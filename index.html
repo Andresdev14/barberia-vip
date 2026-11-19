@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Reserva tu Turno VIP | Barbería & Grooming Barranquilla</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090c;
+      --bg-card: #121218;
+      --bg-card-hover: #181820;
+      --bg-glass: rgba(18, 18, 24, 0.85);
+      --accent: #d4af37;
+      --accent-light: #f3d478;
+      --accent-glow: rgba(212, 175, 55, 0.24);
+      --text: #f7f7fa;
+      --text-muted: #9a9aa8;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(212, 175, 55, 0.45);
+      --success: #25d366;
+      --radius: 16px;
+    }
+
+    [data-theme="crimson"] {
+      --accent: #e11d48;
+      --accent-light: #fb7185;
+      --accent-glow: rgba(225, 29, 72, 0.25);
+      --border-accent: rgba(225, 29, 72, 0.45);
+    }
+
+    [data-theme="emerald"] {
+      --accent: #10b981;
+      --accent-light: #6ee7b7;
+      --accent-glow: rgba(16, 185, 129, 0.25);
+      --border-accent: rgba(16, 185, 129, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 110px;
+      background-image:
+        radial-gradient(circle at 15% 0%, var(--accent-glow), transparent 38%),
+        radial-gradient(circle at 85% 20%, rgba(255,255,255,0.03), transparent 40%);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Admin Generator Panel (Only visible with ?admin=1) */
+    #adminPanel {
+      display: none;
+      background: linear-gradient(145deg, #161622, #0d0d14);
+      border: 2px solid var(--accent);
+      border-radius: 18px;
+      padding: 18px;
+      margin: 16px auto 24px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    }
+    #adminPanel h2 {
+      font-size: 1.05rem;
+      color: var(--accent-light);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #adminPanel p.sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .admin-grid .full {
+      grid-column: 1 / -1;
+    }
+    .admin-input, .admin-select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #09090d;
+      color: var(--text);
+      font-size: 0.84rem;
+      font-family: inherit;
+    }
+    .preset-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .preset-pill {
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .preset-pill:hover {
+      border-color: var(--accent);
+      color: var(--accent-light);
+    }
+    .admin-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .btn-admin {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: none;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      background: var(--accent);
+      color: #09090c;
+    }
+    .btn-admin.secondary {
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .pitch-box {
+      margin-top: 12px;
+      background: #08080b;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 0.76rem;
+      color: #d0d0dc;
+      white-space: pre-wrap;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    /* Top Bar */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(16px);
+      background: rgba(9, 9, 12, 0.82);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+    }
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand-mini {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-emblem {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), #8a6a10);
+      color: #09090c;
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px var(--accent-glow);
+    }
+    .brand-text-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+    .brand-name-top {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.4px;
+    }
+    .brand-loc-top {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+    .live-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(37, 211, 102, 0.12);
+      border: 1px solid rgba(37, 211, 102, 0.35);
+      color: #4ade80;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px #22c55e;
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(1.25); }
+    }
+
+    /* Hero Card */
+    .hero {
+      margin-top: 16px;
+      border-radius: 22px;
+      padding: 24px 20px;
+      background:
+        linear-gradient(180deg, rgba(18, 18, 24, 0.72) 0%, rgba(12, 12, 17, 0.96) 100%),
+        url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1000&q=80') center/cover;
+      border: 1px solid var(--border-accent);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: rgba(212, 175, 55, 0.16);
+      border: 1px solid var(--border-accent);
+      color: var(--accent-light);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 12px;
+    }
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.65rem;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+    .hero p {
+      font-size: 0.88rem;
+      color: #d1d1de;
+      margin-bottom: 16px;
+    }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat-box {
+      text-align: center;
+      background: rgba(9, 9, 12, 0.6);
+      padding: 8px 6px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .stat-val {
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--accent-light);
+    }
+    .stat-lbl {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    /* Perks strip */
+    .perks {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 14px 0 4px;
+      scrollbar-width: none;
+    }
+    .perks::-webkit-scrollbar { display: none; }
+    .perk-chip {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      font-size: 0.76rem;
+      color: #e2e2ec;
+      font-weight: 600;
+    }
+
+    /* Section Header */
+    .sec-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 22px 0 12px;
+    }
+    .sec-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 1.05rem;
+      font-weight: 800;
+    }
+    .step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #09090c;
+      font-weight: 800;
+      font-size: 0.82rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sec-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Category Filter Tabs */
+    .cat-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      scrollbar-width: none;
+    }
+    .cat-tabs::-webkit-scrollbar { display: none; }
+    .cat-tab {
+      flex-shrink: 0;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .cat-tab.active {
+      background: var(--accent);
+      color: #09090c;
+      border-color: var(--accent);
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+
+    /* Service Cards */
+    .services-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .srv-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      position: relative;
+    }
+    .srv-card:hover {
+      background: var(--bg-card-hover);
+    }
+    .srv-card.selected {
+      border-color: var(--accent);
+      background: linear-gradient(145deg, rgba(212, 175, 55, 0.13), rgba(18, 18, 24, 0.95));
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    }
+    .srv-info {
+      flex: 1;
+    }
+    .srv-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 3px;
+      flex-wrap: wrap;
+    }
+    .srv-name {
+      font-weight: 700;
+      font-size: 0.94rem;
+      color: #fff;
+    }
+    .srv-badge {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.66rem;
+      font-weight: 800;
+      background: rgba(212, 175, 55, 0.18);
+      color: var(--accent-light);
+      border: 1px solid var(--border-accent);
+    }
+    .srv-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .srv-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.82rem;
+    }
+    .srv-price {
+      font-weight: 800;
+      color: var(--accent-light);
+      font-size: 0.95rem;
+    }
+    .srv-dur {
+      color: var(--text-muted);
+      font-size: 0.76rem;
+    }
+    .srv-check {
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: transparent;
+      transition: all 0.18s ease;
+      flex-shrink: 0;
+    }
+    .srv-card.selected .srv-check {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #09090c;
+    }
+
+    /* Barbers Grid */
+    .barbers-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .barber-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 13px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+    .barber-card.selected {
+      border-color: var(--accent);
+      background: linear-gradient(145deg, rgba(212, 175, 55, 0.13), rgba(18, 18, 24, 0.95));
+    }
+    .barber-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #262635, #171722);
+      border: 1px solid var(--border-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .barber-name {
+      font-weight: 700;
+      font-size: 0.86rem;
+      color: #fff;
+    }
+    .barber-role {
+      font-size: 0.71rem;
+      color: var(--text-muted);
+    }
+    .barber-rate {
+      font-size: 0.7rem;
+      color: var(--accent-light);
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    /* Date & Time Selector */
+    .dates-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      scrollbar-width: none;
+    }
+    .dates-row::-webkit-scrollbar { display: none; }
+    .date-pill {
+      flex-shrink: 0;
+      min-width: 76px;
+      padding: 10px 10px;
+      border-radius: 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .date-pill.selected {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #09090c;
+      box-shadow: 0 4px 15px var(--accent-glow);
+    }
+    .date-day {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+    .date-num {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin: 1px 0;
+    }
+    .date-mon {
+      font-size: 0.68rem;
+      opacity: 0.75;
+    }
+
+    .times-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .time-slot {
+      padding: 10px 8px;
+      border-radius: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+    .time-slot.selected {
+      background: var(--accent);
+      color: #09090c;
+      border-color: var(--accent);
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+
+    /* Client Form Card */
+    .form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .field-lbl {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #d0d0dc;
+      margin-bottom: 5px;
+      display: block;
+    }
+    .input-box {
+      width: 100%;
+      padding: 12px 13px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #09090d;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+    }
+    .input-box:focus {
+      border-color: var(--accent);
+    }
+    .chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .opt-chip {
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: #09090d;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .opt-chip.selected {
+      border-color: var(--accent);
+      color: var(--accent-light);
+      background: rgba(212, 175, 55, 0.14);
+    }
+
+    /* Ticket Summary Preview */
+    .ticket-card {
+      margin-top: 22px;
+      background: linear-gradient(160deg, #16161f 0%, #0e0e14 100%);
+      border: 1px solid var(--border-accent);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .ticket-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed rgba(255,255,255,0.14);
+      margin-bottom: 10px;
+    }
+    .ticket-head span {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      color: var(--accent-light);
+      font-weight: 800;
+    }
+    .ticket-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.83rem;
+      margin-bottom: 6px;
+      color: #d5d5e2;
+    }
+    .ticket-row strong {
+      color: #fff;
+      text-align: right;
+    }
+    .ticket-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      margin-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 1rem;
+      font-weight: 800;
+    }
+    .ticket-total .amount {
+      color: var(--accent-light);
+      font-size: 1.2rem;
+    }
+
+    /* Sticky Bottom Booking Bar */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: rgba(11, 11, 16, 0.94);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border-accent);
+      padding: 12px 16px;
+    }
+    .bottom-inner {
+      max-width: 540px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .tot-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+    .tot-lbl {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+    .tot-val {
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: var(--accent-light);
+    }
+    .btn-wa {
+      flex: 1;
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, #25d366, #16a34a);
+      color: #06140b;
+      font-weight: 800;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 6px 22px rgba(37, 211, 102, 0.35);
+      transition: transform 0.15s ease;
+    }
+    .btn-wa:active {
+      transform: scale(0.98);
+    }
+
+    /* Modal Preview */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-box {
+      background: #13131b;
+      border: 1px solid var(--border-accent);
+      border-radius: 20px;
+      max-width: 440px;
+      width: 100%;
+      padding: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+    }
+    .modal-box h3 {
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+    .modal-box p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .wa-bubble {
+      background: #0b2316;
+      border: 1px solid rgba(37, 211, 102, 0.35);
+      border-radius: 14px;
+      padding: 12px;
+      font-size: 0.8rem;
+      color: #e7f9ee;
+      white-space: pre-wrap;
+      margin-bottom: 14px;
+      max-height: 260px;
+      overflow-y: auto;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-close {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 26px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .footer-note a {
+      color: var(--accent-light);
+      text-decoration: none;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Header -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand-mini">
+        <div class="brand-emblem" id="brandInitials">BD</div>
+        <div class="brand-text-wrap">
+          <span class="brand-name-top" id="topShopName">Barber Shop & Drinks</span>
+          <span class="brand-loc-top" id="topShopLoc">Alto Prado • Calle 80 # 53-18</span>
+        </div>
+      </div>
+      <div class="live-pill">
+        <span class="live-dot"></span>
+        <span>Turnos Hoy</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- SECRET ADMIN PANEL FOR ANDRÉS (?admin=1) -->
+    <section id="adminPanel">
+      <h2>⚡ Generador de Demos en 10s (Modo Andrés)</h2>
+      <p class="sub">Elige una barbería real de Barranquilla o escribe los datos de cualquier negocio para generar su link personalizado y el mensaje de WhatsApp listo para enviar.</p>
+
+      <div class="preset-pills">
+        <button class="preset-pill" onclick="loadPreset('drinks')">Barber Shop & Drinks (Alto Prado)</button>
+        <button class="preset-pill" onclick="loadPreset('og23')">OG23 Studio (El Prado)</button>
+        <button class="preset-pill" onclick="loadPreset('poder')">El Poder de la Barba (Cra 52)</button>
+        <button class="preset-pill" onclick="loadPreset('donbigotes')">Don Bigotes (Villa Carolina)</button>
+      </div>
+
+      <div class="admin-grid">
+        <div class="full">
+          <input class="admin-input" id="admName" placeholder="Nombre de la Barbería / Estética" oninput="syncAdmin()" />
+        </div>
+        <div class="full">
+          <input class="admin-input" id="admLoc" placeholder="Barrio / Dirección (ej: Alto Prado • Calle 80 # 53-18)" oninput="syncAdmin()" />
+        </div>
+        <div>
+          <input class="admin-input" id="admWa" placeholder="WhatsApp (ej: 573001234567)" oninput="syncAdmin()" />
+        </div>
+        <div>
+          <select class="admin-select" id="admTheme" onchange="syncAdmin()">
+            <option value="gold">Tema: Oro Imperial</option>
+            <option value="crimson">Tema: Rojo Urbano</option>
+            <option value="emerald">Tema: Verde Club</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="admin-actions">
+        <button class="btn-admin" onclick="copyClientLink()">🔗 Copiar Link del Cliente</button>
+        <button class="btn-admin secondary" onclick="copySalesPitch()">💬 Copiar Mensaje Venta</button>
+      </div>
+      <div class="pitch-box" id="salesPitchPreview"></div>
+    </section>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-tag">✂️ Grooming & Experiencia VIP • Barranquilla</div>
+      <h1 id="heroTitle">Barber Shop & Drinks</h1>
+      <p id="heroSub">Agenda tu turno en 30 segundos sin esperar en línea. Elige tu corte o combo, tu barbero favorito y confirma directo por WhatsApp.</p>
+      <div class="hero-stats">
+        <div class="stat-box">
+          <div class="stat-val">4.9 ★</div>
+          <div class="stat-lbl">+320 Reseñas</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val">30 seg</div>
+          <div class="stat-lbl">Reserva Rápida</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val">VIP</div>
+          <div class="stat-lbl">Bebida Gratis</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Perks -->
+    <div class="perks">
+      <div class="perk-chip">🍺 Bebida fría de cortesía</div>
+      <div class="perk-chip">🧖‍♂️ Toalla caliente & Ozono</div>
+      <div class="perk-chip">📲 Pago Nequi / Bancolombia</div>
+      <div class="perk-chip">❄️ Aire acondicionado & Wi-Fi</div>
+    </div>
+
+    <!-- STEP 1: SERVICES -->
+    <div class="sec-head">
+      <div class="sec-title"><span class="step-num">1</span> Elige tus Servicios</div>
+      <span class="sec-hint">Puedes elegir varios</span>
+    </div>
+
+    <div class="cat-tabs" id="catTabs">
+      <button class="cat-tab active" onclick="filterCategory('combos', this)">🔥 Combos VIP</button>
+      <button class="cat-tab" onclick="filterCategory('cortes', this)">✂️ Cortes & Fade</button>
+      <button class="cat-tab" onclick="filterCategory('barba', this)">🧔 Barba & Navaja</button>
+      <button class="cat-tab" onclick="filterCategory('facial', this)">✨ Facial & Spa</button>
+    </div>
+
+    <div class="services-list" id="servicesList"></div>
+
+    <!-- STEP 2: BARBER -->
+    <div class="sec-head">
+      <div class="sec-title"><span class="step-num">2</span> Elige tu Barbero</div>
+      <span class="sec-hint">Especialistas</span>
+    </div>
+
+    <div class="barbers-grid" id="barbersGrid"></div>
+
+    <!-- STEP 3: DATE & TIME -->
+    <div class="sec-head">
+      <div class="sec-title"><span class="step-num">3</span> Fecha y Hora</div>
+      <span class="sec-hint">Disponibilidad hoy</span>
+    </div>
+
+    <div class="dates-row" id="datesRow"></div>
+    <div class="times-grid" id="timesGrid"></div>
+
+    <!-- STEP 4: CLIENT DETAILS -->
+    <div class="sec-head">
+      <div class="sec-title"><span class="step-num">4</span> Confirma tus Datos</div>
+      <span class="sec-hint">Sin registro</span>
+    </div>
+
+    <div class="form-card">
+      <div>
+        <label class="field-lbl">Tu Nombre *</label>
+        <input class="input-box" id="clientName" placeholder="Ej: Carlos Mendoza" oninput="renderTicket()" />
+      </div>
+
+      <div>
+        <label class="field-lbl">Bebida de Cortesía incluida 🍺</label>
+        <div class="chips-row" id="drinkChips">
+          <button class="opt-chip selected" onclick="selectChip('drink', 'Cerveza fría', this)">🍺 Cerveza fría</button>
+          <button class="opt-chip" onclick="selectChip('drink', 'Café Expreso', this)">☕ Café Expreso</button>
+          <button class="opt-chip" onclick="selectChip('drink', 'Agua / Soda fría', this)">🧊 Agua / Soda</button>
+          <button class="opt-chip" onclick="selectChip('drink', 'Gaseosa', this)">🥤 Gaseosa</button>
+        </div>
+      </div>
+
+      <div>
+        <label class="field-lbl">Método de Pago en Barbería</label>
+        <div class="chips-row" id="payChips">
+          <button class="opt-chip selected" onclick="selectChip('pay', 'Nequi', this)">📲 Nequi</button>
+          <button class="opt-chip" onclick="selectChip('pay', 'Transferencia Bancolombia', this)">🏦 Bancolombia</button>
+          <button class="opt-chip" onclick="selectChip('pay', 'Efectivo', this)">💵 Efectivo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE SUMMARY TICKET -->
+    <section class="ticket-card">
+      <div class="ticket-head">
+        <span>🎟️ Resumen de tu Reserva VIP</span>
+        <span id="ticketDuration">45 min aprox.</span>
+      </div>
+      <div class="ticket-row">
+        <span>Sede:</span>
+        <strong id="tShop">Barber Shop & Drinks</strong>
+      </div>
+      <div class="ticket-row">
+        <span>Servicios:</span>
+        <strong id="tServices">Combo Imperial (Corte + Barba)</strong>
+      </div>
+      <div class="ticket-row">
+        <span>Barbero:</span>
+        <strong id="tBarber">Primero Disponible</strong>
+      </div>
+      <div class="ticket-row">
+        <span>Fecha y Hora:</span>
+        <strong id="tDateTime">Hoy • 4:00 PM</strong>
+      </div>
+      <div class="ticket-row">
+        <span>Cortesía & Pago:</span>
+        <strong id="tExtras">Cerveza fría • Nequi</strong>
+      </div>
+      <div class="ticket-total">
+        <span>Total Estimado</span>
+        <span class="amount" id="tTotal">$55.000 COP</span>
+      </div>
+    </section>
+
+    <p class="footer-note">
+      Sistema de Agendamiento Digital Rápido • Barranquilla, Colombia<br/>
+      <a href="?admin=1">¿Tienes una barbería? Personaliza esta demo aquí</a>
+    </p>
+  </main>
+
+  <!-- STICKY BOTTOM CTA -->
+  <div class="bottom-bar">
+    <div class="bottom-inner">
+      <div class="tot-wrap">
+        <span class="tot-lbl" id="bottomCount">1 servicio • 50 min</span>
+        <span class="tot-val" id="bottomTotal">$55.000</span>
+      </div>
+      <button class="btn-wa" onclick="openWhatsAppModal()">
+        <span>📲 Confirmar Cita por WhatsApp</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- WHATSAPP PREVIEW MODAL -->
+  <div class="modal-backdrop" id="waModal">
+    <div class="modal-box">
+      <h3>✅ Tu reserva está lista para enviar</h3>
+      <p>Al tocar "Enviar en WhatsApp", la barbería recibirá este ticket con tu turno separado:</p>
+      <div class="wa-bubble" id="waPreviewText"></div>
+      <div class="modal-actions">
+        <button class="btn-close" onclick="closeModal()">Editar</button>
+        <button class="btn-wa" onclick="sendToWhatsApp()">🚀 Enviar en WhatsApp</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const PRESETS = {
+      drinks: {
+        name: "Barber Shop & Drinks",
+        loc: "Alto Prado • Calle 80 # 53-18, Barranquilla",
+        wa: "573000000000",
+        theme: "gold"
+      },
+      og23: {
+        name: "OG23 Barber Studio",
+        loc: "El Prado • Calle 70 # 53-52, Barranquilla",
+        wa: "573000000000",
+        theme: "crimson"
+      },
+      poder: {
+        name: "El Poder de la Barba",
+        loc: "Alto Prado • Cra. 52, Barranquilla",
+        wa: "573000000000",
+        theme: "gold"
+      },
+      donbigotes: {
+        name: "Don Bigotes Barbería",
+        loc: "Villa Carolina • Cra. 71 # 86-140, Barranquilla",
+        wa: "573000000000",
+        theme: "emerald"
+      }
+    };
+
+    const SERVICES = [
+      { id: "c1", cat: "combos", name: "Combo VIP Imperial (Corte + Barba + Ozono)", desc: "Fade o corte clásico, perfilado de barba con toalla caliente, vapor ozono y bebida fría.", price: 55000, dur: 55, badge: "Más Pedido" },
+      { id: "c2", cat: "combos", name: "Combo Full Deluxe (Corte + Barba + Mascarilla)", desc: "Experiencia completa con limpieza facial profunda de puntos negros, cejas y bebida.", price: 70000, dur: 70, badge: "Experiencia Total" },
+      { id: "c3", cat: "combos", name: "Combo Ejecutivo Express (Corte + Cejas + Lavado)", desc: "Corte preciso con lavado capilar exfoliante y perfilado de cejas en 40 minutos.", price: 42000, dur: 40, badge: "Rápido" },
+      { id: "s1", cat: "cortes", name: "Corte Degradado / Fade Premium", desc: "Skin fade, mid fade, taper o mullet con asesoría de visagismo, lavado y styling.", price: 35000, dur: 40, badge: "Top" },
+      { id: "s2", cat: "cortes", name: "Corte Clásico a Tijera & Máquina", desc: "Acabado elegante y natural con lavado relajante y peinado con pomada mate.", price: 35000, dur: 35, badge: "" },
+      { id: "s3", cat: "cortes", name: "Corte Kids / Junior", desc: "Atención paciente y diseño moderno para niños y jóvenes.", price: 28000, dur: 30, badge: "" },
+      { id: "b1", cat: "barba", name: "Ritual de Barba con Toalla Caliente & Ozono", desc: "Diseño a navaja, aceites esenciales, vapor de ozono y gel post-afeitado frío.", price: 25000, dur: 25, badge: "Recomendado" },
+      { id: "b2", cat: "barba", name: "Perfilado Express de Barba & Bigote", desc: "Contornos limpios con máquina y navaja.", price: 18000, dur: 15, badge: "" },
+      { id: "f1", cat: "facial", name: "Mascarilla Negra + Vapor Ozono", desc: "Eliminación de impurezas y puntos negros con hidratación facial fresca.", price: 25000, dur: 25, badge: "Facial" },
+      { id: "f2", cat: "facial", name: "Diseño y Perfilado de Cejas a Navaja", desc: "Limpieza natural del contorno de cejas.", price: 10000, dur: 10, badge: "" }
+    ];
+
+    const BARBERS = [
+      { id: "any", name: "Primero Disponible", role: "Asignación más rápida", rate: "⚡ Sin espera", icon: "⚡" },
+      { id: "b1", name: "Andrés • Master Barber", role: "Especialista en Fade & Visagismo", rate: "★ 5.0 (140+ citas)", icon: "👑" },
+      { id: "b2", name: "Mateo • Senior Barber", role: "Ritual de Barba & Tijera", rate: "★ 4.9 (110+ citas)", icon: "💈" },
+      { id: "b3", name: "Sebastián • Urban Stylist", role: "Taper, Mullet & Freestyle", rate: "★ 4.9 (95+ citas)", icon: "✂️" }
+    ];
+
+    const TIMES = [
+      "9:00 AM", "10:00 AM", "11:00 AM",
+      "2:00 PM", "3:00 PM", "4:00 PM",
+      "5:00 PM", "6:00 PM", "7:00 PM"
+    ];
+
+    let state = {
+      shopName: "Barber Shop & Drinks",
+      shopLoc: "Alto Prado • Calle 80 # 53-18, Barranquilla",
+      shopWa: "573000000000",
+      theme: "gold",
+      activeCat: "combos",
+      selectedServices: ["c1"],
+      selectedBarber: "any",
+      selectedDateIdx: 0,
+      selectedTime: "4:00 PM",
+      drink: "Cerveza fría",
+      pay: "Nequi",
+      dates: []
+    };
+
+    function formatCOP(num) {
+      return "$" + num.toLocaleString("es-CO");
+    }
+
+    function buildDates() {
+      const days = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+      const months = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+      const out = [];
+      const now = new Date();
+      for (let i = 0; i < 6; i++) {
+        const d = new Date(now);
+        d.setDate(now.getDate() + i);
+        const dayLabel = i === 0 ? "Hoy" : i === 1 ? "Mañana" : days[d.getDay()];
+        out.push({
+          dayLabel,
+          dateNum: d.getDate(),
+          monthLabel: months[d.getMonth()],
+          fullLabel: `${dayLabel} ${d.getDate()} ${months[d.getMonth()]}`
+        });
+      }
+      state.dates = out;
+    }
+
+    function applyShopBranding() {
+      document.documentElement.setAttribute("data-theme", state.theme);
+      document.getElementById("topShopName").textContent = state.shopName;
+      document.getElementById("topShopLoc").textContent = state.shopLoc;
+      document.getElementById("heroTitle").textContent = state.shopName;
+      document.getElementById("tShop").textContent = state.shopName;
+      document.title = `Reservas VIP | ${state.shopName}`;
+      const initials = state.shopName.split(" ").filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join("");
+      document.getElementById("brandInitials").textContent = initials || "VIP";
+    }
+
+    function renderServices() {
+      const wrap = document.getElementById("servicesList");
+      const list = SERVICES.filter(s => s.cat === state.activeCat);
+      wrap.innerHTML = list.map(s => {
+        const isSel = state.selectedServices.includes(s.id);
+        return `
+          <div class="srv-card ${isSel ? 'selected' : ''}" onclick="toggleService('${s.id}')">
+            <div class="srv-info">
+              <div class="srv-top">
+                <span class="srv-name">${s.name}</span>
+                ${s.badge ? `<span class="srv-badge">${s.badge}</span>` : ''}
+              </div>
+              <div class="srv-desc">${s.desc}</div>
+              <div class="srv-meta">
+                <span class="srv-price">${formatCOP(s.price)}</span>
+                <span class="srv-dur">⏱️ ${s.dur} min</span>
+              </div>
+            </div>
+            <div class="srv-check">✓</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function filterCategory(cat, btn) {
+      state.activeCat = cat;
+      document.querySelectorAll(".cat-tab").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderServices();
+    }
+
+    function toggleService(id) {
+      const idx = state.selectedServices.indexOf(id);
+      if (idx >= 0) {
+        if (state.selectedServices.length > 1) {
+          state.selectedServices.splice(idx, 1);
+        }
+      } else {
+        state.selectedServices.push(id);
+      }
+      renderServices();
+      renderTicket();
+    }
+
+    function renderBarbers() {
+      const wrap = document.getElementById("barbersGrid");
+      wrap.innerHTML = BARBERS.map(b => {
+        const isSel = state.selectedBarber === b.id;
+        return `
+          <div class="barber-card ${isSel ? 'selected' : ''}" onclick="selectBarber('${b.id}')">
+            <div class="barber-avatar">${b.icon}</div>
+            <div>
+              <div class="barber-name">${b.name}</div>
+              <div class="barber-role">${b.role}</div>
+              <div class="barber-rate">${b.rate}</div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function selectBarber(id) {
+      state.selectedBarber = id;
+      renderBarbers();
+      renderTicket();
+    }
+
+    function renderDates() {
+      const wrap = document.getElementById("datesRow");
+      wrap.innerHTML = state.dates.map((d, i) => `
+        <div class="date-pill ${state.selectedDateIdx === i ? 'selected' : ''}" onclick="selectDate(${i})">
+          <div class="date-day">${d.dayLabel}</div>
+          <div class="date-num">${d.dateNum}</div>
+          <div class="date-mon">${d.monthLabel}</div>
+        </div>
+      `).join("");
+    }
+
+    function selectDate(idx) {
+      state.selectedDateIdx = idx;
+      renderDates();
+      renderTicket();
+    }
+
+    function renderTimes() {
+      const wrap = document.getElementById("timesGrid");
+      wrap.innerHTML = TIMES.map(t => `
+        <div class="time-slot ${state.selectedTime === t ? 'selected' : ''}" onclick="selectTime('${t}')">
+          ${t}
+        </div>
+      `).join("");
+    }
+
+    function selectTime(t) {
+      state.selectedTime = t;
+      renderTimes();
+      renderTicket();
+    }
+
+    function selectChip(type, val, btn) {
+      state[type] = val;
+      const parent = btn.parentElement;
+      parent.querySelectorAll(".opt-chip").forEach(c => c.classList.remove("selected"));
+      btn.classList.add("selected");
+      renderTicket();
+    }
+
+    function getSummaryData() {
+      const chosen = SERVICES.filter(s => state.selectedServices.includes(s.id));
+      const total = chosen.reduce((acc, s) => acc + s.price, 0);
+      const dur = chosen.reduce((acc, s) => acc + s.dur, 0);
+      const barber = BARBERS.find(b => b.id === state.selectedBarber) || BARBERS[0];
+      const dateObj = state.dates[state.selectedDateIdx] || state.dates[0];
+      const client = (document.getElementById("clientName").value || "").trim() || "Cliente VIP";
+      return { chosen, total, dur, barber, dateObj, client };
+    }
+
+    function renderTicket() {
+      const { chosen, total, dur, barber, dateObj } = getSummaryData();
+      document.getElementById("tServices").textContent = chosen.map(s => s.name).join(" + ");
+      document.getElementById("tBarber").textContent = barber.name;
+      document.getElementById("tDateTime").textContent = `${dateObj.fullLabel} • ${state.selectedTime}`;
+      document.getElementById("tExtras").textContent = `${state.drink} • ${state.pay}`;
+      document.getElementById("tTotal").textContent = `${formatCOP(total)} COP`;
+      document.getElementById("ticketDuration").textContent = `${dur} min aprox.`;
+      document.getElementById("bottomCount").textContent = `${chosen.length} servicio${chosen.length > 1 ? 's' : ''} • ${dur} min`;
+      document.getElementById("bottomTotal").textContent = formatCOP(total);
+    }
+
+    function buildWhatsAppMessage() {
+      const { chosen, total, dur, barber, dateObj, client } = getSummaryData();
+      const lines = [
+        `💈 *NUEVA RESERVA VIP — ${state.shopName.toUpperCase()}*`,
+        `📍 *Sede:* ${state.shopLoc}`,
+        `━━━━━━━━━━━━━━━━━━━━`,
+        `👤 *Cliente:* ${client}`,
+        `📅 *Fecha:* ${dateObj.fullLabel}`,
+        `⏰ *Hora:* ${state.selectedTime}`,
+        `✂️ *Barbero:* ${barber.name}`,
+        `━━━━━━━━━━━━━━━━━━━━`,
+        `🧾 *Servicios seleccionados:*`,
+        ...chosen.map(s => `  • ${s.name} (${formatCOP(s.price)})`),
+        `⏱️ *Duración estimada:* ${dur} min`,
+        `🍺 *Cortesía:* ${state.drink}`,
+        `💳 *Pago:* ${state.pay}`,
+        `━━━━━━━━━━━━━━━━━━━━`,
+        `💰 *TOTAL: ${formatCOP(total)} COP*`,
+        ``,
+        `Hola, ¿me confirman disponibilidad para este turno? ¡Gracias!`
+      ];
+      return lines.join("\n");
+    }
+
+    function openWhatsAppModal() {
+      document.getElementById("waPreviewText").textContent = buildWhatsAppMessage();
+      document.getElementById("waModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("waModal").style.display = "none";
+    }
+
+    function sendToWhatsApp() {
+      const msg = encodeURIComponent(buildWhatsAppMessage());
+      const cleanPhone = (state.shopWa || "573000000000").replace(/\D/g, "");
+      window.open(`https://wa.me/${cleanPhone}?text=${msg}`, "_blank");
+    }
+
+    /* ADMIN PANEL HELPERS */
+    function buildClientUrl() {
+      const base = window.location.origin + window.location.pathname;
+      const p = new URLSearchParams();
+      p.set("nombre", state.shopName);
+      p.set("barrio", state.shopLoc);
+      if (state.shopWa && state.shopWa !== "573000000000") p.set("wa", state.shopWa);
+      if (state.theme !== "gold") p.set("tema", state.theme);
+      return `${base}?${p.toString()}`;
+    }
+
+    function updatePitchPreview() {
+      const url = buildClientUrl();
+      const pitch =
+`Hola equipo de *${state.shopName}*, ¿cómo están? Soy Andrés, desarrollador web acá en Barranquilla.
+
+Vi su perfil y noté que agendan las citas manualmente por WhatsApp, así que les armé una demo funcional con el nombre de *${state.shopName}* para que vean cómo sus clientes pueden elegir corte/combo, barbero y hora en 30 segundos y enviarles el turno listo a su WhatsApp (sin pagar mensualidades de apps como Booksy o AgendaPro):
+
+👉 ${url}
+
+Pruébenla desde el celular. Si les gusta cómo quedó, se las dejo 100% personalizada con todos sus precios, fotos y barberos reales para su Instagram por $180.000 COP (pago único, sin mensualidad).`;
+      document.getElementById("salesPitchPreview").textContent = pitch;
+    }
+
+    function syncAdmin() {
+      state.shopName = document.getElementById("admName").value || "Barbería VIP";
+      state.shopLoc = document.getElementById("admLoc").value || "Barranquilla, Colombia";
+      state.shopWa = document.getElementById("admWa").value || "573000000000";
+      state.theme = document.getElementById("admTheme").value || "gold";
+      applyShopBranding();
+      renderTicket();
+      updatePitchPreview();
+    }
+
+    function loadPreset(key) {
+      const pr = PRESETS[key];
+      if (!pr) return;
+      document.getElementById("admName").value = pr.name;
+      document.getElementById("admLoc").value = pr.loc;
+      document.getElementById("admWa").value = pr.wa;
+      document.getElementById("admTheme").value = pr.theme;
+      syncAdmin();
+    }
+
+    function copyClientLink() {
+      navigator.clipboard.writeText(buildClientUrl());
+      alert("✅ Link personalizado copiado al portapapeles");
+    }
+
+    function copySalesPitch() {
+      navigator.clipboard.writeText(document.getElementById("salesPitchPreview").textContent);
+      alert("✅ Mensaje de venta copiado al portapapeles");
+    }
+
+    function init() {
+      buildDates();
+      const params = new URLSearchParams(window.location.search);
+      const demoKey = params.get("demo");
+      if (demoKey && PRESETS[demoKey]) {
+        state.shopName = PRESETS[demoKey].name;
+        state.shopLoc = PRESETS[demoKey].loc;
+        state.shopWa = PRESETS[demoKey].wa;
+        state.theme = PRESETS[demoKey].theme;
+      }
+      if (params.get("nombre")) state.shopName = params.get("nombre");
+      if (params.get("barrio")) state.shopLoc = params.get("barrio");
+      if (params.get("wa")) state.shopWa = params.get("wa");
+      if (params.get("tema")) state.theme = params.get("tema");
+
+      if (params.get("admin") === "1") {
+        document.getElementById("adminPanel").style.display = "block";
+        document.getElementById("admName").value = state.shopName;
+        document.getElementById("admLoc").value = state.shopLoc;
+        document.getElementById("admWa").value = state.shopWa;
+        document.getElementById("admTheme").value = state.theme;
+        updatePitchPreview();
+      }
+
+      applyShopBranding();
+      renderServices();
+      renderBarbers();
+      renderDates();
+      renderTimes();
+      renderTicket();
+    }
+
+    init();
+  </script>
+</body>
+</html>
