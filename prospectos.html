@@ -264,11 +264,14 @@
       const msg =
 `Hola equipo de *${lead.name}*, ¿cómo están? Soy Andrés, desarrollador web acá en Barranquilla.
 
-Vi su barbería en ${lead.loc.split("•")[0].trim()} y les armé una demo funcional con el nombre de *${lead.name}* para que vean cómo sus clientes pueden elegir corte/combo, barbero y hora en 30 segundos y enviarles el turno listo a este WhatsApp (sin pagar mensualidades):
+Vi su barbería en ${lead.loc.split("•")[0].trim()} y les armé una demo funcional con el nombre de *${lead.name}* que incluye:
+✅ Agenda en 30s con *bloqueo automático de horas ocupadas* (para que dos clientes nunca agenden la misma hora).
+✅ *Protección anti-inasistencias* (abono opcional de $10.000 por Nequi o confirmación 1h antes + botón para liberar la silla en 1 toque desde el Panel del Barbero).
 
+Pruébenla aquí desde el celular (arriba pueden cambiar entre "Vista Cliente" y "Panel Barbero"):
 👉 ${demoUrl}
 
-Pruébenla desde el celular. Si les gusta cómo se ve, se las dejo 100% personalizada con sus precios reales, nombres de sus barberos y lista para su Instagram por ${price} (pago único, sin mensualidades). ¿Qué les parece?`;
+Si les gusta cómo funciona, se las dejo 100% personalizada con sus precios y barberos reales por ${price} (pago único, sin mensualidades). ¿Qué les parece?`;
       return `https://wa.me/${lead.phone}?text=${encodeURIComponent(msg)}`;
     }
 

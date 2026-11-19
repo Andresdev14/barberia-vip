@@ -21,6 +21,7 @@
       --border: rgba(255, 255, 255, 0.08);
       --border-accent: rgba(212, 175, 55, 0.45);
       --success: #25d366;
+      --danger: #ef4444;
       --radius: 16px;
     }
 
@@ -50,7 +51,7 @@
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.5;
-      padding-bottom: 110px;
+      padding-bottom: 115px;
       background-image:
         radial-gradient(circle at 15% 0%, var(--accent-glow), transparent 38%),
         radial-gradient(circle at 85% 20%, rgba(255,255,255,0.03), transparent 40%);
@@ -63,6 +64,44 @@
       padding: 0 16px;
     }
 
+    /* Mode Switcher Banner (Client View vs Barber Panel View) */
+    .mode-switcher {
+      display: flex;
+      gap: 6px;
+      background: #101017;
+      padding: 6px;
+      border-radius: 14px;
+      border: 1px solid var(--border-accent);
+      margin-top: 12px;
+    }
+    .mode-btn {
+      flex: 1;
+      padding: 9px 10px;
+      border-radius: 10px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 800;
+      font-size: 0.78rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.18s ease;
+    }
+    .mode-btn.active {
+      background: var(--accent);
+      color: #09090c;
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+    .badge-count {
+      background: rgba(0,0,0,0.25);
+      padding: 1px 7px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+    }
+
     /* Admin Generator Panel (Only visible with ?admin=1) */
     #adminPanel {
       display: none;
@@ -70,16 +109,13 @@
       border: 2px solid var(--accent);
       border-radius: 18px;
       padding: 18px;
-      margin: 16px auto 24px;
+      margin: 16px auto 18px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.6);
     }
     #adminPanel h2 {
       font-size: 1.05rem;
       color: var(--accent-light);
       margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
     #adminPanel p.sub {
       font-size: 0.8rem;
@@ -92,9 +128,7 @@
       gap: 10px;
       margin-bottom: 12px;
     }
-    .admin-grid .full {
-      grid-column: 1 / -1;
-    }
+    .admin-grid .full { grid-column: 1 / -1; }
     .admin-input, .admin-select {
       width: 100%;
       padding: 10px 12px;
@@ -120,10 +154,6 @@
       font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
-    }
-    .preset-pill:hover {
-      border-color: var(--accent);
-      color: var(--accent-light);
     }
     .admin-actions {
       display: grid;
@@ -164,7 +194,7 @@
       top: 0;
       z-index: 40;
       backdrop-filter: blur(16px);
-      background: rgba(9, 9, 12, 0.82);
+      background: rgba(9, 9, 12, 0.86);
       border-bottom: 1px solid var(--border);
       padding: 12px 0;
     }
@@ -233,16 +263,14 @@
 
     /* Hero Card */
     .hero {
-      margin-top: 16px;
+      margin-top: 14px;
       border-radius: 22px;
-      padding: 24px 20px;
+      padding: 22px 20px;
       background:
         linear-gradient(180deg, rgba(18, 18, 24, 0.72) 0%, rgba(12, 12, 17, 0.96) 100%),
         url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1000&q=80') center/cover;
       border: 1px solid var(--border-accent);
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
-      position: relative;
-      overflow: hidden;
     }
     .hero-tag {
       display: inline-flex;
@@ -257,25 +285,25 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.8px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .hero h1 {
       font-family: 'Cinzel', serif;
-      font-size: 1.65rem;
+      font-size: 1.6rem;
       line-height: 1.2;
       margin-bottom: 8px;
       color: #ffffff;
     }
     .hero p {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       color: #d1d1de;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .hero-stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      padding-top: 14px;
+      padding-top: 12px;
       border-top: 1px solid rgba(255,255,255,0.1);
     }
     .stat-box {
@@ -287,35 +315,12 @@
     }
     .stat-val {
       font-weight: 800;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: var(--accent-light);
     }
     .stat-lbl {
-      font-size: 0.68rem;
+      font-size: 0.67rem;
       color: var(--text-muted);
-    }
-
-    /* Perks strip */
-    .perks {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 14px 0 4px;
-      scrollbar-width: none;
-    }
-    .perks::-webkit-scrollbar { display: none; }
-    .perk-chip {
-      flex-shrink: 0;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 7px 12px;
-      border-radius: 12px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      font-size: 0.76rem;
-      color: #e2e2ec;
-      font-weight: 600;
     }
 
     /* Section Header */
@@ -329,7 +334,7 @@
       display: flex;
       align-items: center;
       gap: 9px;
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       font-weight: 800;
     }
     .step-num {
@@ -345,7 +350,7 @@
       justify-content: center;
     }
     .sec-hint {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--text-muted);
     }
 
@@ -368,13 +373,11 @@
       font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.18s ease;
     }
     .cat-tab.active {
       background: var(--accent);
       color: #09090c;
       border-color: var(--accent);
-      box-shadow: 0 4px 14px var(--accent-glow);
     }
 
     /* Service Cards */
@@ -393,20 +396,12 @@
       justify-content: space-between;
       gap: 12px;
       cursor: pointer;
-      transition: all 0.18s ease;
-      position: relative;
-    }
-    .srv-card:hover {
-      background: var(--bg-card-hover);
     }
     .srv-card.selected {
       border-color: var(--accent);
       background: linear-gradient(145deg, rgba(212, 175, 55, 0.13), rgba(18, 18, 24, 0.95));
-      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
     }
-    .srv-info {
-      flex: 1;
-    }
+    .srv-info { flex: 1; }
     .srv-top {
       display: flex;
       align-items: center;
@@ -414,40 +409,20 @@
       margin-bottom: 3px;
       flex-wrap: wrap;
     }
-    .srv-name {
-      font-weight: 700;
-      font-size: 0.94rem;
-      color: #fff;
-    }
+    .srv-name { font-weight: 700; font-size: 0.93rem; color: #fff; }
     .srv-badge {
       padding: 2px 8px;
       border-radius: 999px;
-      font-size: 0.66rem;
+      font-size: 0.65rem;
       font-weight: 800;
       background: rgba(212, 175, 55, 0.18);
       color: var(--accent-light);
       border: 1px solid var(--border-accent);
     }
-    .srv-desc {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-    .srv-meta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 0.82rem;
-    }
-    .srv-price {
-      font-weight: 800;
-      color: var(--accent-light);
-      font-size: 0.95rem;
-    }
-    .srv-dur {
-      color: var(--text-muted);
-      font-size: 0.76rem;
-    }
+    .srv-desc { font-size: 0.77rem; color: var(--text-muted); margin-bottom: 7px; }
+    .srv-meta { display: flex; align-items: center; gap: 12px; font-size: 0.82rem; }
+    .srv-price { font-weight: 800; color: var(--accent-light); font-size: 0.94rem; }
+    .srv-dur { color: var(--text-muted); font-size: 0.75rem; }
     .srv-check {
       width: 28px;
       height: 28px;
@@ -458,7 +433,6 @@
       justify-content: center;
       font-weight: 900;
       color: transparent;
-      transition: all 0.18s ease;
       flex-shrink: 0;
     }
     .srv-card.selected .srv-check {
@@ -477,46 +451,33 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 13px;
+      padding: 12px;
       cursor: pointer;
-      transition: all 0.18s ease;
       display: flex;
       align-items: center;
-      gap: 11px;
+      gap: 10px;
     }
     .barber-card.selected {
       border-color: var(--accent);
       background: linear-gradient(145deg, rgba(212, 175, 55, 0.13), rgba(18, 18, 24, 0.95));
     }
     .barber-avatar {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       border-radius: 12px;
       background: linear-gradient(135deg, #262635, #171722);
       border: 1px solid var(--border-accent);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       flex-shrink: 0;
     }
-    .barber-name {
-      font-weight: 700;
-      font-size: 0.86rem;
-      color: #fff;
-    }
-    .barber-role {
-      font-size: 0.71rem;
-      color: var(--text-muted);
-    }
-    .barber-rate {
-      font-size: 0.7rem;
-      color: var(--accent-light);
-      font-weight: 700;
-      margin-top: 2px;
-    }
+    .barber-name { font-weight: 700; font-size: 0.84rem; color: #fff; }
+    .barber-role { font-size: 0.7rem; color: var(--text-muted); }
+    .barber-rate { font-size: 0.69rem; color: var(--accent-light); font-weight: 700; margin-top: 2px; }
 
-    /* Date & Time Selector */
+    /* Date & Time Selector with Real-Time Busy Locks */
     .dates-row {
       display: flex;
       gap: 8px;
@@ -528,58 +489,115 @@
     .date-pill {
       flex-shrink: 0;
       min-width: 76px;
-      padding: 10px 10px;
+      padding: 10px;
       border-radius: 14px;
       background: var(--bg-card);
       border: 1px solid var(--border);
       text-align: center;
       cursor: pointer;
-      transition: all 0.18s ease;
     }
     .date-pill.selected {
       border-color: var(--accent);
       background: var(--accent);
       color: #09090c;
-      box-shadow: 0 4px 15px var(--accent-glow);
     }
-    .date-day {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      opacity: 0.8;
-    }
-    .date-num {
-      font-size: 1.05rem;
-      font-weight: 800;
-      margin: 1px 0;
-    }
-    .date-mon {
-      font-size: 0.68rem;
-      opacity: 0.75;
-    }
+    .date-day { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; opacity: 0.8; }
+    .date-num { font-size: 1.05rem; font-weight: 800; margin: 1px 0; }
+    .date-mon { font-size: 0.68rem; opacity: 0.75; }
 
+    .slot-legend {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.73rem;
+      color: var(--text-muted);
+      margin: 4px 0 8px;
+    }
     .times-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      margin-top: 6px;
     }
     .time-slot {
-      padding: 10px 8px;
+      padding: 10px 6px;
       border-radius: 12px;
       background: var(--bg-card);
       border: 1px solid var(--border);
       text-align: center;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.16s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .time-slot .slot-sub {
+      font-size: 0.64rem;
+      font-weight: 600;
+      color: #4ade80;
     }
     .time-slot.selected {
       background: var(--accent);
       color: #09090c;
       border-color: var(--accent);
-      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+    .time-slot.selected .slot-sub {
+      color: #09090c;
+      font-weight: 800;
+    }
+    .time-slot.busy {
+      background: rgba(239, 68, 68, 0.08);
+      border-color: rgba(239, 68, 68, 0.28);
+      color: #7f7f8e;
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+    .time-slot.busy .slot-sub {
+      color: #f87171;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    /* Anti No-Show Guarantee Selector */
+    .guarantee-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .g-card {
+      padding: 12px 13px;
+      border-radius: 13px;
+      background: #09090d;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .g-card.selected {
+      border-color: var(--accent);
+      background: rgba(212, 175, 55, 0.12);
+    }
+    .g-title {
+      font-size: 0.83rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+    .g-desc {
+      font-size: 0.73rem;
+      color: var(--text-muted);
+    }
+    .g-tag {
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 0.66rem;
+      font-weight: 800;
+      background: rgba(37, 211, 102, 0.16);
+      color: #4ade80;
+      white-space: nowrap;
     }
 
     /* Client Form Card */
@@ -590,7 +608,7 @@
       padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 13px;
     }
     .field-lbl {
       font-size: 0.76rem;
@@ -601,17 +619,14 @@
     }
     .input-box {
       width: 100%;
-      padding: 12px 13px;
+      padding: 11px 13px;
       border-radius: 12px;
       border: 1px solid var(--border);
       background: #09090d;
       color: var(--text);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-family: inherit;
       outline: none;
-    }
-    .input-box:focus {
-      border-color: var(--accent);
     }
     .chips-row {
       display: flex;
@@ -624,7 +639,7 @@
       background: #09090d;
       border: 1px solid var(--border);
       color: var(--text-muted);
-      font-size: 0.78rem;
+      font-size: 0.77rem;
       font-weight: 600;
       cursor: pointer;
     }
@@ -636,7 +651,7 @@
 
     /* Ticket Summary Preview */
     .ticket-card {
-      margin-top: 22px;
+      margin-top: 20px;
       background: linear-gradient(160deg, #16161f 0%, #0e0e14 100%);
       border: 1px solid var(--border-accent);
       border-radius: 18px;
@@ -651,7 +666,7 @@
       margin-bottom: 10px;
     }
     .ticket-head span {
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.7px;
       color: var(--accent-light);
@@ -660,9 +675,10 @@
     .ticket-row {
       display: flex;
       justify-content: space-between;
-      font-size: 0.83rem;
+      font-size: 0.82rem;
       margin-bottom: 6px;
       color: #d5d5e2;
+      gap: 10px;
     }
     .ticket-row strong {
       color: #fff;
@@ -675,12 +691,101 @@
       padding-top: 10px;
       margin-top: 8px;
       border-top: 1px solid rgba(255,255,255,0.1);
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 800;
     }
     .ticket-total .amount {
       color: var(--accent-light);
-      font-size: 1.2rem;
+      font-size: 1.18rem;
+    }
+
+    /* BARBER PANEL VIEW (Agenda & Anti No-Show Manager) */
+    #barberView {
+      display: none;
+      margin-top: 16px;
+    }
+    .b-panel-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .b-panel-box h3 {
+      font-size: 1rem;
+      color: var(--accent-light);
+      margin-bottom: 4px;
+    }
+    .b-panel-box p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .appt-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .appt-item {
+      background: #0b0b10;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+    }
+    .appt-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .appt-time {
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--accent-light);
+    }
+    .appt-status {
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 999px;
+    }
+    .appt-status.confirmed {
+      background: rgba(37, 211, 102, 0.16);
+      color: #4ade80;
+    }
+    .appt-status.pending {
+      background: rgba(245, 158, 11, 0.18);
+      color: #fbbf24;
+    }
+    .appt-meta {
+      font-size: 0.78rem;
+      color: #d0d0dc;
+      margin-bottom: 10px;
+    }
+    .appt-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
+    .btn-sm {
+      padding: 8px 10px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-sm.green {
+      background: rgba(37, 211, 102, 0.16);
+      border-color: rgba(37, 211, 102, 0.4);
+      color: #4ade80;
+    }
+    .btn-sm.red {
+      background: rgba(239, 68, 68, 0.14);
+      border-color: rgba(239, 68, 68, 0.35);
+      color: #f87171;
     }
 
     /* Sticky Bottom Booking Bar */
@@ -703,19 +808,9 @@
       justify-content: space-between;
       gap: 12px;
     }
-    .tot-wrap {
-      display: flex;
-      flex-direction: column;
-    }
-    .tot-lbl {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-    }
-    .tot-val {
-      font-size: 1.12rem;
-      font-weight: 800;
-      color: var(--accent-light);
-    }
+    .tot-wrap { display: flex; flex-direction: column; }
+    .tot-lbl { font-size: 0.7rem; color: var(--text-muted); }
+    .tot-val { font-size: 1.12rem; font-weight: 800; color: var(--accent-light); }
     .btn-wa {
       flex: 1;
       padding: 14px 18px;
@@ -724,17 +819,13 @@
       background: linear-gradient(135deg, #25d366, #16a34a);
       color: #06140b;
       font-weight: 800;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
       box-shadow: 0 6px 22px rgba(37, 211, 102, 0.35);
-      transition: transform 0.15s ease;
-    }
-    .btn-wa:active {
-      transform: scale(0.98);
     }
 
     /* Modal Preview */
@@ -743,7 +834,7 @@
       position: fixed;
       inset: 0;
       z-index: 90;
-      background: rgba(0, 0, 0, 0.78);
+      background: rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(6px);
       align-items: center;
       justify-content: center;
@@ -756,34 +847,22 @@
       max-width: 440px;
       width: 100%;
       padding: 20px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
     }
-    .modal-box h3 {
-      font-size: 1.05rem;
-      margin-bottom: 6px;
-      color: #fff;
-    }
-    .modal-box p {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-    }
+    .modal-box h3 { font-size: 1.02rem; margin-bottom: 6px; color: #fff; }
+    .modal-box p { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; }
     .wa-bubble {
       background: #0b2316;
       border: 1px solid rgba(37, 211, 102, 0.35);
       border-radius: 14px;
       padding: 12px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: #e7f9ee;
       white-space: pre-wrap;
       margin-bottom: 14px;
-      max-height: 260px;
+      max-height: 250px;
       overflow-y: auto;
     }
-    .modal-actions {
-      display: flex;
-      gap: 8px;
-    }
+    .modal-actions { display: flex; gap: 8px; }
     .btn-close {
       padding: 12px 14px;
       border-radius: 12px;
@@ -792,18 +871,6 @@
       color: var(--text);
       font-weight: 700;
       cursor: pointer;
-    }
-
-    .footer-note {
-      text-align: center;
-      margin-top: 26px;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-    .footer-note a {
-      color: var(--accent-light);
-      text-decoration: none;
-      font-weight: 700;
     }
   </style>
 </head>
@@ -821,34 +888,42 @@
       </div>
       <div class="live-pill">
         <span class="live-dot"></span>
-        <span>Turnos Hoy</span>
+        <span>Agenda en Vivo</span>
       </div>
     </div>
   </header>
 
   <main class="container">
 
+    <!-- MODE SWITCHER: ALLOWS BARBERSHOP OWNER TO TEST BOTH CLIENT & BARBER PANEL -->
+    <div class="mode-switcher">
+      <button class="mode-btn active" id="btnClientMode" onclick="switchMode('client')">
+        ✂️ Vista Cliente (Reservar)
+      </button>
+      <button class="mode-btn" id="btnBarberMode" onclick="switchMode('barber')">
+        🔐 Panel Barbero <span class="badge-count" id="bookedBadge">3 turnos</span>
+      </button>
+    </div>
+
     <!-- SECRET ADMIN PANEL FOR ANDRÉS (?admin=1) -->
     <section id="adminPanel">
       <h2>⚡ Generador de Demos en 10s (Modo Andrés)</h2>
-      <p class="sub">Elige una barbería real de Barranquilla o escribe los datos de cualquier negocio para generar su link personalizado y el mensaje de WhatsApp listo para enviar.</p>
-
+      <p class="sub">Elige una barbería o escribe los datos para generar su link personalizado.</p>
       <div class="preset-pills">
-        <button class="preset-pill" onclick="loadPreset('drinks')">Barber Shop & Drinks (Alto Prado)</button>
-        <button class="preset-pill" onclick="loadPreset('og23')">OG23 Studio (El Prado)</button>
-        <button class="preset-pill" onclick="loadPreset('poder')">El Poder de la Barba (Cra 52)</button>
-        <button class="preset-pill" onclick="loadPreset('donbigotes')">Don Bigotes (Villa Carolina)</button>
+        <button class="preset-pill" onclick="loadPreset('drinks')">Barber Shop & Drinks</button>
+        <button class="preset-pill" onclick="loadPreset('og23')">OG23 Studio</button>
+        <button class="preset-pill" onclick="loadPreset('poder')">El Poder de la Barba</button>
+        <button class="preset-pill" onclick="loadPreset('donbigotes')">Don Bigotes</button>
       </div>
-
       <div class="admin-grid">
         <div class="full">
-          <input class="admin-input" id="admName" placeholder="Nombre de la Barbería / Estética" oninput="syncAdmin()" />
+          <input class="admin-input" id="admName" placeholder="Nombre de la Barbería" oninput="syncAdmin()" />
         </div>
         <div class="full">
-          <input class="admin-input" id="admLoc" placeholder="Barrio / Dirección (ej: Alto Prado • Calle 80 # 53-18)" oninput="syncAdmin()" />
+          <input class="admin-input" id="admLoc" placeholder="Barrio / Dirección" oninput="syncAdmin()" />
         </div>
         <div>
-          <input class="admin-input" id="admWa" placeholder="WhatsApp (ej: 573001234567)" oninput="syncAdmin()" />
+          <input class="admin-input" id="admWa" placeholder="WhatsApp (ej: 57300...)" oninput="syncAdmin()" />
         </div>
         <div>
           <select class="admin-select" id="admTheme" onchange="syncAdmin()">
@@ -858,154 +933,189 @@
           </select>
         </div>
       </div>
-
       <div class="admin-actions">
-        <button class="btn-admin" onclick="copyClientLink()">🔗 Copiar Link del Cliente</button>
+        <button class="btn-admin" onclick="copyClientLink()">🔗 Copiar Link Cliente</button>
         <button class="btn-admin secondary" onclick="copySalesPitch()">💬 Copiar Mensaje Venta</button>
       </div>
       <div class="pitch-box" id="salesPitchPreview"></div>
     </section>
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-tag">✂️ Grooming & Experiencia VIP • Barranquilla</div>
-      <h1 id="heroTitle">Barber Shop & Drinks</h1>
-      <p id="heroSub">Agenda tu turno en 30 segundos sin esperar en línea. Elige tu corte o combo, tu barbero favorito y confirma directo por WhatsApp.</p>
-      <div class="hero-stats">
-        <div class="stat-box">
-          <div class="stat-val">4.9 ★</div>
-          <div class="stat-lbl">+320 Reseñas</div>
+    <!-- ==================== CLIENT BOOKING VIEW ==================== -->
+    <div id="clientView">
+      <section class="hero">
+        <div class="hero-tag">✂️ Grooming & Experiencia VIP • Barranquilla</div>
+        <h1 id="heroTitle">Barber Shop & Drinks</h1>
+        <p id="heroSub">Agenda tu turno en 30 segundos. Horarios sincronizados en tiempo real para evitar esperas y cruces de turnos.</p>
+        <div class="hero-stats">
+          <div class="stat-box">
+            <div class="stat-val">4.9 ★</div>
+            <div class="stat-lbl">+320 Reseñas</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val">En Vivo</div>
+            <div class="stat-lbl">Sin Cruces</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val">VIP</div>
+            <div class="stat-lbl">Bebida Gratis</div>
+          </div>
         </div>
-        <div class="stat-box">
-          <div class="stat-val">30 seg</div>
-          <div class="stat-lbl">Reserva Rápida</div>
+      </section>
+
+      <!-- STEP 1: SERVICES -->
+      <div class="sec-head">
+        <div class="sec-title"><span class="step-num">1</span> Elige tus Servicios</div>
+        <span class="sec-hint">Puedes combinar varios</span>
+      </div>
+
+      <div class="cat-tabs">
+        <button class="cat-tab active" onclick="filterCategory('combos', this)">🔥 Combos VIP</button>
+        <button class="cat-tab" onclick="filterCategory('cortes', this)">✂️ Cortes & Fade</button>
+        <button class="cat-tab" onclick="filterCategory('barba', this)">🧔 Barba & Navaja</button>
+        <button class="cat-tab" onclick="filterCategory('facial', this)">✨ Facial & Spa</button>
+      </div>
+
+      <div class="services-list" id="servicesList"></div>
+
+      <!-- STEP 2: BARBER -->
+      <div class="sec-head">
+        <div class="sec-title"><span class="step-num">2</span> Elige tu Barbero</div>
+        <span class="sec-hint">Agenda individual</span>
+      </div>
+
+      <div class="barbers-grid" id="barbersGrid"></div>
+
+      <!-- STEP 3: DATE & TIME WITH BUSY SLOT PROTECTION -->
+      <div class="sec-head">
+        <div class="sec-title"><span class="step-num">3</span> Fecha y Hora</div>
+        <span class="sec-hint">Bloqueo automático</span>
+      </div>
+
+      <div class="dates-row" id="datesRow"></div>
+      <div class="slot-legend">
+        <span>🟢 Libre para reservar</span>
+        <span>🔒 Ocupado (No permite doble cita)</span>
+      </div>
+      <div class="times-grid" id="timesGrid"></div>
+
+      <!-- STEP 4: CLIENT DETAILS & ANTI NO-SHOW PROTECTION -->
+      <div class="sec-head">
+        <div class="sec-title"><span class="step-num">4</span> Tus Datos y Garantía de Turno</div>
+        <span class="sec-hint">Anti-inasistencias</span>
+      </div>
+
+      <div class="form-card">
+        <div>
+          <label class="field-lbl">Tu Nombre y Apellido *</label>
+          <input class="input-box" id="clientName" placeholder="Ej: Carlos Mendoza" oninput="renderTicket()" />
         </div>
-        <div class="stat-box">
-          <div class="stat-val">VIP</div>
-          <div class="stat-lbl">Bebida Gratis</div>
+
+        <div>
+          <label class="field-lbl">Tu WhatsApp / Celular (para recordatorio automático)</label>
+          <input class="input-box" id="clientPhone" type="tel" placeholder="Ej: 300 123 4567" oninput="renderTicket()" />
         </div>
-      </div>
-    </section>
 
-    <!-- Perks -->
-    <div class="perks">
-      <div class="perk-chip">🍺 Bebida fría de cortesía</div>
-      <div class="perk-chip">🧖‍♂️ Toalla caliente & Ozono</div>
-      <div class="perk-chip">📲 Pago Nequi / Bancolombia</div>
-      <div class="perk-chip">❄️ Aire acondicionado & Wi-Fi</div>
-    </div>
+        <div>
+          <label class="field-lbl">🛡️ ¿Cómo deseas asegurar tu silla? (Evita pérdida de turnos)</label>
+          <div class="guarantee-grid">
+            <div class="g-card selected" id="gCardDeposit" onclick="selectGuarantee('deposit')">
+              <div>
+                <div class="g-title">🔥 Turno Blindado VIP (Abono $10.000 por Nequi)</div>
+                <div class="g-desc">Tu hora queda 100% bloqueada y asegurada. Los $10.000 se descuentan del total al pagar tu corte.</div>
+              </div>
+              <span class="g-tag">Prioritario</span>
+            </div>
+            <div class="g-card" id="gCardConfirm" onclick="selectGuarantee('confirm')">
+              <div>
+                <div class="g-title">⏱️ Reserva con Confirmación 1h Antes</div>
+                <div class="g-desc">Sin abono previo. Recibirás un mensaje 1 hora antes; si no confirmas o tras 10 min de retraso, la silla se libera.</div>
+              </div>
+              <span class="g-tag">Estándar</span>
+            </div>
+          </div>
+        </div>
 
-    <!-- STEP 1: SERVICES -->
-    <div class="sec-head">
-      <div class="sec-title"><span class="step-num">1</span> Elige tus Servicios</div>
-      <span class="sec-hint">Puedes elegir varios</span>
-    </div>
+        <div>
+          <label class="field-lbl">Bebida de Cortesía incluida 🍺</label>
+          <div class="chips-row">
+            <button class="opt-chip selected" onclick="selectChip('drink', 'Cerveza fría', this)">🍺 Cerveza fría</button>
+            <button class="opt-chip" onclick="selectChip('drink', 'Café Expreso', this)">☕ Café Expreso</button>
+            <button class="opt-chip" onclick="selectChip('drink', 'Agua / Soda fría', this)">🧊 Agua / Soda</button>
+          </div>
+        </div>
 
-    <div class="cat-tabs" id="catTabs">
-      <button class="cat-tab active" onclick="filterCategory('combos', this)">🔥 Combos VIP</button>
-      <button class="cat-tab" onclick="filterCategory('cortes', this)">✂️ Cortes & Fade</button>
-      <button class="cat-tab" onclick="filterCategory('barba', this)">🧔 Barba & Navaja</button>
-      <button class="cat-tab" onclick="filterCategory('facial', this)">✨ Facial & Spa</button>
-    </div>
-
-    <div class="services-list" id="servicesList"></div>
-
-    <!-- STEP 2: BARBER -->
-    <div class="sec-head">
-      <div class="sec-title"><span class="step-num">2</span> Elige tu Barbero</div>
-      <span class="sec-hint">Especialistas</span>
-    </div>
-
-    <div class="barbers-grid" id="barbersGrid"></div>
-
-    <!-- STEP 3: DATE & TIME -->
-    <div class="sec-head">
-      <div class="sec-title"><span class="step-num">3</span> Fecha y Hora</div>
-      <span class="sec-hint">Disponibilidad hoy</span>
-    </div>
-
-    <div class="dates-row" id="datesRow"></div>
-    <div class="times-grid" id="timesGrid"></div>
-
-    <!-- STEP 4: CLIENT DETAILS -->
-    <div class="sec-head">
-      <div class="sec-title"><span class="step-num">4</span> Confirma tus Datos</div>
-      <span class="sec-hint">Sin registro</span>
-    </div>
-
-    <div class="form-card">
-      <div>
-        <label class="field-lbl">Tu Nombre *</label>
-        <input class="input-box" id="clientName" placeholder="Ej: Carlos Mendoza" oninput="renderTicket()" />
-      </div>
-
-      <div>
-        <label class="field-lbl">Bebida de Cortesía incluida 🍺</label>
-        <div class="chips-row" id="drinkChips">
-          <button class="opt-chip selected" onclick="selectChip('drink', 'Cerveza fría', this)">🍺 Cerveza fría</button>
-          <button class="opt-chip" onclick="selectChip('drink', 'Café Expreso', this)">☕ Café Expreso</button>
-          <button class="opt-chip" onclick="selectChip('drink', 'Agua / Soda fría', this)">🧊 Agua / Soda</button>
-          <button class="opt-chip" onclick="selectChip('drink', 'Gaseosa', this)">🥤 Gaseosa</button>
+        <div>
+          <label class="field-lbl">Método de Pago</label>
+          <div class="chips-row">
+            <button class="opt-chip selected" onclick="selectChip('pay', 'Nequi', this)">📲 Nequi</button>
+            <button class="opt-chip" onclick="selectChip('pay', 'Transferencia Bancolombia', this)">🏦 Bancolombia</button>
+            <button class="opt-chip" onclick="selectChip('pay', 'Efectivo', this)">💵 Efectivo</button>
+          </div>
         </div>
       </div>
 
-      <div>
-        <label class="field-lbl">Método de Pago en Barbería</label>
-        <div class="chips-row" id="payChips">
-          <button class="opt-chip selected" onclick="selectChip('pay', 'Nequi', this)">📲 Nequi</button>
-          <button class="opt-chip" onclick="selectChip('pay', 'Transferencia Bancolombia', this)">🏦 Bancolombia</button>
-          <button class="opt-chip" onclick="selectChip('pay', 'Efectivo', this)">💵 Efectivo</button>
+      <!-- LIVE SUMMARY TICKET -->
+      <section class="ticket-card">
+        <div class="ticket-head">
+          <span>🎟️ Ticket de Reserva VIP</span>
+          <span id="ticketDuration">55 min aprox.</span>
         </div>
+        <div class="ticket-row">
+          <span>Sede:</span>
+          <strong id="tShop">Barber Shop & Drinks</strong>
+        </div>
+        <div class="ticket-row">
+          <span>Servicios:</span>
+          <strong id="tServices">Combo VIP Imperial</strong>
+        </div>
+        <div class="ticket-row">
+          <span>Barbero:</span>
+          <strong id="tBarber">Andrés • Master Barber</strong>
+        </div>
+        <div class="ticket-row">
+          <span>Fecha y Hora:</span>
+          <strong id="tDateTime">Hoy • 4:00 PM</strong>
+        </div>
+        <div class="ticket-row">
+          <span>Garantía de silla:</span>
+          <strong id="tGuarantee">Turno Blindado (Abono $10.000)</strong>
+        </div>
+        <div class="ticket-total">
+          <span>Total del Servicio</span>
+          <span class="amount" id="tTotal">$55.000 COP</span>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== BARBER ADMIN PANEL VIEW ==================== -->
+    <div id="barberView">
+      <div class="b-panel-box">
+        <h3>🔐 Panel de Control del Barbero (En Vivo)</h3>
+        <p>Aquí la barbería controla los turnos del día, evita que dos clientes agenden la misma hora y libera sillas en 1 toque si un cliente no confirma o no asiste.</p>
+
+        <div class="appt-list" id="appointmentsList"></div>
+      </div>
+
+      <div class="b-panel-box">
+        <h3>⚡ Bloquear Hora Manualmente (Cliente Presencial)</h3>
+        <p>Si llegó un cliente caminando al local sin cita web, toca cualquier hora de la vista cliente o bloquéala aquí en 1 segundo para que nadie más la agende.</p>
+        <button class="btn-admin" style="width:100%" onclick="switchMode('client')">
+          ➕ Ir a Agenda para Bloquear / Crear Turno
+        </button>
       </div>
     </div>
 
-    <!-- LIVE SUMMARY TICKET -->
-    <section class="ticket-card">
-      <div class="ticket-head">
-        <span>🎟️ Resumen de tu Reserva VIP</span>
-        <span id="ticketDuration">45 min aprox.</span>
-      </div>
-      <div class="ticket-row">
-        <span>Sede:</span>
-        <strong id="tShop">Barber Shop & Drinks</strong>
-      </div>
-      <div class="ticket-row">
-        <span>Servicios:</span>
-        <strong id="tServices">Combo Imperial (Corte + Barba)</strong>
-      </div>
-      <div class="ticket-row">
-        <span>Barbero:</span>
-        <strong id="tBarber">Primero Disponible</strong>
-      </div>
-      <div class="ticket-row">
-        <span>Fecha y Hora:</span>
-        <strong id="tDateTime">Hoy • 4:00 PM</strong>
-      </div>
-      <div class="ticket-row">
-        <span>Cortesía & Pago:</span>
-        <strong id="tExtras">Cerveza fría • Nequi</strong>
-      </div>
-      <div class="ticket-total">
-        <span>Total Estimado</span>
-        <span class="amount" id="tTotal">$55.000 COP</span>
-      </div>
-    </section>
-
-    <p class="footer-note">
-      Sistema de Agendamiento Digital Rápido • Barranquilla, Colombia<br/>
-      <a href="?admin=1">¿Tienes una barbería? Personaliza esta demo aquí</a>
-    </p>
   </main>
 
   <!-- STICKY BOTTOM CTA -->
-  <div class="bottom-bar">
+  <div class="bottom-bar" id="bottomBar">
     <div class="bottom-inner">
       <div class="tot-wrap">
-        <span class="tot-lbl" id="bottomCount">1 servicio • 50 min</span>
+        <span class="tot-lbl" id="bottomCount">1 servicio • 55 min</span>
         <span class="tot-val" id="bottomTotal">$55.000</span>
       </div>
-      <button class="btn-wa" onclick="openWhatsAppModal()">
-        <span>📲 Confirmar Cita por WhatsApp</span>
+      <button class="btn-wa" onclick="lockSlotAndOpenModal()">
+        <span>📲 Separar Turno y Confirmar</span>
       </button>
     </div>
   </div>
@@ -1013,11 +1123,11 @@
   <!-- WHATSAPP PREVIEW MODAL -->
   <div class="modal-backdrop" id="waModal">
     <div class="modal-box">
-      <h3>✅ Tu reserva está lista para enviar</h3>
-      <p>Al tocar "Enviar en WhatsApp", la barbería recibirá este ticket con tu turno separado:</p>
+      <h3>🔒 ¡Hora Bloqueada en la Agenda!</h3>
+      <p>Tu hora ya quedó marcada como <strong>Ocupada</strong> para que nadie más te la quite. Envía el ticket en WhatsApp para finalizar:</p>
       <div class="wa-bubble" id="waPreviewText"></div>
       <div class="modal-actions">
-        <button class="btn-close" onclick="closeModal()">Editar</button>
+        <button class="btn-close" onclick="closeModal()">Ver Agenda</button>
         <button class="btn-wa" onclick="sendToWhatsApp()">🚀 Enviar en WhatsApp</button>
       </div>
     </div>
@@ -1025,30 +1135,10 @@
 
   <script>
     const PRESETS = {
-      drinks: {
-        name: "Barber Shop & Drinks",
-        loc: "Alto Prado • Calle 80 # 53-18, Barranquilla",
-        wa: "573000000000",
-        theme: "gold"
-      },
-      og23: {
-        name: "OG23 Barber Studio",
-        loc: "El Prado • Calle 70 # 53-52, Barranquilla",
-        wa: "573000000000",
-        theme: "crimson"
-      },
-      poder: {
-        name: "El Poder de la Barba",
-        loc: "Alto Prado • Cra. 52, Barranquilla",
-        wa: "573000000000",
-        theme: "gold"
-      },
-      donbigotes: {
-        name: "Don Bigotes Barbería",
-        loc: "Villa Carolina • Cra. 71 # 86-140, Barranquilla",
-        wa: "573000000000",
-        theme: "emerald"
-      }
+      drinks: { name: "Barber Shop & Drinks", loc: "Alto Prado • Calle 80 # 53-18, Barranquilla", wa: "573000000000", theme: "gold" },
+      og23: { name: "OG23 Barber Studio", loc: "El Prado • Calle 70 # 53-52, Barranquilla", wa: "573163947170", theme: "crimson" },
+      poder: { name: "El Poder de la Barba", loc: "Alto Prado • Cra. 52, Barranquilla", wa: "573185277014", theme: "gold" },
+      donbigotes: { name: "Don Bigotes Barbería", loc: "Villa Carolina • Cra. 71 # 86-140, Barranquilla", wa: "573000000000", theme: "emerald" }
     };
 
     const SERVICES = [
@@ -1057,24 +1147,21 @@
       { id: "c3", cat: "combos", name: "Combo Ejecutivo Express (Corte + Cejas + Lavado)", desc: "Corte preciso con lavado capilar exfoliante y perfilado de cejas en 40 minutos.", price: 42000, dur: 40, badge: "Rápido" },
       { id: "s1", cat: "cortes", name: "Corte Degradado / Fade Premium", desc: "Skin fade, mid fade, taper o mullet con asesoría de visagismo, lavado y styling.", price: 35000, dur: 40, badge: "Top" },
       { id: "s2", cat: "cortes", name: "Corte Clásico a Tijera & Máquina", desc: "Acabado elegante y natural con lavado relajante y peinado con pomada mate.", price: 35000, dur: 35, badge: "" },
-      { id: "s3", cat: "cortes", name: "Corte Kids / Junior", desc: "Atención paciente y diseño moderno para niños y jóvenes.", price: 28000, dur: 30, badge: "" },
       { id: "b1", cat: "barba", name: "Ritual de Barba con Toalla Caliente & Ozono", desc: "Diseño a navaja, aceites esenciales, vapor de ozono y gel post-afeitado frío.", price: 25000, dur: 25, badge: "Recomendado" },
-      { id: "b2", cat: "barba", name: "Perfilado Express de Barba & Bigote", desc: "Contornos limpios con máquina y navaja.", price: 18000, dur: 15, badge: "" },
-      { id: "f1", cat: "facial", name: "Mascarilla Negra + Vapor Ozono", desc: "Eliminación de impurezas y puntos negros con hidratación facial fresca.", price: 25000, dur: 25, badge: "Facial" },
-      { id: "f2", cat: "facial", name: "Diseño y Perfilado de Cejas a Navaja", desc: "Limpieza natural del contorno de cejas.", price: 10000, dur: 10, badge: "" }
+      { id: "f1", cat: "facial", name: "Mascarilla Negra + Vapor Ozono", desc: "Eliminación de impurezas y puntos negros con hidratación facial fresca.", price: 25000, dur: 25, badge: "Facial" }
     ];
 
     const BARBERS = [
-      { id: "any", name: "Primero Disponible", role: "Asignación más rápida", rate: "⚡ Sin espera", icon: "⚡" },
-      { id: "b1", name: "Andrés • Master Barber", role: "Especialista en Fade & Visagismo", rate: "★ 5.0 (140+ citas)", icon: "👑" },
-      { id: "b2", name: "Mateo • Senior Barber", role: "Ritual de Barba & Tijera", rate: "★ 4.9 (110+ citas)", icon: "💈" },
-      { id: "b3", name: "Sebastián • Urban Stylist", role: "Taper, Mullet & Freestyle", rate: "★ 4.9 (95+ citas)", icon: "✂️" }
+      { id: "b1", name: "Master Barber #1", role: "Especialista en Fade & Visagismo", rate: "★ 5.0 • Agenda Activa", icon: "👑" },
+      { id: "b2", name: "Senior Barber #2", role: "Ritual de Barba & Tijera", rate: "★ 4.9 • Agenda Activa", icon: "💈" },
+      { id: "b3", name: "Urban Stylist #3", role: "Taper, Mullet & Freestyle", rate: "★ 4.9 • Agenda Activa", icon: "✂️" },
+      { id: "any", name: "Primero Disponible", role: "Asignación automática sin espera", rate: "⚡ Más rápido", icon: "⚡" }
     ];
 
     const TIMES = [
-      "9:00 AM", "10:00 AM", "11:00 AM",
-      "2:00 PM", "3:00 PM", "4:00 PM",
-      "5:00 PM", "6:00 PM", "7:00 PM"
+      "8:00 AM", "9:00 AM", "10:00 AM",
+      "11:00 AM", "2:00 PM", "3:00 PM",
+      "4:00 PM", "5:00 PM", "6:00 PM"
     ];
 
     let state = {
@@ -1084,12 +1171,14 @@
       theme: "gold",
       activeCat: "combos",
       selectedServices: ["c1"],
-      selectedBarber: "any",
+      selectedBarber: "b1",
       selectedDateIdx: 0,
       selectedTime: "4:00 PM",
+      guarantee: "deposit",
       drink: "Cerveza fría",
       pay: "Nequi",
-      dates: []
+      dates: [],
+      bookings: []
     };
 
     function formatCOP(num) {
@@ -1106,6 +1195,7 @@
         d.setDate(now.getDate() + i);
         const dayLabel = i === 0 ? "Hoy" : i === 1 ? "Mañana" : days[d.getDay()];
         out.push({
+          key: `d${i}`,
           dayLabel,
           dateNum: d.getDate(),
           monthLabel: months[d.getMonth()],
@@ -1113,6 +1203,94 @@
         });
       }
       state.dates = out;
+    }
+
+    function loadInitialBookings() {
+      try {
+        const saved = JSON.parse(localStorage.getItem("vip_barber_bookings_v2"));
+        if (Array.isArray(saved) && saved.length > 0) {
+          state.bookings = saved;
+          return;
+        }
+      } catch {}
+      state.bookings = [
+        {
+          id: "bk1",
+          dateKey: "d0",
+          dateLabel: state.dates[0].fullLabel,
+          time: "10:00 AM",
+          barberId: "b1",
+          barberName: "Master Barber #1",
+          client: "Camilo Restrepo",
+          phone: "573001112233",
+          service: "Combo VIP Imperial",
+          total: 55000,
+          guarantee: "deposit",
+          status: "confirmed"
+        },
+        {
+          id: "bk2",
+          dateKey: "d0",
+          dateLabel: state.dates[0].fullLabel,
+          time: "3:00 PM",
+          barberId: "b1",
+          barberName: "Master Barber #1",
+          client: "Juan Sebastián Polo",
+          phone: "573014445566",
+          service: "Corte Degradado / Fade Premium",
+          total: 35000,
+          guarantee: "confirm",
+          status: "pending"
+        },
+        {
+          id: "bk3",
+          dateKey: "d1",
+          dateLabel: state.dates[1].fullLabel,
+          time: "8:00 AM",
+          barberId: "b1",
+          barberName: "Master Barber #1",
+          client: "Andrés Char",
+          phone: "573158889900",
+          service: "Combo Full Deluxe",
+          total: 70000,
+          guarantee: "deposit",
+          status: "confirmed"
+        }
+      ];
+      saveBookings();
+    }
+
+    function saveBookings() {
+      localStorage.setItem("vip_barber_bookings_v2", JSON.stringify(state.bookings));
+      document.getElementById("bookedBadge").textContent = `${state.bookings.length} turnos`;
+    }
+
+    function isSlotBusy(dateIdx, timeStr, barberId) {
+      const dateKey = state.dates[dateIdx]?.key;
+      if (barberId === "any") {
+        const realBarbers = ["b1", "b2", "b3"];
+        return realBarbers.every(bId =>
+          state.bookings.some(b => b.dateKey === dateKey && b.time === timeStr && b.barberId === bId)
+        );
+      }
+      return state.bookings.some(b => b.dateKey === dateKey && b.time === timeStr && b.barberId === barberId);
+    }
+
+    function ensureAvailableSelectedTime() {
+      if (isSlotBusy(state.selectedDateIdx, state.selectedTime, state.selectedBarber)) {
+        const free = TIMES.find(t => !isSlotBusy(state.selectedDateIdx, t, state.selectedBarber));
+        if (free) state.selectedTime = free;
+      }
+    }
+
+    function switchMode(mode) {
+      const isClient = mode === "client";
+      document.getElementById("clientView").style.display = isClient ? "block" : "none";
+      document.getElementById("bottomBar").style.display = isClient ? "block" : "none";
+      document.getElementById("barberView").style.display = isClient ? "none" : "block";
+      document.getElementById("btnClientMode").classList.toggle("active", isClient);
+      document.getElementById("btnBarberMode").classList.toggle("active", !isClient);
+      if (!isClient) renderBarberAppointments();
     }
 
     function applyShopBranding() {
@@ -1160,9 +1338,7 @@
     function toggleService(id) {
       const idx = state.selectedServices.indexOf(id);
       if (idx >= 0) {
-        if (state.selectedServices.length > 1) {
-          state.selectedServices.splice(idx, 1);
-        }
+        if (state.selectedServices.length > 1) state.selectedServices.splice(idx, 1);
       } else {
         state.selectedServices.push(id);
       }
@@ -1189,7 +1365,9 @@
 
     function selectBarber(id) {
       state.selectedBarber = id;
+      ensureAvailableSelectedTime();
       renderBarbers();
+      renderTimes();
       renderTicket();
     }
 
@@ -1206,17 +1384,25 @@
 
     function selectDate(idx) {
       state.selectedDateIdx = idx;
+      ensureAvailableSelectedTime();
       renderDates();
+      renderTimes();
       renderTicket();
     }
 
     function renderTimes() {
       const wrap = document.getElementById("timesGrid");
-      wrap.innerHTML = TIMES.map(t => `
-        <div class="time-slot ${state.selectedTime === t ? 'selected' : ''}" onclick="selectTime('${t}')">
-          ${t}
-        </div>
-      `).join("");
+      wrap.innerHTML = TIMES.map(t => {
+        const busy = isSlotBusy(state.selectedDateIdx, t, state.selectedBarber);
+        const isSel = !busy && state.selectedTime === t;
+        return `
+          <div class="time-slot ${busy ? 'busy' : ''} ${isSel ? 'selected' : ''}"
+               onclick="${busy ? `alert('🔒 Esta hora ya está reservada con este barbero. Elige otra hora o cambia de barbero.')` : `selectTime('${t}')`}">
+            <span>${t}</span>
+            <span class="slot-sub">${busy ? '🔒 Ocupado' : (isSel ? '✓ Tu Turno' : 'Disponible')}</span>
+          </div>
+        `;
+      }).join("");
     }
 
     function selectTime(t) {
@@ -1225,10 +1411,16 @@
       renderTicket();
     }
 
+    function selectGuarantee(type) {
+      state.guarantee = type;
+      document.getElementById("gCardDeposit").classList.toggle("selected", type === "deposit");
+      document.getElementById("gCardConfirm").classList.toggle("selected", type === "confirm");
+      renderTicket();
+    }
+
     function selectChip(type, val, btn) {
       state[type] = val;
-      const parent = btn.parentElement;
-      parent.querySelectorAll(".opt-chip").forEach(c => c.classList.remove("selected"));
+      btn.parentElement.querySelectorAll(".opt-chip").forEach(c => c.classList.remove("selected"));
       btn.classList.add("selected");
       renderTicket();
     }
@@ -1240,15 +1432,19 @@
       const barber = BARBERS.find(b => b.id === state.selectedBarber) || BARBERS[0];
       const dateObj = state.dates[state.selectedDateIdx] || state.dates[0];
       const client = (document.getElementById("clientName").value || "").trim() || "Cliente VIP";
-      return { chosen, total, dur, barber, dateObj, client };
+      const phone = (document.getElementById("clientPhone").value || "").trim() || "300 000 0000";
+      const guaranteeText = state.guarantee === "deposit"
+        ? "Turno Blindado (Abono $10.000 Nequi)"
+        : "Confirmación 1h antes (10 min tolerancia)";
+      return { chosen, total, dur, barber, dateObj, client, phone, guaranteeText };
     }
 
     function renderTicket() {
-      const { chosen, total, dur, barber, dateObj } = getSummaryData();
+      const { chosen, total, dur, barber, dateObj, guaranteeText } = getSummaryData();
       document.getElementById("tServices").textContent = chosen.map(s => s.name).join(" + ");
       document.getElementById("tBarber").textContent = barber.name;
       document.getElementById("tDateTime").textContent = `${dateObj.fullLabel} • ${state.selectedTime}`;
-      document.getElementById("tExtras").textContent = `${state.drink} • ${state.pay}`;
+      document.getElementById("tGuarantee").textContent = guaranteeText;
       document.getElementById("tTotal").textContent = `${formatCOP(total)} COP`;
       document.getElementById("ticketDuration").textContent = `${dur} min aprox.`;
       document.getElementById("bottomCount").textContent = `${chosen.length} servicio${chosen.length > 1 ? 's' : ''} • ${dur} min`;
@@ -1256,42 +1452,119 @@
     }
 
     function buildWhatsAppMessage() {
-      const { chosen, total, dur, barber, dateObj, client } = getSummaryData();
+      const { chosen, total, dur, barber, dateObj, client, phone, guaranteeText } = getSummaryData();
       const lines = [
         `💈 *NUEVA RESERVA VIP — ${state.shopName.toUpperCase()}*`,
         `📍 *Sede:* ${state.shopLoc}`,
         `━━━━━━━━━━━━━━━━━━━━`,
-        `👤 *Cliente:* ${client}`,
+        `👤 *Cliente:* ${client} (${phone})`,
         `📅 *Fecha:* ${dateObj.fullLabel}`,
-        `⏰ *Hora:* ${state.selectedTime}`,
+        `⏰ *Hora bloqueada:* ${state.selectedTime}`,
         `✂️ *Barbero:* ${barber.name}`,
+        `🛡️ *Garantía:* ${guaranteeText}`,
         `━━━━━━━━━━━━━━━━━━━━`,
-        `🧾 *Servicios seleccionados:*`,
+        `🧾 *Servicios:*`,
         ...chosen.map(s => `  • ${s.name} (${formatCOP(s.price)})`),
-        `⏱️ *Duración estimada:* ${dur} min`,
-        `🍺 *Cortesía:* ${state.drink}`,
-        `💳 *Pago:* ${state.pay}`,
+        `⏱️ *Duración:* ${dur} min`,
+        `🍺 *Cortesía:* ${state.drink} | 💳 *Pago:* ${state.pay}`,
         `━━━━━━━━━━━━━━━━━━━━`,
-        `💰 *TOTAL: ${formatCOP(total)} COP*`,
-        ``,
-        `Hola, ¿me confirman disponibilidad para este turno? ¡Gracias!`
+        `💰 *TOTAL SERVICIO: ${formatCOP(total)} COP*`,
+        state.guarantee === "deposit"
+          ? `✅ *Envío este mensaje para abonar los $10.000 COP por Nequi y dejar mi turno 100% blindado.*`
+          : `✅ *Confirmo que asistiré puntual (sé que tras 10 min de retraso la silla se libera).*`
       ];
       return lines.join("\n");
     }
 
-    function openWhatsAppModal() {
+    function lockSlotAndOpenModal() {
+      const { chosen, total, barber, dateObj, client, phone } = getSummaryData();
+      const assignedBarberId = barber.id === "any" ? "b1" : barber.id;
+      const assignedBarberName = BARBERS.find(b => b.id === assignedBarberId)?.name || barber.name;
+
+      if (!isSlotBusy(state.selectedDateIdx, state.selectedTime, assignedBarberId)) {
+        state.bookings.unshift({
+          id: "bk_" + Date.now(),
+          dateKey: dateObj.key,
+          dateLabel: dateObj.fullLabel,
+          time: state.selectedTime,
+          barberId: assignedBarberId,
+          barberName: assignedBarberName,
+          client,
+          phone: phone.replace(/\D/g, "") || "573000000000",
+          service: chosen.map(s => s.name).join(" + "),
+          total,
+          guarantee: state.guarantee,
+          status: state.guarantee === "deposit" ? "confirmed" : "pending"
+        });
+        saveBookings();
+      }
+
       document.getElementById("waPreviewText").textContent = buildWhatsAppMessage();
       document.getElementById("waModal").style.display = "flex";
+      renderTimes();
     }
 
     function closeModal() {
       document.getElementById("waModal").style.display = "none";
+      ensureAvailableSelectedTime();
+      renderTimes();
+      renderTicket();
     }
 
     function sendToWhatsApp() {
       const msg = encodeURIComponent(buildWhatsAppMessage());
       const cleanPhone = (state.shopWa || "573000000000").replace(/\D/g, "");
       window.open(`https://wa.me/${cleanPhone}?text=${msg}`, "_blank");
+      closeModal();
+    }
+
+    /* BARBER PANEL FUNCTIONS (Anti No-Show & Slot Release) */
+    function renderBarberAppointments() {
+      const wrap = document.getElementById("appointmentsList");
+      if (state.bookings.length === 0) {
+        wrap.innerHTML = `<p style="text-align:center;color:var(--text-muted);padding:16px;">No hay turnos bloqueados en este momento.</p>`;
+        return;
+      }
+      wrap.innerHTML = state.bookings.map(b => {
+        const isConf = b.status === "confirmed";
+        return `
+          <div class="appt-item">
+            <div class="appt-top">
+              <span class="appt-time">📅 ${b.dateLabel} • ${b.time}</span>
+              <span class="appt-status ${isConf ? 'confirmed' : 'pending'}">
+                ${isConf ? '✅ Blindado (Abono $10k)' : '⏳ Por Confirmar 1h antes'}
+              </span>
+            </div>
+            <div class="appt-meta">
+              <div>👤 <strong>${b.client}</strong> • ✂️ ${b.barberName}</div>
+              <div>🧾 ${b.service} (<strong>${formatCOP(b.total)}</strong>)</div>
+            </div>
+            <div class="appt-actions">
+              <button class="btn-sm green" onclick="sendClientReminder('${b.id}')">
+                📲 Recordar Asistencia
+              </button>
+              <button class="btn-sm red" onclick="releaseSlot('${b.id}')">
+                🔓 Liberar Hora (No vino)
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function sendClientReminder(id) {
+      const b = state.bookings.find(x => x.id === id);
+      if (!b) return;
+      const msg = `Hola *${b.client}*, te escribimos de *${state.shopName}* 💈 para recordarte tu turno programado para *${b.dateLabel} a las ${b.time}* con *${b.barberName}*. Por favor respóndenos "CONFIRMO" para mantener tu silla reservada (recuerda que después de 10 min el sistema libera el turno automáticamente). ¡Te esperamos!`;
+      const phone = (b.phone || "").startsWith("57") ? b.phone : "57" + (b.phone || "3000000000");
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
+    }
+
+    function releaseSlot(id) {
+      state.bookings = state.bookings.filter(x => x.id !== id);
+      saveBookings();
+      renderBarberAppointments();
+      renderTimes();
     }
 
     /* ADMIN PANEL HELPERS */
@@ -1310,11 +1583,11 @@
       const pitch =
 `Hola equipo de *${state.shopName}*, ¿cómo están? Soy Andrés, desarrollador web acá en Barranquilla.
 
-Vi su perfil y noté que agendan las citas manualmente por WhatsApp, así que les armé una demo funcional con el nombre de *${state.shopName}* para que vean cómo sus clientes pueden elegir corte/combo, barbero y hora en 30 segundos y enviarles el turno listo a su WhatsApp (sin pagar mensualidades de apps como Booksy o AgendaPro):
+Les armé una demo funcional con el nombre de *${state.shopName}* que incluye bloqueo automático de horas ocupadas (para que no se crucen dos clientes a la misma hora) y protección anti-inasistencias con abono Nequi o recordatorio en 1 toque:
 
 👉 ${url}
 
-Pruébenla desde el celular. Si les gusta cómo quedó, se las dejo 100% personalizada con todos sus precios, fotos y barberos reales para su Instagram por $180.000 COP (pago único, sin mensualidad).`;
+Pruébenla desde el celular (arriba pueden cambiar entre "Vista Cliente" y "Panel Barbero"). Si les gusta, se las dejo 100% personalizada con sus precios y barberos reales por $180.000 COP (pago único, sin mensualidad).`;
       document.getElementById("salesPitchPreview").textContent = pitch;
     }
 
@@ -1340,16 +1613,17 @@ Pruébenla desde el celular. Si les gusta cómo quedó, se las dejo 100% persona
 
     function copyClientLink() {
       navigator.clipboard.writeText(buildClientUrl());
-      alert("✅ Link personalizado copiado al portapapeles");
+      alert("✅ Link personalizado copiado");
     }
 
     function copySalesPitch() {
       navigator.clipboard.writeText(document.getElementById("salesPitchPreview").textContent);
-      alert("✅ Mensaje de venta copiado al portapapeles");
+      alert("✅ Mensaje de venta copiado");
     }
 
     function init() {
       buildDates();
+      loadInitialBookings();
       const params = new URLSearchParams(window.location.search);
       const demoKey = params.get("demo");
       if (demoKey && PRESETS[demoKey]) {
@@ -1372,6 +1646,7 @@ Pruébenla desde el celular. Si les gusta cómo quedó, se las dejo 100% persona
         updatePitchPreview();
       }
 
+      ensureAvailableSelectedTime();
       applyShopBranding();
       renderServices();
       renderBarbers();
