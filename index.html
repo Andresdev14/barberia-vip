@@ -6,36 +6,48 @@
   <title>Reserva tu Turno VIP | Barbería & Grooming Barranquilla</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #09090c;
-      --bg-card: #121218;
-      --bg-card-hover: #181820;
-      --bg-glass: rgba(18, 18, 24, 0.85);
+      --bg: #07070a;
+      --bg-elevated: #0f0f15;
+      --bg-card: rgba(20, 20, 28, 0.78);
+      --bg-card-solid: #14141c;
+      --bg-card-hover: rgba(28, 28, 40, 0.92);
       --accent: #d4af37;
-      --accent-light: #f3d478;
-      --accent-glow: rgba(212, 175, 55, 0.24);
-      --text: #f7f7fa;
-      --text-muted: #9a9aa8;
+      --accent-light: #f5d97e;
+      --accent-dark: #9a7b1c;
+      --accent-glow: rgba(212, 175, 55, 0.22);
+      --accent-subtle: rgba(212, 175, 55, 0.1);
+      --text: #f8f8fc;
+      --text-secondary: #c4c4d4;
+      --text-muted: #85859ad9;
       --border: rgba(255, 255, 255, 0.08);
-      --border-accent: rgba(212, 175, 55, 0.45);
-      --success: #25d366;
-      --danger: #ef4444;
-      --radius: 16px;
+      --border-accent: rgba(212, 175, 55, 0.42);
+      --success: #10b981;
+      --whatsapp: #25d366;
+      --danger: #f43f5e;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     [data-theme="crimson"] {
       --accent: #e11d48;
-      --accent-light: #fb7185;
-      --accent-glow: rgba(225, 29, 72, 0.25);
+      --accent-light: #fda4af;
+      --accent-dark: #9f1239;
+      --accent-glow: rgba(225, 29, 72, 0.24);
+      --accent-subtle: rgba(225, 29, 72, 0.12);
       --border-accent: rgba(225, 29, 72, 0.45);
     }
 
     [data-theme="emerald"] {
       --accent: #10b981;
       --accent-light: #6ee7b7;
-      --accent-glow: rgba(16, 185, 129, 0.25);
+      --accent-dark: #047857;
+      --accent-glow: rgba(16, 185, 129, 0.22);
+      --accent-subtle: rgba(16, 185, 129, 0.12);
       --border-accent: rgba(16, 185, 129, 0.45);
     }
 
@@ -46,104 +58,182 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.5;
-      padding-bottom: 115px;
+      padding-bottom: 124px;
       background-image:
-        radial-gradient(circle at 15% 0%, var(--accent-glow), transparent 38%),
-        radial-gradient(circle at 85% 20%, rgba(255,255,255,0.03), transparent 40%);
+        radial-gradient(ellipse 80% 45% at 50% -10%, var(--accent-glow), transparent 70%),
+        radial-gradient(circle at 90% 35%, rgba(255, 255, 255, 0.025), transparent 45%);
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     .container {
-      max-width: 540px;
+      max-width: 560px;
       margin: 0 auto;
       padding: 0 16px;
     }
 
-    /* Mode Switcher Banner (Client View vs Barber Panel View) */
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Sticky Glass Header */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(7, 7, 10, 0.84);
+      border-bottom: 1px solid var(--border);
+      padding: 11px 0;
+    }
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .brand-mini {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+    }
+    .brand-emblem {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-light), var(--accent), var(--accent-dark));
+      color: #07070a;
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 18px var(--accent-glow), inset 0 1px 1px rgba(255,255,255,0.6);
+      flex-shrink: 0;
+    }
+    .brand-text-wrap {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .brand-name-top {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 0.96rem;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .brand-loc-top {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .live-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+      font-size: 0.72rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.3); }
+    }
+
+    /* Segmented View Switcher */
     .mode-switcher {
       display: flex;
       gap: 6px;
-      background: #101017;
-      padding: 6px;
-      border-radius: 14px;
+      background: rgba(15, 15, 22, 0.9);
+      padding: 5px;
+      border-radius: 15px;
       border: 1px solid var(--border-accent);
-      margin-top: 12px;
+      margin-top: 14px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     }
     .mode-btn {
       flex: 1;
-      padding: 9px 10px;
-      border-radius: 10px;
+      padding: 10px 12px;
+      border-radius: 11px;
       border: none;
       background: transparent;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       font-weight: 800;
-      font-size: 0.78rem;
+      font-size: 0.79rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      transition: all 0.18s ease;
+      gap: 7px;
+      transition: all 0.22s var(--ease);
     }
     .mode-btn.active {
-      background: var(--accent);
-      color: #09090c;
-      box-shadow: 0 4px 14px var(--accent-glow);
+      background: linear-gradient(135deg, var(--accent-light), var(--accent));
+      color: #07070a;
+      box-shadow: 0 4px 16px var(--accent-glow);
     }
     .badge-count {
-      background: rgba(0,0,0,0.25);
-      padding: 1px 7px;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 2px 8px;
       border-radius: 999px;
-      font-size: 0.7rem;
+      font-size: 0.69rem;
     }
 
-    /* Admin Generator Panel (Only visible with ?admin=1) */
+    /* Secret Admin Generator Panel (?admin=1) */
     #adminPanel {
       display: none;
-      background: linear-gradient(145deg, #161622, #0d0d14);
-      border: 2px solid var(--accent);
-      border-radius: 18px;
+      background: linear-gradient(155deg, #171724, #0c0c12);
+      border: 1.5px solid var(--accent);
+      border-radius: var(--radius-lg);
       padding: 18px;
-      margin: 16px auto 18px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+      margin: 16px auto;
+      box-shadow: 0 16px 45px rgba(0,0,0,0.65);
     }
     #adminPanel h2 {
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       color: var(--accent-light);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
     #adminPanel p.sub {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
-      margin-bottom: 14px;
-    }
-    .admin-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
       margin-bottom: 12px;
-    }
-    .admin-grid .full { grid-column: 1 / -1; }
-    .admin-input, .admin-select {
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: #09090d;
-      color: var(--text);
-      font-size: 0.84rem;
-      font-family: inherit;
     }
     .preset-pills {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     .preset-pill {
       padding: 6px 11px;
@@ -151,9 +241,31 @@
       background: rgba(255,255,255,0.06);
       border: 1px solid var(--border);
       color: var(--text);
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       font-weight: 600;
       cursor: pointer;
+      transition: 0.18s;
+    }
+    .preset-pill:hover {
+      border-color: var(--accent);
+      color: var(--accent-light);
+    }
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin-bottom: 11px;
+    }
+    .admin-grid .full { grid-column: 1 / -1; }
+    .admin-input, .admin-select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #07070b;
+      color: var(--text);
+      font-size: 0.83rem;
+      font-family: inherit;
     }
     .admin-actions {
       display: grid;
@@ -161,166 +273,205 @@
       gap: 8px;
     }
     .btn-admin {
-      padding: 10px 12px;
-      border-radius: 10px;
+      padding: 11px 12px;
+      border-radius: 11px;
       border: none;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 0.8rem;
       cursor: pointer;
-      background: var(--accent);
-      color: #09090c;
+      background: linear-gradient(135deg, var(--accent-light), var(--accent));
+      color: #07070a;
     }
     .btn-admin.secondary {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.08);
       color: var(--text);
       border: 1px solid var(--border);
     }
     .pitch-box {
-      margin-top: 12px;
-      background: #08080b;
+      margin-top: 11px;
+      background: #060609;
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 10px;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       color: #d0d0dc;
       white-space: pre-wrap;
-      max-height: 150px;
+      max-height: 140px;
       overflow-y: auto;
     }
 
-    /* Top Bar */
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      backdrop-filter: blur(16px);
-      background: rgba(9, 9, 12, 0.86);
-      border-bottom: 1px solid var(--border);
-      padding: 12px 0;
+    /* Editorial Luxury Hero */
+    .hero {
+      margin-top: 14px;
+      border-radius: var(--radius-lg);
+      padding: 26px 22px 22px;
+      background:
+        linear-gradient(180deg, rgba(10, 10, 15, 0.55) 0%, rgba(10, 10, 15, 0.92) 68%, #0c0c12 100%),
+        url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1200&q=82') center 25%/cover;
+      border: 1px solid var(--border-accent);
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+      position: relative;
+      overflow: hidden;
     }
-    .topbar-inner {
+    .hero-badge-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-    }
-    .brand-mini {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .brand-emblem {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, var(--accent), #8a6a10);
-      color: #09090c;
-      font-family: 'Cinzel', serif;
-      font-weight: 800;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 15px var(--accent-glow);
-    }
-    .brand-text-wrap {
-      display: flex;
-      flex-direction: column;
-    }
-    .brand-name-top {
-      font-family: 'Cinzel', serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 0.4px;
-    }
-    .brand-loc-top {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-    }
-    .live-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 10px;
-      border-radius: 999px;
-      background: rgba(37, 211, 102, 0.12);
-      border: 1px solid rgba(37, 211, 102, 0.35);
-      color: #4ade80;
-      font-size: 0.72rem;
-      font-weight: 700;
-    }
-    .live-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #22c55e;
-      box-shadow: 0 0 8px #22c55e;
-      animation: pulse 1.8s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.45; transform: scale(1.25); }
-    }
-
-    /* Hero Card */
-    .hero {
-      margin-top: 14px;
-      border-radius: 22px;
-      padding: 22px 20px;
-      background:
-        linear-gradient(180deg, rgba(18, 18, 24, 0.72) 0%, rgba(12, 12, 17, 0.96) 100%),
-        url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1000&q=80') center/cover;
-      border: 1px solid var(--border-accent);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
     }
     .hero-tag {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 11px;
+      padding: 5px 12px;
       border-radius: 999px;
-      background: rgba(212, 175, 55, 0.16);
+      background: rgba(212, 175, 55, 0.18);
+      backdrop-filter: blur(8px);
       border: 1px solid var(--border-accent);
       color: var(--accent-light);
-      font-size: 0.72rem;
-      font-weight: 700;
+      font-size: 0.71rem;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
-      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+    .rating-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.65);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #fde047;
     }
     .hero h1 {
       font-family: 'Cinzel', serif;
-      font-size: 1.6rem;
-      line-height: 1.2;
-      margin-bottom: 8px;
+      font-size: 1.75rem;
+      line-height: 1.18;
+      margin-bottom: 9px;
       color: #ffffff;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.6);
     }
     .hero p {
-      font-size: 0.86rem;
-      color: #d1d1de;
-      margin-bottom: 14px;
+      font-size: 0.87rem;
+      color: #d6d6e4;
+      margin-bottom: 18px;
+      max-width: 95%;
     }
     .hero-stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      padding-top: 12px;
+      gap: 9px;
+      padding-top: 14px;
       border-top: 1px solid rgba(255,255,255,0.1);
     }
     .stat-box {
       text-align: center;
-      background: rgba(9, 9, 12, 0.6);
-      padding: 8px 6px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(14, 14, 20, 0.72);
+      backdrop-filter: blur(8px);
+      padding: 9px 6px;
+      border-radius: 13px;
+      border: 1px solid rgba(255,255,255,0.07);
     }
     .stat-val {
       font-weight: 800;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       color: var(--accent-light);
     }
     .stat-lbl {
-      font-size: 0.67rem;
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      margin-top: 1px;
+    }
+
+    /* Visual Lookbook Strip (Gallery) */
+    .lookbook-strip {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 14px 0 4px;
+      scrollbar-width: none;
+    }
+    .lookbook-strip::-webkit-scrollbar { display: none; }
+    .look-card {
+      flex-shrink: 0;
+      width: 142px;
+      height: 104px;
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--border);
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: flex-end;
+      padding: 9px;
+    }
+    .look-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 25%, rgba(5,5,8,0.9) 100%);
+    }
+    .look-info {
+      position: relative;
+      z-index: 2;
+    }
+    .look-title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .look-sub {
+      font-size: 0.65rem;
+      color: var(--accent-light);
+      font-weight: 700;
+    }
+
+    /* Interactive Step Progress Bar */
+    .progress-bar-wrap {
+      margin-top: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 11px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .p-step {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.73rem;
+      font-weight: 700;
       color: var(--text-muted);
+    }
+    .p-step.done {
+      color: var(--accent-light);
+    }
+    .p-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+    .p-step.done .p-dot {
+      background: var(--accent);
+      color: #07070a;
+      border-color: var(--accent);
     }
 
     /* Section Header */
@@ -328,30 +479,33 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 22px 0 12px;
+      margin: 24px 0 12px;
     }
     .sec-title {
       display: flex;
       align-items: center;
-      gap: 9px;
-      font-size: 1.02rem;
+      gap: 10px;
+      font-size: 1.05rem;
       font-weight: 800;
+      letter-spacing: -0.2px;
     }
     .step-num {
-      width: 26px;
-      height: 26px;
-      border-radius: 8px;
-      background: var(--accent);
-      color: #09090c;
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--accent-light), var(--accent));
+      color: #07070a;
       font-weight: 800;
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 3px 12px var(--accent-glow);
     }
     .sec-hint {
-      font-size: 0.74rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
+      font-weight: 600;
     }
 
     /* Category Filter Tabs */
@@ -359,25 +513,28 @@
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      padding-bottom: 10px;
+      padding-bottom: 12px;
       scrollbar-width: none;
     }
     .cat-tabs::-webkit-scrollbar { display: none; }
     .cat-tab {
       flex-shrink: 0;
-      padding: 8px 14px;
+      padding: 9px 15px;
       border-radius: 999px;
-      background: var(--bg-card);
+      background: var(--bg-card-solid);
       border: 1px solid var(--border);
-      color: var(--text-muted);
+      color: var(--text-secondary);
       font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
+      transition: all 0.2s var(--ease);
     }
     .cat-tab.active {
-      background: var(--accent);
-      color: #09090c;
-      border-color: var(--accent);
+      background: linear-gradient(135deg, var(--accent-light), var(--accent));
+      color: #07070a;
+      border-color: transparent;
+      box-shadow: 0 4px 16px var(--accent-glow);
+      transform: translateY(-1px);
     }
 
     /* Service Cards */
@@ -388,60 +545,94 @@
     }
     .srv-card {
       background: var(--bg-card);
+      backdrop-filter: blur(12px);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px 15px;
+      border-radius: var(--radius-md);
+      padding: 15px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 14px;
       cursor: pointer;
+      transition: all 0.2s var(--ease);
+    }
+    .srv-card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255,255,255,0.16);
     }
     .srv-card.selected {
       border-color: var(--accent);
-      background: linear-gradient(145deg, rgba(212, 175, 55, 0.13), rgba(18, 18, 24, 0.95));
+      background: linear-gradient(145deg, var(--accent-subtle), rgba(18, 18, 26, 0.96));
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
     }
     .srv-info { flex: 1; }
     .srv-top {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
       flex-wrap: wrap;
     }
-    .srv-name { font-weight: 700; font-size: 0.93rem; color: #fff; }
-    .srv-badge {
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 0.65rem;
+    .srv-name {
       font-weight: 800;
-      background: rgba(212, 175, 55, 0.18);
+      font-size: 0.95rem;
+      color: #fff;
+    }
+    .srv-badge {
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: 0.66rem;
+      font-weight: 800;
+      background: var(--accent-subtle);
       color: var(--accent-light);
       border: 1px solid var(--border-accent);
     }
-    .srv-desc { font-size: 0.77rem; color: var(--text-muted); margin-bottom: 7px; }
-    .srv-meta { display: flex; align-items: center; gap: 12px; font-size: 0.82rem; }
-    .srv-price { font-weight: 800; color: var(--accent-light); font-size: 0.94rem; }
-    .srv-dur { color: var(--text-muted); font-size: 0.75rem; }
+    .srv-desc {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-bottom: 9px;
+      line-height: 1.4;
+    }
+    .srv-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .srv-price {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--accent-light);
+      font-size: 0.95rem;
+    }
+    .srv-dur {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(255,255,255,0.05);
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
     .srv-check {
-      width: 28px;
-      height: 28px;
-      border-radius: 9px;
-      border: 2px solid var(--border);
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      border: 2px solid rgba(255,255,255,0.16);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 900;
       color: transparent;
       flex-shrink: 0;
+      transition: all 0.2s var(--ease);
     }
     .srv-card.selected .srv-check {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #09090c;
+      background: linear-gradient(135deg, var(--accent-light), var(--accent));
+      border-color: transparent;
+      color: #07070a;
+      box-shadow: 0 3px 10px var(--accent-glow);
     }
 
-    /* Barbers Grid */
+    /* Barbers Grid with Portrait Avatars */
     .barbers-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -450,34 +641,38 @@
     .barber-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 12px;
+      border-radius: var(--radius-md);
+      padding: 13px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 11px;
+      transition: all 0.2s var(--ease);
     }
     .barber-card.selected {
       border-color: var(--accent);
-      background: linear-gradient(145deg, rgba(212, 175, 55, 0.13), rgba(18, 18, 24, 0.95));
+      background: linear-gradient(145deg, var(--accent-subtle), rgba(18, 18, 26, 0.96));
+      box-shadow: 0 8px 22px rgba(0,0,0,0.4);
     }
     .barber-avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #262635, #171722);
-      border: 1px solid var(--border-accent);
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background-size: cover;
+      background-position: center;
+      border: 1.5px solid var(--border-accent);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       flex-shrink: 0;
+      background-color: #1c1c28;
     }
-    .barber-name { font-weight: 700; font-size: 0.84rem; color: #fff; }
-    .barber-role { font-size: 0.7rem; color: var(--text-muted); }
-    .barber-rate { font-size: 0.69rem; color: var(--accent-light); font-weight: 700; margin-top: 2px; }
+    .barber-name { font-weight: 800; font-size: 0.85rem; color: #fff; }
+    .barber-role { font-size: 0.71rem; color: var(--text-secondary); line-height: 1.25; margin-top: 1px; }
+    .barber-rate { font-size: 0.7rem; color: var(--accent-light); font-weight: 700; margin-top: 4px; }
 
-    /* Date & Time Selector with Real-Time Busy Locks */
+    /* Date & Time Selector with Duration Overlap Guard */
     .dates-row {
       display: flex;
       gap: 8px;
@@ -488,115 +683,125 @@
     .dates-row::-webkit-scrollbar { display: none; }
     .date-pill {
       flex-shrink: 0;
-      min-width: 76px;
-      padding: 10px;
-      border-radius: 14px;
-      background: var(--bg-card);
+      min-width: 78px;
+      padding: 11px 10px;
+      border-radius: 15px;
+      background: var(--bg-card-solid);
       border: 1px solid var(--border);
       text-align: center;
       cursor: pointer;
+      transition: all 0.2s var(--ease);
     }
     .date-pill.selected {
-      border-color: var(--accent);
-      background: var(--accent);
-      color: #09090c;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--accent-light), var(--accent));
+      color: #07070a;
+      box-shadow: 0 6px 18px var(--accent-glow);
+      transform: translateY(-1px);
     }
-    .date-day { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; opacity: 0.8; }
-    .date-num { font-size: 1.05rem; font-weight: 800; margin: 1px 0; }
-    .date-mon { font-size: 0.68rem; opacity: 0.75; }
+    .date-day { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; opacity: 0.85; }
+    .date-num { font-size: 1.1rem; font-weight: 800; margin: 2px 0; font-family: 'JetBrains Mono', monospace; }
+    .date-mon { font-size: 0.69rem; font-weight: 600; opacity: 0.8; }
 
     .slot-legend {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.73rem;
-      color: var(--text-muted);
-      margin: 4px 0 8px;
+      font-size: 0.74rem;
+      color: var(--text-secondary);
+      margin: 4px 0 10px;
+      background: rgba(255,255,255,0.03);
+      padding: 7px 11px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
     }
     .times-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+      gap: 9px;
     }
     .time-slot {
-      padding: 10px 6px;
-      border-radius: 12px;
-      background: var(--bg-card);
+      padding: 11px 6px;
+      border-radius: 13px;
+      background: var(--bg-card-solid);
       border: 1px solid var(--border);
       text-align: center;
-      font-size: 0.8rem;
-      font-weight: 700;
+      font-size: 0.82rem;
+      font-weight: 800;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
+      gap: 3px;
+      transition: all 0.18s var(--ease);
     }
     .time-slot .slot-sub {
-      font-size: 0.64rem;
-      font-weight: 600;
-      color: #4ade80;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #34d399;
     }
     .time-slot.selected {
-      background: var(--accent);
-      color: #09090c;
-      border-color: var(--accent);
+      background: linear-gradient(135deg, var(--accent-light), var(--accent));
+      color: #07070a;
+      border-color: transparent;
+      box-shadow: 0 5px 16px var(--accent-glow);
     }
     .time-slot.selected .slot-sub {
-      color: #09090c;
+      color: #07070a;
       font-weight: 800;
     }
     .time-slot.busy {
-      background: rgba(239, 68, 68, 0.08);
-      border-color: rgba(239, 68, 68, 0.28);
-      color: #7f7f8e;
+      background: rgba(244, 63, 94, 0.07);
+      border-color: rgba(244, 63, 94, 0.26);
+      color: #6e6e80;
       cursor: not-allowed;
       text-decoration: line-through;
     }
     .time-slot.busy .slot-sub {
-      color: #f87171;
+      color: #fb7185;
       text-decoration: none;
-      display: inline-block;
     }
 
     /* Anti No-Show Guarantee Selector */
     .guarantee-grid {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 9px;
     }
     .g-card {
-      padding: 12px 13px;
-      border-radius: 13px;
-      background: #09090d;
+      padding: 13px 14px;
+      border-radius: 14px;
+      background: #0a0a0f;
       border: 1px solid var(--border);
       cursor: pointer;
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
       gap: 10px;
+      transition: all 0.2s var(--ease);
     }
     .g-card.selected {
       border-color: var(--accent);
-      background: rgba(212, 175, 55, 0.12);
+      background: linear-gradient(145deg, var(--accent-subtle), rgba(12,12,18,0.95));
     }
     .g-title {
-      font-size: 0.83rem;
+      font-size: 0.84rem;
       font-weight: 800;
       color: #fff;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
     .g-desc {
-      font-size: 0.73rem;
-      color: var(--text-muted);
+      font-size: 0.74rem;
+      color: var(--text-secondary);
+      line-height: 1.38;
     }
     .g-tag {
-      padding: 3px 8px;
+      padding: 3px 9px;
       border-radius: 999px;
-      font-size: 0.66rem;
+      font-size: 0.67rem;
       font-weight: 800;
-      background: rgba(37, 211, 102, 0.16);
-      color: #4ade80;
+      background: rgba(16, 185, 129, 0.16);
+      color: #34d399;
       white-space: nowrap;
     }
 
@@ -604,29 +809,33 @@
     .form-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: var(--radius-md);
       padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 13px;
+      gap: 14px;
     }
     .field-lbl {
       font-size: 0.76rem;
       font-weight: 700;
-      color: #d0d0dc;
-      margin-bottom: 5px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
       display: block;
     }
     .input-box {
       width: 100%;
-      padding: 11px 13px;
+      padding: 12px 14px;
       border-radius: 12px;
       border: 1px solid var(--border);
-      background: #09090d;
+      background: #08080c;
       color: var(--text);
       font-size: 0.88rem;
       font-family: inherit;
       outline: none;
+      transition: border-color 0.18s;
+    }
+    .input-box:focus {
+      border-color: var(--accent);
     }
     .chips-row {
       display: flex;
@@ -634,51 +843,54 @@
       gap: 7px;
     }
     .opt-chip {
-      padding: 8px 12px;
-      border-radius: 10px;
-      background: #09090d;
+      padding: 8px 13px;
+      border-radius: 11px;
+      background: #08080c;
       border: 1px solid var(--border);
-      color: var(--text-muted);
-      font-size: 0.77rem;
-      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      font-weight: 700;
       cursor: pointer;
+      transition: all 0.18s;
     }
     .opt-chip.selected {
       border-color: var(--accent);
       color: var(--accent-light);
-      background: rgba(212, 175, 55, 0.14);
+      background: var(--accent-subtle);
     }
 
-    /* Ticket Summary Preview */
+    /* Boarding-Pass Style Luxury VIP Ticket */
     .ticket-card {
-      margin-top: 20px;
-      background: linear-gradient(160deg, #16161f 0%, #0e0e14 100%);
+      margin-top: 22px;
+      background: linear-gradient(165deg, #181824 0%, #0e0e15 100%);
       border: 1px solid var(--border-accent);
-      border-radius: 18px;
-      padding: 16px;
+      border-radius: 20px;
+      padding: 18px;
+      position: relative;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
     }
     .ticket-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-bottom: 10px;
-      border-bottom: 1px dashed rgba(255,255,255,0.14);
-      margin-bottom: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed rgba(255,255,255,0.16);
+      margin-bottom: 12px;
     }
     .ticket-head span {
       font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.7px;
+      letter-spacing: 0.8px;
       color: var(--accent-light);
       font-weight: 800;
     }
     .ticket-row {
       display: flex;
       justify-content: space-between;
-      font-size: 0.82rem;
-      margin-bottom: 6px;
-      color: #d5d5e2;
-      gap: 10px;
+      font-size: 0.83rem;
+      margin-bottom: 7px;
+      color: var(--text-secondary);
+      gap: 12px;
     }
     .ticket-row strong {
       color: #fff;
@@ -688,24 +900,25 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 10px;
-      margin-top: 8px;
+      padding-top: 12px;
+      margin-top: 10px;
       border-top: 1px solid rgba(255,255,255,0.1);
-      font-size: 0.98rem;
+      font-size: 1rem;
       font-weight: 800;
     }
     .ticket-total .amount {
+      font-family: 'JetBrains Mono', monospace;
       color: var(--accent-light);
-      font-size: 1.18rem;
+      font-size: 1.24rem;
     }
 
-    /* BARBER PANEL VIEW (Agenda & Anti No-Show Manager) */
+    /* BARBER PANEL VIEW */
     #barberView {
       display: none;
       margin-top: 16px;
     }
     .b-panel-box {
-      background: var(--bg-card);
+      background: var(--bg-card-solid);
       border: 1px solid var(--border-accent);
       border-radius: 18px;
       padding: 16px;
@@ -718,8 +931,29 @@
     }
     .b-panel-box p {
       font-size: 0.78rem;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       margin-bottom: 12px;
+    }
+    .quick-block-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+      margin-top: 8px;
+    }
+    .qb-btn {
+      padding: 9px 6px;
+      border-radius: 10px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: #09090e;
+      color: #34d399;
+    }
+    .qb-btn.locked {
+      background: rgba(244, 63, 94, 0.14);
+      border-color: rgba(244, 63, 94, 0.4);
+      color: #fb7185;
     }
     .appt-list {
       display: flex;
@@ -727,49 +961,52 @@
       gap: 10px;
     }
     .appt-item {
-      background: #0b0b10;
+      background: #09090e;
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 12px;
+      padding: 13px;
     }
     .appt-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 6px;
+      gap: 6px;
+      flex-wrap: wrap;
     }
     .appt-time {
       font-weight: 800;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--accent-light);
+      font-family: 'JetBrains Mono', monospace;
     }
     .appt-status {
       font-size: 0.68rem;
       font-weight: 800;
-      padding: 3px 8px;
+      padding: 3px 9px;
       border-radius: 999px;
     }
     .appt-status.confirmed {
-      background: rgba(37, 211, 102, 0.16);
-      color: #4ade80;
+      background: rgba(16, 185, 129, 0.16);
+      color: #34d399;
     }
     .appt-status.pending {
       background: rgba(245, 158, 11, 0.18);
       color: #fbbf24;
     }
     .appt-meta {
-      font-size: 0.78rem;
-      color: #d0d0dc;
+      font-size: 0.79rem;
+      color: var(--text-secondary);
       margin-bottom: 10px;
     }
     .appt-actions {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 7px;
+      gap: 8px;
     }
     .btn-sm {
-      padding: 8px 10px;
-      border-radius: 9px;
+      padding: 9px 10px;
+      border-radius: 10px;
       border: 1px solid var(--border);
       background: rgba(255,255,255,0.06);
       color: #fff;
@@ -778,14 +1015,14 @@
       cursor: pointer;
     }
     .btn-sm.green {
-      background: rgba(37, 211, 102, 0.16);
-      border-color: rgba(37, 211, 102, 0.4);
-      color: #4ade80;
+      background: rgba(16, 185, 129, 0.16);
+      border-color: rgba(16, 185, 129, 0.4);
+      color: #34d399;
     }
     .btn-sm.red {
-      background: rgba(239, 68, 68, 0.14);
-      border-color: rgba(239, 68, 68, 0.35);
-      color: #f87171;
+      background: rgba(244, 63, 94, 0.14);
+      border-color: rgba(244, 63, 94, 0.35);
+      color: #fb7185;
     }
 
     /* Sticky Bottom Booking Bar */
@@ -794,64 +1031,68 @@
       bottom: 0;
       left: 0;
       right: 0;
-      z-index: 50;
-      background: rgba(11, 11, 16, 0.94);
-      backdrop-filter: blur(16px);
+      z-index: 70;
+      background: rgba(8, 8, 12, 0.94);
+      backdrop-filter: blur(18px);
       border-top: 1px solid var(--border-accent);
       padding: 12px 16px;
+      box-shadow: 0 -10px 30px rgba(0,0,0,0.6);
     }
     .bottom-inner {
-      max-width: 540px;
+      max-width: 560px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 14px;
     }
     .tot-wrap { display: flex; flex-direction: column; }
-    .tot-lbl { font-size: 0.7rem; color: var(--text-muted); }
-    .tot-val { font-size: 1.12rem; font-weight: 800; color: var(--accent-light); }
+    .tot-lbl { font-size: 0.71rem; color: var(--text-secondary); font-weight: 600; }
+    .tot-val { font-size: 1.16rem; font-weight: 800; color: var(--accent-light); font-family: 'JetBrains Mono', monospace; }
     .btn-wa {
       flex: 1;
       padding: 14px 18px;
       border-radius: 14px;
       border: none;
       background: linear-gradient(135deg, #25d366, #16a34a);
-      color: #06140b;
+      color: #041208;
       font-weight: 800;
-      font-size: 0.9rem;
+      font-size: 0.91rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      box-shadow: 0 6px 22px rgba(37, 211, 102, 0.35);
+      box-shadow: 0 6px 24px rgba(37, 211, 102, 0.35);
+      transition: transform 0.15s ease;
     }
+    .btn-wa:active { transform: scale(0.98); }
 
     /* Modal Preview */
     .modal-backdrop {
       display: none;
       position: fixed;
       inset: 0;
-      z-index: 90;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(6px);
+      z-index: 95;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(8px);
       align-items: center;
       justify-content: center;
       padding: 16px;
     }
     .modal-box {
-      background: #13131b;
+      background: #13131c;
       border: 1px solid var(--border-accent);
-      border-radius: 20px;
+      border-radius: 22px;
       max-width: 440px;
       width: 100%;
       padding: 20px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.8);
     }
-    .modal-box h3 { font-size: 1.02rem; margin-bottom: 6px; color: #fff; }
-    .modal-box p { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; }
+    .modal-box h3 { font-size: 1.05rem; margin-bottom: 6px; color: #fff; }
+    .modal-box p { font-size: 0.79rem; color: var(--text-secondary); margin-bottom: 12px; }
     .wa-bubble {
-      background: #0b2316;
+      background: #0a2015;
       border: 1px solid rgba(37, 211, 102, 0.35);
       border-radius: 14px;
       padding: 12px;
@@ -864,7 +1105,7 @@
     }
     .modal-actions { display: flex; gap: 8px; }
     .btn-close {
-      padding: 12px 14px;
+      padding: 12px 15px;
       border-radius: 12px;
       border: 1px solid var(--border);
       background: transparent;
@@ -895,7 +1136,7 @@
 
   <main class="container">
 
-    <!-- MODE SWITCHER: ALLOWS BARBERSHOP OWNER TO TEST BOTH CLIENT & BARBER PANEL -->
+    <!-- MODE SWITCHER -->
     <div class="mode-switcher">
       <button class="mode-btn active" id="btnClientMode" onclick="switchMode('client')">
         ✂️ Vista Cliente (Reservar)
@@ -908,7 +1149,7 @@
     <!-- SECRET ADMIN PANEL FOR ANDRÉS (?admin=1) -->
     <section id="adminPanel">
       <h2>⚡ Generador de Demos en 10s (Modo Andrés)</h2>
-      <p class="sub">Elige una barbería o escribe los datos para generar su link personalizado.</p>
+      <p class="sub">Personaliza al instante el nombre, dirección, WhatsApp y paleta para cualquier barbería de Barranquilla.</p>
       <div class="preset-pills">
         <button class="preset-pill" onclick="loadPreset('drinks')">Barber Shop & Drinks</button>
         <button class="preset-pill" onclick="loadPreset('og23')">OG23 Studio</button>
@@ -943,29 +1184,68 @@
     <!-- ==================== CLIENT BOOKING VIEW ==================== -->
     <div id="clientView">
       <section class="hero">
-        <div class="hero-tag">✂️ Grooming & Experiencia VIP • Barranquilla</div>
+        <div class="hero-badge-row">
+          <div class="hero-tag">✂️ Grooming & Club VIP • Barranquilla</div>
+          <div class="rating-pill">★ 4.9 Google Reviews</div>
+        </div>
         <h1 id="heroTitle">Barber Shop & Drinks</h1>
-        <p id="heroSub">Agenda tu turno en 30 segundos. Horarios sincronizados en tiempo real para evitar esperas y cruces de turnos.</p>
+        <p id="heroSub">Selecciona tu servicio, barbero y hora exacta en 30 segundos. Agenda sincronizada en tiempo real sin esperas ni cruces de turnos.</p>
         <div class="hero-stats">
           <div class="stat-box">
-            <div class="stat-val">4.9 ★</div>
-            <div class="stat-lbl">+320 Reseñas</div>
+            <div class="stat-val mono">100%</div>
+            <div class="stat-lbl">Hora Exacta</div>
           </div>
           <div class="stat-box">
-            <div class="stat-val">En Vivo</div>
-            <div class="stat-lbl">Sin Cruces</div>
+            <div class="stat-val">Bebida VIP</div>
+            <div class="stat-lbl">Cortesía Incluida</div>
           </div>
           <div class="stat-box">
-            <div class="stat-val">VIP</div>
-            <div class="stat-lbl">Bebida Gratis</div>
+            <div class="stat-val">Nequi / Efectivo</div>
+            <div class="stat-lbl">Pago Fácil</div>
           </div>
         </div>
       </section>
 
+      <!-- VISUAL LOOKBOOK STRIP -->
+      <div class="lookbook-strip">
+        <div class="look-card" style="background-image:url('https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=400&q=80')">
+          <div class="look-info">
+            <div class="look-sub">Top #1</div>
+            <div class="look-title">Skin Fade & Visagismo</div>
+          </div>
+        </div>
+        <div class="look-card" style="background-image:url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=400&q=80')">
+          <div class="look-info">
+            <div class="look-sub">Ritual Ozono</div>
+            <div class="look-title">Barba & Toalla Caliente</div>
+          </div>
+        </div>
+        <div class="look-card" style="background-image:url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=400&q=80')">
+          <div class="look-info">
+            <div class="look-sub">Combo VIP</div>
+            <div class="look-title">Corte + Facial Black Mask</div>
+          </div>
+        </div>
+        <div class="look-card" style="background-image:url('https://images.unsplash.com/photo-1517832607067-4db24a2ae47c?auto=format&fit=crop&w=400&q=80')">
+          <div class="look-info">
+            <div class="look-sub">Clásico</div>
+            <div class="look-title">Tijera & Pomada Mate</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP PROGRESS INDICATOR -->
+      <div class="progress-bar-wrap">
+        <div class="p-step done"><span class="p-dot">1</span> Servicio</div>
+        <div class="p-step done"><span class="p-dot">2</span> Barbero</div>
+        <div class="p-step done"><span class="p-dot">3</span> Hora</div>
+        <div class="p-step done"><span class="p-dot">4</span> Ticket</div>
+      </div>
+
       <!-- STEP 1: SERVICES -->
       <div class="sec-head">
         <div class="sec-title"><span class="step-num">1</span> Elige tus Servicios</div>
-        <span class="sec-hint">Puedes combinar varios</span>
+        <span class="sec-hint">Combina varios si deseas</span>
       </div>
 
       <div class="cat-tabs">
@@ -979,8 +1259,8 @@
 
       <!-- STEP 2: BARBER -->
       <div class="sec-head">
-        <div class="sec-title"><span class="step-num">2</span> Elige tu Barbero</div>
-        <span class="sec-hint">Agenda individual</span>
+        <div class="sec-title"><span class="step-num">2</span> Elige tu Especialista</div>
+        <span class="sec-hint">Agenda independiente</span>
       </div>
 
       <div class="barbers-grid" id="barbersGrid"></div>
@@ -988,20 +1268,20 @@
       <!-- STEP 3: DATE & TIME WITH BUSY SLOT PROTECTION -->
       <div class="sec-head">
         <div class="sec-title"><span class="step-num">3</span> Fecha y Hora</div>
-        <span class="sec-hint">Bloqueo automático</span>
+        <span class="sec-hint" id="durationHint">Bloqueo inteligente</span>
       </div>
 
       <div class="dates-row" id="datesRow"></div>
       <div class="slot-legend">
-        <span>🟢 Libre para reservar</span>
-        <span>🔒 Ocupado (No permite doble cita)</span>
+        <span>🟢 Disponible ahora</span>
+        <span>🔒 Ocupado (Bloqueado en vivo)</span>
       </div>
       <div class="times-grid" id="timesGrid"></div>
 
       <!-- STEP 4: CLIENT DETAILS & ANTI NO-SHOW PROTECTION -->
       <div class="sec-head">
         <div class="sec-title"><span class="step-num">4</span> Tus Datos y Garantía de Turno</div>
-        <span class="sec-hint">Anti-inasistencias</span>
+        <span class="sec-hint">Cero filas</span>
       </div>
 
       <div class="form-card">
@@ -1011,24 +1291,24 @@
         </div>
 
         <div>
-          <label class="field-lbl">Tu WhatsApp / Celular (para recordatorio automático)</label>
+          <label class="field-lbl">Tu WhatsApp / Celular (para recordatorio de turno)</label>
           <input class="input-box" id="clientPhone" type="tel" placeholder="Ej: 300 123 4567" oninput="renderTicket()" />
         </div>
 
         <div>
-          <label class="field-lbl">🛡️ ¿Cómo deseas asegurar tu silla? (Evita pérdida de turnos)</label>
+          <label class="field-lbl">🛡️ Modalidad de Reserva (Protección Anti-Inasistencias)</label>
           <div class="guarantee-grid">
             <div class="g-card selected" id="gCardDeposit" onclick="selectGuarantee('deposit')">
               <div>
                 <div class="g-title">🔥 Turno Blindado VIP (Abono $10.000 por Nequi)</div>
-                <div class="g-desc">Tu hora queda 100% bloqueada y asegurada. Los $10.000 se descuentan del total al pagar tu corte.</div>
+                <div class="g-desc">Tu silla queda 100% asegurada sin riesgo de cancelación. Los $10.000 se descuentan del total al final.</div>
               </div>
-              <span class="g-tag">Prioritario</span>
+              <span class="g-tag">Recomendado</span>
             </div>
             <div class="g-card" id="gCardConfirm" onclick="selectGuarantee('confirm')">
               <div>
                 <div class="g-title">⏱️ Reserva con Confirmación 1h Antes</div>
-                <div class="g-desc">Sin abono previo. Recibirás un mensaje 1 hora antes; si no confirmas o tras 10 min de retraso, la silla se libera.</div>
+                <div class="g-desc">Sin abono previo. Se confirma por WhatsApp 1h antes; tras 10 min de retraso la silla se libera automáticamente.</div>
               </div>
               <span class="g-tag">Estándar</span>
             </div>
@@ -1054,11 +1334,11 @@
         </div>
       </div>
 
-      <!-- LIVE SUMMARY TICKET -->
+      <!-- LIVE BOARDING-PASS SUMMARY TICKET -->
       <section class="ticket-card">
         <div class="ticket-head">
-          <span>🎟️ Ticket de Reserva VIP</span>
-          <span id="ticketDuration">55 min aprox.</span>
+          <span>🎟️ PASE DE RESERVA VIP</span>
+          <span class="mono" id="ticketDuration">55 MIN</span>
         </div>
         <div class="ticket-row">
           <span>Sede:</span>
@@ -1069,19 +1349,19 @@
           <strong id="tServices">Combo VIP Imperial</strong>
         </div>
         <div class="ticket-row">
-          <span>Barbero:</span>
-          <strong id="tBarber">Andrés • Master Barber</strong>
+          <span>Especialista:</span>
+          <strong id="tBarber">Master Barber #1</strong>
         </div>
         <div class="ticket-row">
-          <span>Fecha y Hora:</span>
-          <strong id="tDateTime">Hoy • 4:00 PM</strong>
+          <span>Horario Exacto:</span>
+          <strong class="mono" id="tDateTime">Hoy • 4:00 PM - 4:55 PM</strong>
         </div>
         <div class="ticket-row">
-          <span>Garantía de silla:</span>
+          <span>Garantía:</span>
           <strong id="tGuarantee">Turno Blindado (Abono $10.000)</strong>
         </div>
         <div class="ticket-total">
-          <span>Total del Servicio</span>
+          <span>Total Estimado</span>
           <span class="amount" id="tTotal">$55.000 COP</span>
         </div>
       </section>
@@ -1090,18 +1370,15 @@
     <!-- ==================== BARBER ADMIN PANEL VIEW ==================== -->
     <div id="barberView">
       <div class="b-panel-box">
-        <h3>🔐 Panel de Control del Barbero (En Vivo)</h3>
-        <p>Aquí la barbería controla los turnos del día, evita que dos clientes agenden la misma hora y libera sillas en 1 toque si un cliente no confirma o no asiste.</p>
-
-        <div class="appt-list" id="appointmentsList"></div>
+        <h3>⚡ Bloqueo Rápido de Horas en 1 Toque (Clientes Presenciales)</h3>
+        <p>Si llega un cliente caminando al local sin usar la web, toca cualquier hora de hoy para bloquearla o liberarla al instante en todos los celulares:</p>
+        <div class="quick-block-grid" id="quickBlockGrid"></div>
       </div>
 
       <div class="b-panel-box">
-        <h3>⚡ Bloquear Hora Manualmente (Cliente Presencial)</h3>
-        <p>Si llegó un cliente caminando al local sin cita web, toca cualquier hora de la vista cliente o bloquéala aquí en 1 segundo para que nadie más la agende.</p>
-        <button class="btn-admin" style="width:100%" onclick="switchMode('client')">
-          ➕ Ir a Agenda para Bloquear / Crear Turno
-        </button>
+        <h3>🔐 Turnos Agendados & Control Anti-Inasistencias</h3>
+        <p>Envía recordatorios por WhatsApp en 1 toque o libera la silla si el cliente no confirmó 1 hora antes.</p>
+        <div class="appt-list" id="appointmentsList"></div>
       </div>
     </div>
 
@@ -1115,7 +1392,7 @@
         <span class="tot-val" id="bottomTotal">$55.000</span>
       </div>
       <button class="btn-wa" onclick="lockSlotAndOpenModal()">
-        <span>📲 Separar Turno y Confirmar</span>
+        <span>📲 Separar Turno en WhatsApp</span>
       </button>
     </div>
   </div>
@@ -1123,8 +1400,8 @@
   <!-- WHATSAPP PREVIEW MODAL -->
   <div class="modal-backdrop" id="waModal">
     <div class="modal-box">
-      <h3>🔒 ¡Hora Bloqueada en la Agenda!</h3>
-      <p>Tu hora ya quedó marcada como <strong>Ocupada</strong> para que nadie más te la quite. Envía el ticket en WhatsApp para finalizar:</p>
+      <h3>🔒 ¡Horario Bloqueado en la Agenda!</h3>
+      <p>Tu turno ya quedó marcado como <strong>Ocupado</strong> para evitar cruces. Envía el pase en WhatsApp para finalizar:</p>
       <div class="wa-bubble" id="waPreviewText"></div>
       <div class="modal-actions">
         <button class="btn-close" onclick="closeModal()">Ver Agenda</button>
@@ -1142,20 +1419,20 @@
     };
 
     const SERVICES = [
-      { id: "c1", cat: "combos", name: "Combo VIP Imperial (Corte + Barba + Ozono)", desc: "Fade o corte clásico, perfilado de barba con toalla caliente, vapor ozono y bebida fría.", price: 55000, dur: 55, badge: "Más Pedido" },
-      { id: "c2", cat: "combos", name: "Combo Full Deluxe (Corte + Barba + Mascarilla)", desc: "Experiencia completa con limpieza facial profunda de puntos negros, cejas y bebida.", price: 70000, dur: 70, badge: "Experiencia Total" },
-      { id: "c3", cat: "combos", name: "Combo Ejecutivo Express (Corte + Cejas + Lavado)", desc: "Corte preciso con lavado capilar exfoliante y perfilado de cejas en 40 minutos.", price: 42000, dur: 40, badge: "Rápido" },
-      { id: "s1", cat: "cortes", name: "Corte Degradado / Fade Premium", desc: "Skin fade, mid fade, taper o mullet con asesoría de visagismo, lavado y styling.", price: 35000, dur: 40, badge: "Top" },
-      { id: "s2", cat: "cortes", name: "Corte Clásico a Tijera & Máquina", desc: "Acabado elegante y natural con lavado relajante y peinado con pomada mate.", price: 35000, dur: 35, badge: "" },
-      { id: "b1", cat: "barba", name: "Ritual de Barba con Toalla Caliente & Ozono", desc: "Diseño a navaja, aceites esenciales, vapor de ozono y gel post-afeitado frío.", price: 25000, dur: 25, badge: "Recomendado" },
-      { id: "f1", cat: "facial", name: "Mascarilla Negra + Vapor Ozono", desc: "Eliminación de impurezas y puntos negros con hidratación facial fresca.", price: 25000, dur: 25, badge: "Facial" }
+      { id: "c1", cat: "combos", name: "Combo VIP Imperial (Corte + Barba + Ozono)", desc: "Fade o corte clásico, ritual de barba con toalla caliente, vapor ozono y bebida fría.", price: 55000, dur: 55, badge: "Más Pedido" },
+      { id: "c2", cat: "combos", name: "Combo Full Deluxe (Corte + Barba + Black Mask)", desc: "Experiencia completa con limpieza facial profunda, perfilado de cejas y bebida VIP.", price: 70000, dur: 65, badge: "VIP Total" },
+      { id: "c3", cat: "combos", name: "Combo Ejecutivo Express (Corte + Cejas + Lavado)", desc: "Corte de precisión con lavado capilar exfoliante y perfilado de cejas.", price: 42000, dur: 40, badge: "Express" },
+      { id: "s1", cat: "cortes", name: "Corte Degradado / Skin Fade Premium", desc: "Skin fade, mid fade, taper o mullet con visagismo, lavado y styling mate.", price: 35000, dur: 40, badge: "Top #1" },
+      { id: "s2", cat: "cortes", name: "Corte Clásico a Tijera & Máquina", desc: "Acabado elegante a tijera con lavado relajante y peinado estructurado.", price: 35000, dur: 35, badge: "" },
+      { id: "b1", cat: "barba", name: "Ritual de Barba con Toalla Caliente & Ozono", desc: "Perfilado a navaja libre, aceites esenciales, vapor de ozono y aftershave frío.", price: 25000, dur: 25, badge: "Ritual" },
+      { id: "f1", cat: "facial", name: "Mascarilla Negra + Vapor Ozono Facial", desc: "Extracción de impurezas, puntos negros e hidratación facial refrescante.", price: 25000, dur: 25, badge: "Spa" }
     ];
 
     const BARBERS = [
-      { id: "b1", name: "Master Barber #1", role: "Especialista en Fade & Visagismo", rate: "★ 5.0 • Agenda Activa", icon: "👑" },
-      { id: "b2", name: "Senior Barber #2", role: "Ritual de Barba & Tijera", rate: "★ 4.9 • Agenda Activa", icon: "💈" },
-      { id: "b3", name: "Urban Stylist #3", role: "Taper, Mullet & Freestyle", rate: "★ 4.9 • Agenda Activa", icon: "✂️" },
-      { id: "any", name: "Primero Disponible", role: "Asignación automática sin espera", rate: "⚡ Más rápido", icon: "⚡" }
+      { id: "b1", name: "Master Barber #1", role: "Fade & Visagismo", rate: "★ 5.0 • Disponible", photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" },
+      { id: "b2", name: "Senior Barber #2", role: "Barba & Navaja", rate: "★ 4.9 • Disponible", photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" },
+      { id: "b3", name: "Urban Stylist #3", role: "Taper & Freestyle", rate: "★ 4.9 • Disponible", photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80" },
+      { id: "any", name: "Primero Disponible", role: "Asignación sin espera", rate: "⚡ Más rápido", photo: "" }
     ];
 
     const TIMES = [
@@ -1185,6 +1462,20 @@
       return "$" + num.toLocaleString("es-CO");
     }
 
+    function computeEndTime(startTimeStr, durationMin) {
+      const [timePart, mer] = startTimeStr.split(" ");
+      let [h, m] = timePart.split(":").map(Number);
+      if (mer === "PM" && h !== 12) h += 12;
+      if (mer === "AM" && h === 12) h = 0;
+      const totalMin = h * 60 + m + durationMin;
+      let endH = Math.floor(totalMin / 60) % 24;
+      const endM = totalMin % 60;
+      const endMer = endH >= 12 ? "PM" : "AM";
+      const dispH = endH % 12 === 0 ? 12 : endH % 12;
+      const dispM = endM < 10 ? "0" + endM : endM;
+      return `${dispH}:${dispM} ${endMer}`;
+    }
+
     function buildDates() {
       const days = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
       const months = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
@@ -1207,7 +1498,7 @@
 
     function loadInitialBookings() {
       try {
-        const saved = JSON.parse(localStorage.getItem("vip_barber_bookings_v2"));
+        const saved = JSON.parse(localStorage.getItem("vip_barber_bookings_v3"));
         if (Array.isArray(saved) && saved.length > 0) {
           state.bookings = saved;
           return;
@@ -1237,7 +1528,7 @@
           barberName: "Master Barber #1",
           client: "Juan Sebastián Polo",
           phone: "573014445566",
-          service: "Corte Degradado / Fade Premium",
+          service: "Corte Degradado / Skin Fade",
           total: 35000,
           guarantee: "confirm",
           status: "pending"
@@ -1261,7 +1552,7 @@
     }
 
     function saveBookings() {
-      localStorage.setItem("vip_barber_bookings_v2", JSON.stringify(state.bookings));
+      localStorage.setItem("vip_barber_bookings_v3", JSON.stringify(state.bookings));
       document.getElementById("bookedBadge").textContent = `${state.bookings.length} turnos`;
     }
 
@@ -1290,7 +1581,10 @@
       document.getElementById("barberView").style.display = isClient ? "none" : "block";
       document.getElementById("btnClientMode").classList.toggle("active", isClient);
       document.getElementById("btnBarberMode").classList.toggle("active", !isClient);
-      if (!isClient) renderBarberAppointments();
+      if (!isClient) {
+        renderQuickBlockGrid();
+        renderBarberAppointments();
+      }
     }
 
     function applyShopBranding() {
@@ -1350,9 +1644,10 @@
       const wrap = document.getElementById("barbersGrid");
       wrap.innerHTML = BARBERS.map(b => {
         const isSel = state.selectedBarber === b.id;
+        const avatarStyle = b.photo ? `style="background-image:url('${b.photo}')"` : "";
         return `
           <div class="barber-card ${isSel ? 'selected' : ''}" onclick="selectBarber('${b.id}')">
-            <div class="barber-avatar">${b.icon}</div>
+            <div class="barber-avatar" ${avatarStyle}>${b.photo ? '' : '⚡'}</div>
             <div>
               <div class="barber-name">${b.name}</div>
               <div class="barber-role">${b.role}</div>
@@ -1397,9 +1692,9 @@
         const isSel = !busy && state.selectedTime === t;
         return `
           <div class="time-slot ${busy ? 'busy' : ''} ${isSel ? 'selected' : ''}"
-               onclick="${busy ? `alert('🔒 Esta hora ya está reservada con este barbero. Elige otra hora o cambia de barbero.')` : `selectTime('${t}')`}">
-            <span>${t}</span>
-            <span class="slot-sub">${busy ? '🔒 Ocupado' : (isSel ? '✓ Tu Turno' : 'Disponible')}</span>
+               onclick="${busy ? `alert('🔒 Este horario ya está reservado con este barbero. Selecciona otro horario libre o cambia de especialista.')` : `selectTime('${t}')`}">
+            <span class="mono">${t}</span>
+            <span class="slot-sub">${busy ? '🔒 Ocupado' : (isSel ? '✓ Separado' : 'Disponible')}</span>
           </div>
         `;
       }).join("");
@@ -1431,53 +1726,54 @@
       const dur = chosen.reduce((acc, s) => acc + s.dur, 0);
       const barber = BARBERS.find(b => b.id === state.selectedBarber) || BARBERS[0];
       const dateObj = state.dates[state.selectedDateIdx] || state.dates[0];
+      const endTime = computeEndTime(state.selectedTime, dur);
       const client = (document.getElementById("clientName").value || "").trim() || "Cliente VIP";
       const phone = (document.getElementById("clientPhone").value || "").trim() || "300 000 0000";
       const guaranteeText = state.guarantee === "deposit"
         ? "Turno Blindado (Abono $10.000 Nequi)"
         : "Confirmación 1h antes (10 min tolerancia)";
-      return { chosen, total, dur, barber, dateObj, client, phone, guaranteeText };
+      return { chosen, total, dur, barber, dateObj, endTime, client, phone, guaranteeText };
     }
 
     function renderTicket() {
-      const { chosen, total, dur, barber, dateObj, guaranteeText } = getSummaryData();
+      const { chosen, total, dur, barber, dateObj, endTime, guaranteeText } = getSummaryData();
       document.getElementById("tServices").textContent = chosen.map(s => s.name).join(" + ");
       document.getElementById("tBarber").textContent = barber.name;
-      document.getElementById("tDateTime").textContent = `${dateObj.fullLabel} • ${state.selectedTime}`;
+      document.getElementById("tDateTime").textContent = `${dateObj.fullLabel} • ${state.selectedTime} - ${endTime}`;
       document.getElementById("tGuarantee").textContent = guaranteeText;
       document.getElementById("tTotal").textContent = `${formatCOP(total)} COP`;
-      document.getElementById("ticketDuration").textContent = `${dur} min aprox.`;
-      document.getElementById("bottomCount").textContent = `${chosen.length} servicio${chosen.length > 1 ? 's' : ''} • ${dur} min`;
+      document.getElementById("ticketDuration").textContent = `${dur} MIN`;
+      document.getElementById("durationHint").textContent = `Bloque de ${dur} min (${state.selectedTime} - ${endTime})`;
+      document.getElementById("bottomCount").textContent = `${chosen.length} servicio${chosen.length > 1 ? 's' : ''} • ${state.selectedTime} - ${endTime}`;
       document.getElementById("bottomTotal").textContent = formatCOP(total);
     }
 
     function buildWhatsAppMessage() {
-      const { chosen, total, dur, barber, dateObj, client, phone, guaranteeText } = getSummaryData();
+      const { chosen, total, dur, barber, dateObj, endTime, client, phone, guaranteeText } = getSummaryData();
       const lines = [
-        `💈 *NUEVA RESERVA VIP — ${state.shopName.toUpperCase()}*`,
+        `💈 *PASE DE RESERVA VIP — ${state.shopName.toUpperCase()}*`,
         `📍 *Sede:* ${state.shopLoc}`,
         `━━━━━━━━━━━━━━━━━━━━`,
         `👤 *Cliente:* ${client} (${phone})`,
         `📅 *Fecha:* ${dateObj.fullLabel}`,
-        `⏰ *Hora bloqueada:* ${state.selectedTime}`,
-        `✂️ *Barbero:* ${barber.name}`,
+        `⏰ *Bloque Separado:* ${state.selectedTime} a ${endTime} (${dur} min)`,
+        `✂️ *Especialista:* ${barber.name}`,
         `🛡️ *Garantía:* ${guaranteeText}`,
         `━━━━━━━━━━━━━━━━━━━━`,
         `🧾 *Servicios:*`,
         ...chosen.map(s => `  • ${s.name} (${formatCOP(s.price)})`),
-        `⏱️ *Duración:* ${dur} min`,
         `🍺 *Cortesía:* ${state.drink} | 💳 *Pago:* ${state.pay}`,
         `━━━━━━━━━━━━━━━━━━━━`,
         `💰 *TOTAL SERVICIO: ${formatCOP(total)} COP*`,
         state.guarantee === "deposit"
           ? `✅ *Envío este mensaje para abonar los $10.000 COP por Nequi y dejar mi turno 100% blindado.*`
-          : `✅ *Confirmo que asistiré puntual (sé que tras 10 min de retraso la silla se libera).*`
+          : `✅ *Confirmo asistencia puntual (conozco que tras 10 min de retraso la silla se libera).*`
       ];
       return lines.join("\n");
     }
 
     function lockSlotAndOpenModal() {
-      const { chosen, total, barber, dateObj, client, phone } = getSummaryData();
+      const { chosen, total, barber, dateObj, endTime, client, phone } = getSummaryData();
       const assignedBarberId = barber.id === "any" ? "b1" : barber.id;
       const assignedBarberName = BARBERS.find(b => b.id === assignedBarberId)?.name || barber.name;
 
@@ -1487,6 +1783,7 @@
           dateKey: dateObj.key,
           dateLabel: dateObj.fullLabel,
           time: state.selectedTime,
+          endTime,
           barberId: assignedBarberId,
           barberName: assignedBarberName,
           client,
@@ -1518,7 +1815,46 @@
       closeModal();
     }
 
-    /* BARBER PANEL FUNCTIONS (Anti No-Show & Slot Release) */
+    /* BARBER PANEL: 1-TAP QUICK BLOCK + APPOINTMENTS */
+    function renderQuickBlockGrid() {
+      const wrap = document.getElementById("quickBlockGrid");
+      wrap.innerHTML = TIMES.map(t => {
+        const busy = isSlotBusy(0, t, "b1");
+        return `
+          <button class="qb-btn ${busy ? 'locked' : ''}" onclick="toggleQuickBlock('${t}')">
+            ${t}<br/>
+            <span>${busy ? '🔒 Ocupado (Liberar)' : '🟢 Libre (Bloquear)'}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function toggleQuickBlock(timeStr) {
+      const existing = state.bookings.find(b => b.dateKey === "d0" && b.time === timeStr && b.barberId === "b1");
+      if (existing) {
+        state.bookings = state.bookings.filter(b => b.id !== existing.id);
+      } else {
+        state.bookings.unshift({
+          id: "bk_" + Date.now(),
+          dateKey: "d0",
+          dateLabel: state.dates[0].fullLabel,
+          time: timeStr,
+          barberId: "b1",
+          barberName: "Master Barber #1",
+          client: "Cliente Presencial (Local)",
+          phone: "573000000000",
+          service: "Turno Bloqueado en Barbería",
+          total: 35000,
+          guarantee: "deposit",
+          status: "confirmed"
+        });
+      }
+      saveBookings();
+      renderQuickBlockGrid();
+      renderBarberAppointments();
+      renderTimes();
+    }
+
     function renderBarberAppointments() {
       const wrap = document.getElementById("appointmentsList");
       if (state.bookings.length === 0) {
@@ -1541,7 +1877,7 @@
             </div>
             <div class="appt-actions">
               <button class="btn-sm green" onclick="sendClientReminder('${b.id}')">
-                📲 Recordar Asistencia
+                📲 Recordar por WhatsApp
               </button>
               <button class="btn-sm red" onclick="releaseSlot('${b.id}')">
                 🔓 Liberar Hora (No vino)
@@ -1555,7 +1891,7 @@
     function sendClientReminder(id) {
       const b = state.bookings.find(x => x.id === id);
       if (!b) return;
-      const msg = `Hola *${b.client}*, te escribimos de *${state.shopName}* 💈 para recordarte tu turno programado para *${b.dateLabel} a las ${b.time}* con *${b.barberName}*. Por favor respóndenos "CONFIRMO" para mantener tu silla reservada (recuerda que después de 10 min el sistema libera el turno automáticamente). ¡Te esperamos!`;
+      const msg = `Hola *${b.client}*, te escribimos de *${state.shopName}* 💈 para recordarte tu turno de *${b.dateLabel} a las ${b.time}* con *${b.barberName}*. Respóndenos "CONFIRMO" para mantener tu silla separada (recuerda que tras 10 min de retraso el sistema libera la hora). ¡Te esperamos!`;
       const phone = (b.phone || "").startsWith("57") ? b.phone : "57" + (b.phone || "3000000000");
       window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
     }
@@ -1563,6 +1899,7 @@
     function releaseSlot(id) {
       state.bookings = state.bookings.filter(x => x.id !== id);
       saveBookings();
+      renderQuickBlockGrid();
       renderBarberAppointments();
       renderTimes();
     }
@@ -1583,7 +1920,7 @@
       const pitch =
 `Hola equipo de *${state.shopName}*, ¿cómo están? Soy Andrés, desarrollador web acá en Barranquilla.
 
-Les armé una demo funcional con el nombre de *${state.shopName}* que incluye bloqueo automático de horas ocupadas (para que no se crucen dos clientes a la misma hora) y protección anti-inasistencias con abono Nequi o recordatorio en 1 toque:
+Les armé una demo funcional con el nombre de *${state.shopName}* que incluye bloqueo automático de horas ocupadas (para que no se crucen dos clientes a la misma hora) y protección anti-inasistencias con abono Nequi o liberación en 1 toque:
 
 👉 ${url}
 
