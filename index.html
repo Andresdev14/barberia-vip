@@ -9,21 +9,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
+      color-scheme: dark;
       --bg: #07070a;
       --bg-elevated: #0f0f15;
       --bg-card: rgba(20, 20, 28, 0.78);
       --bg-card-solid: #14141c;
       --bg-card-hover: rgba(28, 28, 40, 0.92);
       --accent: #d4af37;
-      --accent-light: #f5d97e;
+      --accent-light: color-mix(in oklab, var(--accent), white 28%);
       --accent-dark: #9a7b1c;
       --accent-glow: rgba(212, 175, 55, 0.22);
       --accent-subtle: rgba(212, 175, 55, 0.1);
       --text: #f8f8fc;
       --text-secondary: #c4c4d4;
-      --text-muted: #85859ad9;
-      --border: rgba(255, 255, 255, 0.08);
-      --border-accent: rgba(212, 175, 55, 0.42);
+      --text-muted: #9b9bb0;
+      --border: rgba(255, 255, 255, 0.12);
+      --border-accent: rgba(212, 175, 55, 0.48);
       --success: #10b981;
       --whatsapp: #25d366;
       --danger: #f43f5e;
@@ -71,8 +72,8 @@
       background-image:
         radial-gradient(ellipse 80% 45% at 50% -10%, var(--accent-glow), transparent 70%),
         radial-gradient(circle at 90% 35%, rgba(255, 255, 255, 0.025), transparent 45%);
-      min-height: 100vh;
-      overflow-x: hidden;
+      min-block-size: 100dvh;
+      overflow-x: clip;
     }
 
     .container {
@@ -163,7 +164,11 @@
       border-radius: 50%;
       background: #10b981;
       box-shadow: 0 0 10px #10b981;
-      animation: pulse 1.8s infinite;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .live-dot {
+        animation: pulse 1.8s infinite;
+      }
     }
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
@@ -232,6 +237,7 @@
     .preset-pills {
       display: flex;
       flex-wrap: wrap;
+      flex-wrap: balance;
       gap: 6px;
       margin-bottom: 12px;
     }
@@ -311,7 +317,7 @@
       border: 1px solid var(--border-accent);
       box-shadow: 0 22px 50px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.14);
       position: relative;
-      overflow: hidden;
+      overflow: clip;
     }
     .hero-badge-row {
       display: flex;
@@ -402,7 +408,7 @@
       width: 142px;
       height: 104px;
       border-radius: 15px;
-      overflow: hidden;
+      overflow: clip;
       position: relative;
       border: 1px solid var(--border);
       background-size: cover;
@@ -840,6 +846,7 @@
     .chips-row {
       display: flex;
       flex-wrap: wrap;
+      flex-wrap: balance;
       gap: 7px;
     }
     .opt-chip {
