@@ -1068,26 +1068,33 @@
     }
     .btn-wa:active { transform: scale(0.98); }
 
-    /* Modal Preview */
-    .modal-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 95;
-      background: rgba(0, 0, 0, 0.82);
-      backdrop-filter: blur(8px);
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-    .modal-box {
+    /* Native Modal Dialog (Modern Web Guidance) */
+    dialog#waModal {
+      margin: auto;
       background: #13131c;
+      color: var(--text);
       border: 1px solid var(--border-accent);
       border-radius: 22px;
       max-width: 440px;
-      width: 100%;
+      width: calc(100% - 32px);
       padding: 20px;
       box-shadow: 0 24px 60px rgba(0,0,0,0.8);
+    }
+    dialog:modal {
+      overscroll-behavior: contain;
+    }
+    dialog::backdrop {
+      overflow: hidden;
+      overscroll-behavior: contain;
+      background-color: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(8px);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      ::view-transition-group(*),
+      ::view-transition-old(*),
+      ::view-transition-new(*) {
+        animation: none !important;
+      }
     }
     .modal-box h3 { font-size: 1.05rem; margin-bottom: 6px; color: #fff; }
     .modal-box p { font-size: 0.79rem; color: var(--text-secondary); margin-bottom: 12px; }
@@ -1188,7 +1195,7 @@
           <div class="hero-tag">✂️ Grooming & Club VIP • Barranquilla</div>
           <div class="rating-pill">★ 4.9 Google Reviews</div>
         </div>
-        <h1 id="heroTitle">Barber Shop & Drinks</h1>
+        <h1 id="heroTitle" tabindex="-1">Barber Shop & Drinks</h1>
         <p id="heroSub">Selecciona tu servicio, barbero y hora exacta en 30 segundos. Agenda sincronizada en tiempo real sin esperas ni cruces de turnos.</p>
         <div class="hero-stats">
           <div class="stat-box">
@@ -1370,7 +1377,7 @@
     <!-- ==================== BARBER ADMIN PANEL VIEW ==================== -->
     <div id="barberView">
       <div class="b-panel-box">
-        <h3>⚡ Bloqueo Rápido de Horas en 1 Toque (Clientes Presenciales)</h3>
+        <h3 id="barberHeading" tabindex="-1">⚡ Bloqueo Rápido de Horas en 1 Toque (Clientes Presenciales)</h3>
         <p>Si llega un cliente caminando al local sin usar la web, toca cualquier hora de hoy para bloquearla o liberarla al instante en todos los celulares:</p>
         <div class="quick-block-grid" id="quickBlockGrid"></div>
       </div>
@@ -1397,18 +1404,18 @@
     </div>
   </div>
 
-  <!-- WHATSAPP PREVIEW MODAL -->
-  <div class="modal-backdrop" id="waModal">
+  <!-- NATIVE WHATSAPP PREVIEW DIALOG -->
+  <dialog id="waModal" closedby="any" aria-labelledby="waModalTitle">
     <div class="modal-box">
-      <h3>🔒 ¡Horario Bloqueado en la Agenda!</h3>
+      <h3 id="waModalTitle">🔒 ¡Horario Bloqueado en la Agenda!</h3>
       <p>Tu turno ya quedó marcado como <strong>Ocupado</strong> para evitar cruces. Envía el pase en WhatsApp para finalizar:</p>
       <div class="wa-bubble" id="waPreviewText"></div>
       <div class="modal-actions">
-        <button class="btn-close" onclick="closeModal()">Ver Agenda</button>
-        <button class="btn-wa" onclick="sendToWhatsApp()">🚀 Enviar en WhatsApp</button>
+        <button type="button" class="btn-close" onclick="closeModal()" autofocus>Ver Agenda</button>
+        <button type="button" class="btn-wa" onclick="sendToWhatsApp()">🚀 Enviar en WhatsApp</button>
       </div>
     </div>
-  </div>
+  </dialog>
 
   <script>
     const PRESETS = {
@@ -1576,15 +1583,27 @@
 
     function switchMode(mode) {
       const isClient = mode === "client";
-      document.getElementById("clientView").style.display = isClient ? "block" : "none";
-      document.getElementById("bottomBar").style.display = isClient ? "block" : "none";
-      document.getElementById("barberView").style.display = isClient ? "none" : "block";
-      document.getElementById("btnClientMode").classList.toggle("active", isClient);
-      document.getElementById("btnBarberMode").classList.toggle("active", !isClient);
-      if (!isClient) {
-        renderQuickBlockGrid();
-        renderBarberAppointments();
+      const applyDOM = () => {
+        document.getElementById("clientView").style.display = isClient ? "block" : "none";
+        document.getElementById("bottomBar").style.display = isClient ? "block" : "none";
+        document.getElementById("barberView").style.display = isClient ? "none" : "block";
+        document.getElementById("btnClientMode").classList.toggle("active", isClient);
+        document.getElementById("btnBarberMode").classList.toggle("active", !isClient);
+        if (!isClient) {
+          renderQuickBlockGrid();
+          renderBarberAppointments();
+        }
+      };
+      const targetHeadingId = isClient ? "heroTitle" : "barberHeading";
+      if (!document.startViewTransition) {
+        applyDOM();
+        document.getElementById(targetHeadingId)?.focus({ preventScroll: true });
+        return;
       }
+      const transition = document.startViewTransition(() => applyDOM());
+      transition.finished.finally(() => {
+        document.getElementById(targetHeadingId)?.focus({ preventScroll: true });
+      });
     }
 
     function applyShopBranding() {
@@ -1797,12 +1816,14 @@
       }
 
       document.getElementById("waPreviewText").textContent = buildWhatsAppMessage();
-      document.getElementById("waModal").style.display = "flex";
+      const dialog = document.getElementById("waModal");
+      if (!dialog.open) dialog.showModal();
       renderTimes();
     }
 
     function closeModal() {
-      document.getElementById("waModal").style.display = "none";
+      const dialog = document.getElementById("waModal");
+      if (dialog.open) dialog.close();
       ensureAvailableSelectedTime();
       renderTimes();
       renderTicket();
@@ -1990,6 +2011,26 @@ Pruébenla desde el celular (arriba pueden cambiar entre "Vista Cliente" y "Pane
       renderDates();
       renderTimes();
       renderTicket();
+
+      const dialog = document.getElementById("waModal");
+      if (dialog && !("closedBy" in HTMLDialogElement.prototype)) {
+        dialog.addEventListener("click", (event) => {
+          if (event.target !== dialog) return;
+          const rect = dialog.getBoundingClientRect();
+          const isDialogContent =
+            rect.top <= event.clientY &&
+            event.clientY <= rect.top + rect.height &&
+            rect.left <= event.clientX &&
+            event.clientX <= rect.left + rect.width;
+          if (isDialogContent) return;
+          dialog.close();
+        });
+      }
+      dialog?.addEventListener("close", () => {
+        ensureAvailableSelectedTime();
+        renderTimes();
+        renderTicket();
+      });
     }
 
     init();
