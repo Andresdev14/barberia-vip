@@ -214,6 +214,184 @@
       font-size: 0.69rem;
     }
 
+    /* ==================== INITIAL WELCOME MENU (#homeView) ==================== */
+    #homeView {
+      margin-top: 14px;
+    }
+    .welcome-showcase {
+      border-radius: 26px;
+      padding: 30px 22px 24px;
+      background:
+        linear-gradient(180deg, rgba(7, 7, 10, 0.35) 0%, rgba(7, 7, 10, 0.88) 60%, #0a0a10 100%),
+        url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1200&q=85') center 20%/cover;
+      border: 1px solid var(--border-accent);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      text-align: center;
+      position: relative;
+      overflow: clip;
+    }
+    .welcome-crown {
+      width: 66px;
+      height: 66px;
+      margin: 0 auto 14px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--accent-light), var(--accent), var(--accent-dark));
+      color: #07070a;
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 1.55rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px var(--accent-glow), inset 0 1px 2px rgba(255,255,255,0.65);
+    }
+    .welcome-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 13px;
+      border-radius: 999px;
+      background: rgba(212, 175, 55, 0.16);
+      border: 1px solid var(--border-accent);
+      color: var(--accent-light);
+      font-size: 0.71rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+    .welcome-showcase h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.85rem;
+      line-height: 1.15;
+      color: #fff;
+      margin-bottom: 8px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.7);
+    }
+    .welcome-loc {
+      font-size: 0.83rem;
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+    }
+
+    /* Banking-Style 3-Step Onboarding Strip */
+    .onboard-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 22px;
+      text-align: left;
+    }
+    .ob-card {
+      background: rgba(16, 16, 24, 0.82);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 11px 10px;
+    }
+    .ob-icon {
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .ob-title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 2px;
+      line-height: 1.2;
+    }
+    .ob-desc {
+      font-size: 0.67rem;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    /* Main Initial Menu Action Buttons */
+    .menu-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .menu-cta-primary {
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 16px;
+      border: none;
+      background: linear-gradient(135deg, var(--accent-light), var(--accent));
+      color: #07070a;
+      font-weight: 800;
+      font-size: 0.98rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 10px 28px var(--accent-glow);
+      transition: transform 0.18s var(--ease);
+    }
+    .menu-cta-primary:active {
+      transform: scale(0.98);
+    }
+    .menu-cta-primary .cta-left {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      text-align: left;
+    }
+    .menu-cta-primary .cta-sub {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      opacity: 0.82;
+    }
+    .menu-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .menu-card-btn {
+      padding: 14px 13px;
+      border-radius: 16px;
+      background: rgba(20, 20, 30, 0.88);
+      border: 1px solid var(--border);
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: all 0.18s var(--ease);
+    }
+    .menu-card-btn:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+    }
+    .menu-card-btn .m-icon {
+      font-size: 1.2rem;
+      margin-bottom: 2px;
+    }
+    .menu-card-btn .m-title {
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    .menu-card-btn .m-sub {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    dialog.info-dialog {
+      margin: auto;
+      background: #13131c;
+      color: var(--text);
+      border: 1px solid var(--border-accent);
+      border-radius: 22px;
+      max-width: 460px;
+      width: calc(100% - 32px);
+      padding: 20px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.85);
+    }
+
     /* Secret Admin Generator Panel (?admin=1) */
     #adminPanel {
       display: none;
@@ -1150,13 +1328,16 @@
 
   <main class="container">
 
-    <!-- MODE SWITCHER -->
+    <!-- MODE SWITCHER (3-TAB NAVIGATION: INICIO | RESERVAR | BARBERO) -->
     <div class="mode-switcher">
-      <button class="mode-btn active" id="btnClientMode" onclick="switchMode('client')">
-        ✂️ Vista Cliente (Reservar)
+      <button class="mode-btn active" id="btnHomeMode" onclick="switchMode('home')">
+        🏠 Menú Inicial
+      </button>
+      <button class="mode-btn" id="btnClientMode" onclick="switchMode('client')">
+        ✂️ Agendar Turno
       </button>
       <button class="mode-btn" id="btnBarberMode" onclick="switchMode('barber')">
-        🔐 Panel Barbero <span class="badge-count" id="bookedBadge">3 turnos</span>
+        🔐 Barbero <span class="badge-count" id="bookedBadge">3</span>
       </button>
     </div>
 
@@ -1195,8 +1376,77 @@
       <div class="pitch-box" id="salesPitchPreview"></div>
     </section>
 
+    <!-- ==================== INITIAL WELCOME MENU VIEW (#homeView) ==================== -->
+    <div id="homeView">
+      <section class="welcome-showcase">
+        <div class="welcome-crown" id="welcomeInitials">BD</div>
+        <div class="welcome-tag">💈 Club de Barbería & Grooming VIP</div>
+        <h2 id="welcomeTitle" tabindex="-1">Barber Shop & Drinks</h2>
+        <p class="welcome-loc" id="welcomeLoc">📍 Alto Prado • Calle 80 # 53-18, Barranquilla</p>
+
+        <!-- 3-Step Onboarding Strip -->
+        <div class="onboard-cards">
+          <div class="ob-card">
+            <span class="ob-icon">⚡</span>
+            <div class="ob-title">1. Elige en 30s</div>
+            <div class="ob-desc">Selecciona corte, combo y tu barbero favorito.</div>
+          </div>
+          <div class="ob-card">
+            <span class="ob-icon">🔒</span>
+            <div class="ob-title">2. Bloquea Hora</div>
+            <div class="ob-desc">Agenda en vivo sin filas ni cruces de horario.</div>
+          </div>
+          <div class="ob-card">
+            <span class="ob-icon">🍺</span>
+            <div class="ob-title">3. Disfruta VIP</div>
+            <div class="ob-desc">Bebida fría gratis y pago Nequi o Bancolombia.</div>
+          </div>
+        </div>
+
+        <!-- Primary Menu Options -->
+        <div class="menu-actions">
+          <button type="button" class="menu-cta-primary" onclick="switchMode('client')">
+            <div class="cta-left">
+              <span style="font-size:1.45rem;">✂️</span>
+              <div>
+                <span>Agendar Cita VIP Ahora</span>
+                <span class="cta-sub">Turnos disponibles hoy • Confirmación inmediata</span>
+              </div>
+            </div>
+            <span style="font-size:1.2rem;">➔</span>
+          </button>
+
+          <div class="menu-grid-2">
+            <button type="button" class="menu-card-btn" onclick="openPricesDialog()">
+              <span class="m-icon">📋</span>
+              <span class="m-title">Carta de Precios</span>
+              <span class="m-sub">Combos, Fade, Barba y Facial</span>
+            </button>
+            <button type="button" class="menu-card-btn" onclick="openLocationDialog()">
+              <span class="m-icon">📍</span>
+              <span class="m-title">Ubicación & Horario</span>
+              <span class="m-sub">Google Maps y contacto directo</span>
+            </button>
+          </div>
+
+          <div class="menu-grid-2">
+            <button type="button" class="menu-card-btn" onclick="switchMode('barber')">
+              <span class="m-icon">🔐</span>
+              <span class="m-title">Panel de Barberos</span>
+              <span class="m-sub">Ver agenda y bloquear horas</span>
+            </button>
+            <button type="button" class="menu-card-btn" onclick="contactDirectWhatsApp()">
+              <span class="m-icon">💬</span>
+              <span class="m-title">WhatsApp Recepción</span>
+              <span class="m-sub">Consultas rápidas al local</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
     <!-- ==================== CLIENT BOOKING VIEW ==================== -->
-    <div id="clientView">
+    <div id="clientView" style="display:none;">
       <section class="hero">
         <div class="hero-badge-row">
           <div class="hero-tag">✂️ Grooming & Club VIP • Barranquilla</div>
@@ -1399,7 +1649,7 @@
   </main>
 
   <!-- STICKY BOTTOM CTA -->
-  <div class="bottom-bar" id="bottomBar">
+  <div class="bottom-bar" id="bottomBar" style="display:none;">
     <div class="bottom-inner">
       <div class="tot-wrap">
         <span class="tot-lbl" id="bottomCount">1 servicio • 55 min</span>
@@ -1420,6 +1670,45 @@
       <div class="modal-actions">
         <button type="button" class="btn-close" onclick="closeModal()" autofocus>Ver Agenda</button>
         <button type="button" class="btn-wa" onclick="sendToWhatsApp()">🚀 Enviar en WhatsApp</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- NATIVE PRICE MENU DIALOG -->
+  <dialog id="pricesModal" class="info-dialog" closedby="any" aria-labelledby="pricesModalTitle">
+    <div class="modal-box">
+      <h3 id="pricesModalTitle">📋 Carta Oficial de Servicios & Combos</h3>
+      <p>Todos nuestros servicios incluyen bebida de cortesía y asesoría personalizada:</p>
+      <div id="pricesDialogList" style="display:flex;flex-direction:column;gap:8px;max-height:310px;overflow-y:auto;margin-bottom:14px;"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn-close" onclick="document.getElementById('pricesModal').close()">Cerrar</button>
+        <button type="button" class="btn-wa" onclick="document.getElementById('pricesModal').close(); switchMode('client');">✂️ Elegir y Reservar</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- NATIVE LOCATION & HOURS DIALOG -->
+  <dialog id="locationModal" class="info-dialog" closedby="any" aria-labelledby="locModalTitle">
+    <div class="modal-box">
+      <h3 id="locModalTitle">📍 Ubicación & Horarios de Atención</h3>
+      <p id="locDialogAddress" style="color:#fff;font-weight:700;margin-top:6px;">Alto Prado • Calle 80 # 53-18, Barranquilla</p>
+      <div style="background:#0a0a10;border:1px solid var(--border);border-radius:14px;padding:12px;margin:12px 0;font-size:0.8rem;color:var(--text-secondary);">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span>Lunes a Viernes:</span>
+          <strong style="color:#fff;">8:00 AM – 8:00 PM</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span>Sábados:</span>
+          <strong style="color:#fff;">8:00 AM – 8:30 PM</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;">
+          <span>Domingos y Festivos:</span>
+          <strong style="color:var(--accent-light);">9:00 AM – 4:00 PM</strong>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-close" onclick="document.getElementById('locationModal').close()">Cerrar</button>
+        <button type="button" class="btn-wa" onclick="openGoogleMaps()">🗺️ Abrir en Google Maps</button>
       </div>
     </div>
   </dialog>
@@ -1567,7 +1856,7 @@
 
     function saveBookings() {
       localStorage.setItem("vip_barber_bookings_v3", JSON.stringify(state.bookings));
-      document.getElementById("bookedBadge").textContent = `${state.bookings.length} turnos`;
+      document.getElementById("bookedBadge").textContent = `${state.bookings.length}`;
     }
 
     function isSlotBusy(dateIdx, timeStr, barberId) {
@@ -1589,19 +1878,24 @@
     }
 
     function switchMode(mode) {
+      const isHome = mode === "home";
       const isClient = mode === "client";
+      const isBarber = mode === "barber";
       const applyDOM = () => {
+        document.getElementById("homeView").style.display = isHome ? "block" : "none";
         document.getElementById("clientView").style.display = isClient ? "block" : "none";
         document.getElementById("bottomBar").style.display = isClient ? "block" : "none";
-        document.getElementById("barberView").style.display = isClient ? "none" : "block";
+        document.getElementById("barberView").style.display = isBarber ? "block" : "none";
+        document.getElementById("btnHomeMode").classList.toggle("active", isHome);
         document.getElementById("btnClientMode").classList.toggle("active", isClient);
-        document.getElementById("btnBarberMode").classList.toggle("active", !isClient);
-        if (!isClient) {
+        document.getElementById("btnBarberMode").classList.toggle("active", isBarber);
+        if (isBarber) {
           renderQuickBlockGrid();
           renderBarberAppointments();
         }
+        window.scrollTo({ top: 0, behavior: "instant" });
       };
-      const targetHeadingId = isClient ? "heroTitle" : "barberHeading";
+      const targetHeadingId = isHome ? "welcomeTitle" : isClient ? "heroTitle" : "barberHeading";
       if (!document.startViewTransition) {
         applyDOM();
         document.getElementById(targetHeadingId)?.focus({ preventScroll: true });
@@ -1613,15 +1907,48 @@
       });
     }
 
+    function openPricesDialog() {
+      const list = document.getElementById("pricesDialogList");
+      list.innerHTML = SERVICES.map(s => `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#09090e;border:1px solid var(--border);border-radius:12px;gap:10px;">
+          <div>
+            <div style="font-weight:800;font-size:0.84rem;color:#fff;">${s.name}</div>
+            <div style="font-size:0.72rem;color:var(--text-muted);">⏱️ ${s.dur} min</div>
+          </div>
+          <div class="mono" style="font-weight:800;color:var(--accent-light);font-size:0.9rem;white-space:nowrap;">${formatCOP(s.price)}</div>
+        </div>
+      `).join("");
+      document.getElementById("pricesModal").showModal();
+    }
+
+    function openLocationDialog() {
+      document.getElementById("locDialogAddress").textContent = `📍 ${state.shopLoc}`;
+      document.getElementById("locationModal").showModal();
+    }
+
+    function openGoogleMaps() {
+      const q = encodeURIComponent(`${state.shopName} ${state.shopLoc}`);
+      window.open(`https://www.google.com/maps/search/?api=1&query=${q}`, "_blank");
+    }
+
+    function contactDirectWhatsApp() {
+      const cleanPhone = (state.shopWa || "573000000000").replace(/\D/g, "");
+      const msg = encodeURIComponent(`Hola *${state.shopName}*, vengo desde su página web VIP y tengo una consulta.`);
+      window.open(`https://wa.me/${cleanPhone}?text=${msg}`, "_blank");
+    }
+
     function applyShopBranding() {
       document.documentElement.setAttribute("data-theme", state.theme);
       document.getElementById("topShopName").textContent = state.shopName;
       document.getElementById("topShopLoc").textContent = state.shopLoc;
       document.getElementById("heroTitle").textContent = state.shopName;
+      document.getElementById("welcomeTitle").textContent = state.shopName;
+      document.getElementById("welcomeLoc").textContent = `📍 ${state.shopLoc}`;
       document.getElementById("tShop").textContent = state.shopName;
       document.title = `Reservas VIP | ${state.shopName}`;
       const initials = state.shopName.split(" ").filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join("");
       document.getElementById("brandInitials").textContent = initials || "VIP";
+      document.getElementById("welcomeInitials").textContent = initials || "VIP";
     }
 
     function renderServices() {
@@ -2020,18 +2347,20 @@ Pruébenla desde el celular (arriba pueden cambiar entre "Vista Cliente" y "Pane
       renderTicket();
 
       const dialog = document.getElementById("waModal");
-      if (dialog && !("closedBy" in HTMLDialogElement.prototype)) {
-        dialog.addEventListener("click", (event) => {
-          if (event.target !== dialog) return;
-          const rect = dialog.getBoundingClientRect();
-          const isDialogContent =
-            rect.top <= event.clientY &&
-            event.clientY <= rect.top + rect.height &&
-            rect.left <= event.clientX &&
-            event.clientX <= rect.left + rect.width;
-          if (isDialogContent) return;
-          dialog.close();
-        });
+      if (!("closedBy" in HTMLDialogElement.prototype)) {
+        for (const dlg of document.querySelectorAll('dialog[closedby="any"]')) {
+          dlg.addEventListener("click", (event) => {
+            if (event.target !== dlg) return;
+            const rect = dlg.getBoundingClientRect();
+            const isDialogContent =
+              rect.top <= event.clientY &&
+              event.clientY <= rect.top + rect.height &&
+              rect.left <= event.clientX &&
+              event.clientX <= rect.left + rect.width;
+            if (isDialogContent) return;
+            dlg.close();
+          });
+        }
       }
       dialog?.addEventListener("close", () => {
         ensureAvailableSelectedTime();
