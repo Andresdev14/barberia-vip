@@ -9,14 +9,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
+      color-scheme: dark;
       --bg: #09090d;
       --card: #13131b;
       --accent: #d4af37;
-      --accent-light: #f3d478;
+      --accent-light: color-mix(in oklab, var(--accent), white 28%);
       --green: #25d366;
       --text: #f5f5f7;
-      --muted: #9898a8;
-      --border: rgba(255, 255, 255, 0.09);
+      --muted: #9b9bb0;
+      --border: rgba(255, 255, 255, 0.11);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -25,6 +26,7 @@
       color: var(--text);
       padding: 16px 14px 60px;
       line-height: 1.45;
+      min-block-size: 100dvh;
     }
     .container {
       max-width: 600px;
@@ -35,16 +37,16 @@
       border: 1px solid rgba(212, 175, 55, 0.45);
       border-radius: 18px;
       padding: 18px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       box-shadow: 0 12px 32px rgba(0,0,0,0.45);
     }
     .header-box h1 {
-      font-size: 1.2rem;
+      font-size: 1.18rem;
       color: var(--accent-light);
       margin-bottom: 6px;
     }
     .header-box p {
-      font-size: 0.82rem;
+      font-size: 0.81rem;
       color: var(--muted);
       margin-bottom: 14px;
     }
@@ -89,6 +91,49 @@
       font-family: inherit;
     }
 
+    /* Quick Add New Barber Lead Box */
+    .add-box {
+      background: var(--card);
+      border: 1px dashed rgba(212, 175, 55, 0.45);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+    .add-box summary {
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--accent-light);
+      cursor: pointer;
+    }
+    .add-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .add-grid input, .add-grid select {
+      width: 100%;
+      padding: 9px 11px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #09090d;
+      color: #fff;
+      font-size: 0.8rem;
+      font-family: inherit;
+    }
+    .add-grid .full { grid-column: 1 / -1; }
+    .btn-add {
+      grid-column: 1 / -1;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      background: var(--accent);
+      color: #09090d;
+      font-weight: 800;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+
     .leads-list {
       display: flex;
       flex-direction: column;
@@ -101,8 +146,11 @@
       padding: 15px;
       transition: all 0.2s ease;
     }
+    .lead-card.verified {
+      border-color: rgba(212, 175, 55, 0.38);
+    }
     .lead-card.sent {
-      border-color: rgba(37, 211, 102, 0.45);
+      border-color: rgba(37, 211, 102, 0.48);
       background: linear-gradient(145deg, rgba(37, 211, 102, 0.08), #12121a);
     }
     .lead-top {
@@ -113,14 +161,14 @@
       margin-bottom: 6px;
     }
     .lead-name {
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 800;
       color: #fff;
     }
     .badge {
       padding: 3px 9px;
       border-radius: 999px;
-      font-size: 0.68rem;
+      font-size: 0.67rem;
       font-weight: 800;
       background: rgba(212, 175, 55, 0.16);
       color: var(--accent-light);
@@ -131,16 +179,16 @@
       color: #4ade80;
     }
     .lead-meta {
-      font-size: 0.8rem;
+      font-size: 0.79rem;
       color: var(--muted);
-      margin-bottom: 12px;
+      margin-bottom: 11px;
     }
     .lead-meta div {
       margin-bottom: 3px;
     }
     .btn-row {
       display: grid;
-      grid-template-columns: 1fr 1.6fr;
+      grid-template-columns: 1fr 1.55fr;
       gap: 8px;
     }
     .btn {
@@ -167,16 +215,22 @@
       color: #05140a;
       box-shadow: 0 4px 15px rgba(37, 211, 102, 0.28);
     }
-    .btn-toggle {
+    .sub-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
       margin-top: 8px;
-      width: 100%;
-      padding: 7px;
+    }
+    .btn-toggle {
+      padding: 7px 6px;
       background: transparent;
       border: 1px dashed var(--border);
       color: var(--muted);
       border-radius: 9px;
-      font-size: 0.72rem;
+      font-size: 0.71rem;
       cursor: pointer;
+      text-align: center;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -184,10 +238,10 @@
   <div class="container">
     <div class="header-box">
       <h1>🚀 Central Automática de Prospectos — Barranquilla</h1>
-      <p>Ya busqué 16 barberías reales en Barranquilla con número de celular/WhatsApp y les generé a cada una su propia demo personalizada. Solo toca <strong>"Enviar WhatsApp"</strong> en cada tarjeta.</p>
+      <p>Puse de primeras las barberías con <strong>WhatsApp Business verificado</strong> en plataformas de reservas (Fresha, AgendaPro, WeiBook y webs oficiales). Si ves otro número en su Instagram, puedes editarlo con <strong>"✏️ Cambiar #"</strong>.</p>
       <div class="stats-bar">
         <div class="stat">
-          <strong id="totalCount">16</strong>
+          <strong id="totalCount">22</strong>
           <span>Barberías</span>
         </div>
         <div class="stat">
@@ -195,7 +249,7 @@
           <span>Contactadas</span>
         </div>
         <div class="stat">
-          <strong id="pendingCount">16</strong>
+          <strong id="pendingCount">22</strong>
           <span>Pendientes</span>
         </div>
       </div>
@@ -209,28 +263,119 @@
       </div>
     </div>
 
+    <!-- ADD ANY NEW BARBERSHOP FOUND ON INSTAGRAM / GOOGLE MAPS -->
+    <details class="add-box">
+      <summary>➕ Agregar otra barbería que veas en Instagram o Google Maps (en 5 seg)</summary>
+      <div class="add-grid">
+        <input class="full" id="newName" placeholder="Nombre (ej: Barber’s Club Villa Country)" />
+        <input class="full" id="newLoc" placeholder="Barrio / Dirección (ej: Alto Prado • Cra 53 # 80-167)" />
+        <input id="newPhone" placeholder="Celular (ej: 3001234567)" />
+        <select id="newTheme">
+          <option value="gold">Tema: Oro Imperial</option>
+          <option value="crimson">Tema: Rojo Urbano</option>
+          <option value="emerald">Tema: Verde Club</option>
+        </select>
+        <button class="btn-add" onclick="addCustomLead()">⚡ Guardar y Generar su Demo + WhatsApp</button>
+      </div>
+    </details>
+
     <div class="leads-list" id="leadsList"></div>
   </div>
 
   <script>
-    const LEADS = [
-      { id: "1", name: "OG23 Barber Studio", loc: "El Prado • Calle 70 # 53-52", phone: "573163947170", displayPhone: "316 394 7170", zone: "Norte / El Prado", theme: "crimson" },
-      { id: "2", name: "El Poder de la Barba", loc: "Alto Prado • Carrera 52", phone: "573185277014", displayPhone: "318 527 7014", zone: "Alto Prado", theme: "gold" },
-      { id: "3", name: "La Barbería Servicio Superior", loc: "Alto Prado • Carrera 50 # 76-82", phone: "573228309938", displayPhone: "322 830 9938", zone: "Alto Prado", theme: "gold" },
+    const DEFAULT_LEADS = [
+      { id: "v1", name: "OG23 Barber Studio", loc: "El Prado • Calle 70 # 53-52", phone: "573163947170", displayPhone: "316 394 7170", zone: "🔥 Fresha Verificado", theme: "crimson", verified: true },
+      { id: "v2", name: "The Boogeyman Barber Shop", loc: "Norte Centro Histórico • Cra. 46 # 79-163 Local 2", phone: "573126083686", displayPhone: "312 608 3686", zone: "🔥 WhatsApp Business", theme: "gold", verified: true },
+      { id: "v3", name: "Priority Barber", loc: "Plaza 87 / Parque Venezuela • Cra. 46 # 85-185", phone: "573011654620", displayPhone: "301 165 4620", zone: "🔥 WeiBook Verificado", theme: "crimson", verified: true },
+      { id: "v4", name: "Champions Barber Shop", loc: "El Recreo • Calle 57 # 37-83 Local 1", phone: "573017661708", displayPhone: "301 766 1708", zone: "🔥 AgendaPro Verificado", theme: "gold", verified: true },
+      { id: "v5", name: "Barbas & Bigotes (Parque Venezuela)", loc: "Parque Venezuela • Calle 88 # 44-10", phone: "573004097624", displayPhone: "300 409 7624", zone: "🔥 Línea Citas Oficial", theme: "gold", verified: true },
+      { id: "v6", name: "Barbas & Bigotes (Plaza de la Paz)", loc: "Plaza de la Paz • Cra. 45 # 50-168", phone: "573006734799", displayPhone: "300 673 4799", zone: "🔥 Línea Citas Oficial", theme: "gold", verified: true },
+      { id: "v7", name: "La Barba VIP (Villa Carolina)", loc: "Villa Carolina • Cra. 65 # 91-05 Local 1", phone: "573002979720", displayPhone: "300 297 9720", zone: "🔥 Línea Citas Oficial", theme: "gold", verified: true },
+      { id: "v8", name: "La Barba VIP (Sede Riomar / Norte)", loc: "Riomar • Cra. 65 # 86-191", phone: "573007633755", displayPhone: "300 763 3755", zone: "🔥 Línea Citas Oficial", theme: "crimson", verified: true },
+      { id: "v9", name: "Don Bigotes Barberías", loc: "Norte • Sede Plaza del Parque", phone: "573022461401", displayPhone: "302 246 1401", zone: "🔥 Línea Citas Oficial", theme: "emerald", verified: true },
+      { id: "3", name: "La Barbería Servicio Superior", loc: "Alto Prado • Carrera 50 # 76-82", phone: "573228309938", displayPhone: "322 830 9938", zone: "🔥 Fresha Verificado", theme: "gold", verified: true },
+      { id: "9", name: "Frank Jr Barber", loc: "Norte Centro Histórico • Calle 120 # 42-112", phone: "573012936439", displayPhone: "301 293 6439", zone: "🔥 WeiBook Verificado", theme: "crimson", verified: true },
       { id: "4", name: "Headmasters Barbería", loc: "Alto Prado • Calle 84 # 53-46 Piso 2", phone: "573112604509", displayPhone: "311 260 4509", zone: "Alto Prado", theme: "emerald" },
       { id: "5", name: "Bárbaros Barber Shop", loc: "Norte • Carrera 45 # 85-94", phone: "573005265659", displayPhone: "300 526 5659", zone: "Norte", theme: "gold" },
       { id: "6", name: "Caracas Barbershop", loc: "Villa Carolina • Carrera 73 # 88-12", phone: "573014059061", displayPhone: "301 405 9061", zone: "Villa Carolina", theme: "crimson" },
       { id: "7", name: "Niche Barber Shop", loc: "Las Delicias • Calle 72 # 41B-27 Local 2", phone: "573005462572", displayPhone: "300 546 2572", zone: "Las Delicias", theme: "gold" },
       { id: "8", name: "Mar de Plata Barber & Peluquería", loc: "Las Delicias • Calle 70B # 39-143", phone: "573014346018", displayPhone: "301 434 6018", zone: "Las Delicias", theme: "emerald" },
-      { id: "9", name: "Frank Jr Barber", loc: "Norte Centro Histórico • Calle 120 # 42-112", phone: "573012936439", displayPhone: "301 293 6439", zone: "Norte", theme: "crimson" },
-      { id: "10", name: "Il Salone Barber Shop La 8", loc: "Barranquilla • Sede Principal", phone: "573018028370", displayPhone: "301 802 8370", zone: "Barranquilla", theme: "gold" },
+      { id: "10", name: "Il Salone Barber Shop La 8", loc: "Barranquilla • Sede Principal", phone: "573018028370", displayPhone: "301 802 8370", zone: "Byutipoint", theme: "gold" },
       { id: "11", name: "Los Nupis Barbería", loc: "Paraíso • Carrera 65 # 80-60", phone: "573204104610", displayPhone: "320 410 4610", zone: "Paraíso", theme: "emerald" },
       { id: "12", name: "Dubai Barber Shop", loc: "Av. Las Torres • Calle 43 # 42-05", phone: "573022370023", displayPhone: "302 237 0023", zone: "Centro / Sur", theme: "gold" },
       { id: "13", name: "Boris Barber Shop", loc: "Barranquilla • Calle 15 # 25-57", phone: "573005574253", displayPhone: "300 557 4253", zone: "Barranquilla", theme: "crimson" },
       { id: "14", name: "BarberShop Peluquería", loc: "Cevillar • Calle 46 # 13B-177", phone: "573007347782", displayPhone: "300 734 7782", zone: "Cevillar", theme: "gold" },
-      { id: "15", name: "Area 51 Barber Shop", loc: "Barranquilla • Carrera 3 Sur", phone: "573007546596", displayPhone: "300 754 6596", zone: "Sur", theme: "emerald" },
       { id: "16", name: "Zona Urbana Barber", loc: "Barranquilla • Carrera 1 Sur # 43-31", phone: "573005865000", displayPhone: "300 586 5000", zone: "Sur", theme: "crimson" }
     ];
+
+    function getCustomLeads() {
+      try {
+        return JSON.parse(localStorage.getItem("barber_custom_leads_v1") || "[]");
+      } catch {
+        return [];
+      }
+    }
+
+    function getPhoneOverrides() {
+      try {
+        return JSON.parse(localStorage.getItem("barber_phone_overrides_v1") || "{}");
+      } catch {
+        return {};
+      }
+    }
+
+    function getAllLeads() {
+      const overrides = getPhoneOverrides();
+      const all = [...getCustomLeads(), ...DEFAULT_LEADS];
+      return all.map(l => {
+        if (overrides[l.id]) {
+          return { ...l, phone: overrides[l.id], displayPhone: overrides[l.id].replace(/^57/, "") };
+        }
+        return l;
+      });
+    }
+
+    function addCustomLead() {
+      const name = document.getElementById("newName").value.trim();
+      const loc = document.getElementById("newLoc").value.trim() || "Barranquilla";
+      let rawPhone = document.getElementById("newPhone").value.replace(/\D/g, "");
+      const theme = document.getElementById("newTheme").value;
+      if (!name || !rawPhone) {
+        alert("Escribe el nombre y celular de la barbería");
+        return;
+      }
+      if (!rawPhone.startsWith("57")) rawPhone = "57" + rawPhone;
+      const custom = getCustomLeads();
+      custom.unshift({
+        id: "cust_" + Date.now(),
+        name,
+        loc,
+        phone: rawPhone,
+        displayPhone: rawPhone.replace(/^57/, ""),
+        zone: "⭐ Agregada por ti",
+        theme,
+        verified: true
+      });
+      localStorage.setItem("barber_custom_leads_v1", JSON.stringify(custom));
+      document.getElementById("newName").value = "";
+      document.getElementById("newLoc").value = "";
+      document.getElementById("newPhone").value = "";
+      renderLeads();
+    }
+
+    function editPhone(id) {
+      const lead = getAllLeads().find(l => l.id === id);
+      if (!lead) return;
+      const next = prompt(`Nuevo número de WhatsApp para ${lead.name} (ej: 3001234567):`, lead.displayPhone);
+      if (!next) return;
+      let clean = next.replace(/\D/g, "");
+      if (!clean) return;
+      if (!clean.startsWith("57")) clean = "57" + clean;
+      const overrides = getPhoneOverrides();
+      overrides[id] = clean;
+      localStorage.setItem("barber_phone_overrides_v1", JSON.stringify(overrides));
+      renderLeads();
+    }
 
     function getSentMap() {
       try {
@@ -265,10 +410,10 @@
 `Hola equipo de *${lead.name}*, ¿cómo están? Soy Andrés, desarrollador web acá en Barranquilla.
 
 Vi su barbería en ${lead.loc.split("•")[0].trim()} y les armé una demo funcional con el nombre de *${lead.name}* que incluye:
-✅ Agenda en 30s con *bloqueo automático de horas ocupadas* (para que dos clientes nunca agenden la misma hora).
-✅ *Protección anti-inasistencias* (abono opcional de $10.000 por Nequi o confirmación 1h antes + botón para liberar la silla en 1 toque desde el Panel del Barbero).
+✅ Menú inicial + agenda en 30s con *bloqueo automático de horas ocupadas* (para que dos clientes nunca agenden la misma hora).
+✅ *Protección anti-inasistencias* (abono opcional de $10.000 por Nequi o liberación de silla en 1 toque desde el Panel del Barbero).
 
-Pruébenla aquí desde el celular (arriba pueden cambiar entre "Vista Cliente" y "Panel Barbero"):
+Pruébenla aquí desde el celular:
 👉 ${demoUrl}
 
 Si les gusta cómo funciona, se las dejo 100% personalizada con sus precios y barberos reales por ${price} (pago único, sin mensualidades). ¿Qué les parece?`;
@@ -276,7 +421,7 @@ Si les gusta cómo funciona, se las dejo 100% personalizada con sus precios y ba
     }
 
     function openWaAndMark(id) {
-      const lead = LEADS.find(l => l.id === id);
+      const lead = getAllLeads().find(l => l.id === id);
       if (!lead) return;
       const url = buildWaLink(lead);
       setSent(id, true);
@@ -284,18 +429,20 @@ Si les gusta cómo funciona, se las dejo 100% personalizada con sus precios y ba
     }
 
     function renderLeads() {
+      const leads = getAllLeads();
       const sentMap = getSentMap();
-      const sentTotal = LEADS.filter(l => sentMap[l.id]).length;
-      document.getElementById("totalCount").textContent = LEADS.length;
+      const sentTotal = leads.filter(l => sentMap[l.id]).length;
+      document.getElementById("totalCount").textContent = leads.length;
       document.getElementById("sentCount").textContent = sentTotal;
-      document.getElementById("pendingCount").textContent = LEADS.length - sentTotal;
+      document.getElementById("pendingCount").textContent = leads.length - sentTotal;
 
       const wrap = document.getElementById("leadsList");
-      wrap.innerHTML = LEADS.map((l, idx) => {
+      wrap.innerHTML = leads.map((l, idx) => {
         const isSent = !!sentMap[l.id];
         const demoUrl = buildDemoUrl(l);
+        const searchQ = encodeURIComponent(`${l.name} Barranquilla Instagram`);
         return `
-          <div class="lead-card ${isSent ? 'sent' : ''}">
+          <div class="lead-card ${l.verified ? 'verified' : ''} ${isSent ? 'sent' : ''}">
             <div class="lead-top">
               <div class="lead-name">${idx + 1}. ${l.name}</div>
               <span class="badge">${isSent ? '✅ Contactada' : l.zone}</span>
@@ -310,9 +457,13 @@ Si les gusta cómo funciona, se las dejo 100% personalizada con sus precios y ba
                 📲 ${isSent ? 'Reenviar WhatsApp' : 'Enviar WhatsApp'}
               </button>
             </div>
-            <button class="btn-toggle" onclick="setSent('${l.id}', ${!isSent})">
-              ${isSent ? 'Marcar como pendiente' : 'Marcar como ya contactada'}
-            </button>
+            <div class="sub-actions">
+              <button class="btn-toggle" onclick="editPhone('${l.id}')">✏️ Cambiar #</button>
+              <a class="btn-toggle" href="https://www.google.com/search?q=${searchQ}" target="_blank">🔍 Ver Instagram</a>
+              <button class="btn-toggle" onclick="setSent('${l.id}', ${!isSent})">
+                ${isSent ? '↩️ Pendiente' : '✓ Ya enviada'}
+              </button>
+            </div>
           </div>
         `;
       }).join("");
