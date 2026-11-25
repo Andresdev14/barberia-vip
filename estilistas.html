@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agenda Online | Estudio de Belleza & Estilismo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --surface-2: #f3f0eb;
+      --accent: #8c4f58;
+      --accent-ink: #ffffff;
+      --accent-soft: color-mix(in oklab, var(--accent), white 90%);
+      --text: #18181b;
+      --text-secondary: #52525b;
+      --text-muted: #71717a;
+      --border: #e6e2da;
+      --border-strong: #d1cbc0;
+      --success: #059669;
+      --danger: #e11d48;
+      --radius-lg: 20px;
+      --radius-md: 13px;
+      --radius-sm: 9px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    [data-theme="noir"] {
+      --accent: #18181b;
+      --accent-ink: #ffffff;
+    }
+
+    [data-theme="sage"] {
+      --accent: #3d6b5e;
+      --accent-ink: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-block-size: 100dvh;
+      padding-block-end: 108px;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .editorial {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .container {
+      max-inline-size: 560px;
+      margin-inline: auto;
+      padding-inline: 18px;
+    }
+
+    .icon {
+      inline-size: 18px;
+      block-size: 18px;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    /* Compact Sticky Header */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(250, 248, 245, 0.88);
+      border-block-end: 1px solid var(--border);
+      padding-block: 10px;
+    }
+    .top-bar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-inline-size: 0;
+    }
+    .brand-mark {
+      inline-size: 34px;
+      block-size: 34px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      border: 1px solid var(--border-strong);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.8rem;
+      display: grid;
+      place-content: center;
+      flex-shrink: 0;
+    }
+    .brand-name {
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      overflow: clip;
+      text-overflow: ellipsis;
+    }
+    .brand-loc {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: clip;
+      text-overflow: ellipsis;
+    }
+
+    .nav-pills {
+      display: inline-flex;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+    .nav-pill {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 11px;
+      border-radius: 999px;
+      cursor: pointer;
+      min-block-size: 32px;
+    }
+    .nav-pill.active {
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* Editorial Welcome Card */
+    #homeView {
+      padding-block-start: 20px;
+    }
+    .editorial-hero {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: clip;
+      box-shadow: 0 8px 30px rgba(24, 24, 27, 0.04);
+    }
+    .editorial-photo {
+      aspect-ratio: 16 / 8.5;
+      inline-size: 100%;
+      background:
+        linear-gradient(180deg, rgba(24,24,27,0.05) 0%, rgba(24,24,27,0.45) 100%),
+        url('https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1100&q=82') center/cover;
+      display: flex;
+      align-items: flex-end;
+      padding: 18px;
+    }
+    .live-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.92);
+      font-size: 0.73rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .live-dot {
+      inline-size: 7px;
+      block-size: 7px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+    .editorial-body {
+      padding: 18px 20px 22px;
+    }
+    .editorial-body h1 {
+      font-size: 1.9rem;
+      line-height: 1.1;
+      margin-block-end: 6px;
+      letter-spacing: -0.01em;
+    }
+    .editorial-sub {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      margin-block-end: 18px;
+    }
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-block: 1px solid var(--border);
+      padding-block: 12px;
+      margin-block-end: 18px;
+      gap: 8px;
+    }
+    .stats-row strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+    .stats-row span {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .primary-btn {
+      inline-size: 100%;
+      min-block-size: 50px;
+      padding: 13px 18px;
+      border-radius: var(--radius-md);
+      border: none;
+      background: var(--accent);
+      color: var(--accent-ink);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .quick-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-block-start: 10px;
+    }
+    .card-btn {
+      min-block-size: 52px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-family: inherit;
+      text-align: start;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-btn strong { display: block; font-size: 0.82rem; font-weight: 600; }
+    .card-btn span { display: block; font-size: 0.71rem; color: var(--text-secondary); }
+
+    /* Booking Flow */
+    #bookView {
+      display: none;
+      padding-block-start: 18px;
+    }
+    .sec {
+      margin-block-end: 24px;
+    }
+    .sec-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-block-end: 10px;
+    }
+    .sec-head h2 {
+      font-size: 0.96rem;
+      font-weight: 600;
+    }
+    .sec-head span {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    .tabs-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-block-end: 10px;
+      scrollbar-width: none;
+    }
+    .tabs-row::-webkit-scrollbar { display: none; }
+    .tab-chip {
+      flex-shrink: 0;
+      min-block-size: 38px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .tab-chip.active {
+      background: var(--accent);
+      color: var(--accent-ink);
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+
+    .srv-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .srv-item {
+      inline-size: 100%;
+      text-align: start;
+      font-family: inherit;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      color: var(--text);
+    }
+    .srv-item.selected {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .srv-name { font-size: 0.9rem; font-weight: 600; display: block; margin-block-end: 3px; }
+    .srv-desc { font-size: 0.78rem; color: var(--text-secondary); display: block; margin-block-end: 6px; }
+    .srv-meta { font-size: 0.78rem; display: flex; gap: 10px; }
+    .srv-check {
+      inline-size: 22px;
+      block-size: 22px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-strong);
+      display: grid;
+      place-content: center;
+      font-size: 0.74rem;
+      color: transparent;
+      flex-shrink: 0;
+    }
+    .srv-item.selected .srv-check {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--accent-ink);
+    }
+
+    .stylists-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .stylist-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      text-align: start;
+      font-family: inherit;
+      color: var(--text);
+    }
+    .stylist-btn.selected {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .stylist-img {
+      inline-size: 40px;
+      block-size: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--surface-2);
+      flex-shrink: 0;
+      display: grid;
+      place-content: center;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .dates-row {
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      padding-block-end: 10px;
+      scrollbar-width: none;
+    }
+    .dates-row::-webkit-scrollbar { display: none; }
+    .day-pill {
+      flex-shrink: 0;
+      min-inline-size: 70px;
+      padding: 10px 8px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-family: inherit;
+      text-align: center;
+      cursor: pointer;
+    }
+    .day-pill.selected {
+      background: var(--accent);
+      color: var(--accent-ink);
+      border-color: var(--accent);
+    }
+    .day-pill small { display: block; font-size: 0.69rem; text-transform: uppercase; opacity: 0.8; }
+    .day-pill strong { display: block; font-size: 1rem; }
+
+    .hours-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .hour-btn {
+      min-block-size: 48px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+    }
+    .hour-btn span { font-size: 0.81rem; font-weight: 600; }
+    .hour-btn small { font-size: 0.66rem; color: var(--text-muted); }
+    .hour-btn.selected {
+      background: var(--accent);
+      color: var(--accent-ink);
+      border-color: var(--accent);
+    }
+    .hour-btn.selected small { color: var(--accent-ink); opacity: 0.9; }
+    .hour-btn[aria-disabled="true"] {
+      opacity: 0.45;
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+    .hour-btn[aria-disabled="true"] small {
+      text-decoration: none;
+      color: var(--danger);
+    }
+
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    .field label { font-size: 0.79rem; font-weight: 500; color: var(--text-secondary); }
+    .input {
+      inline-size: 100%;
+      min-block-size: 48px;
+      padding: 10px 13px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: var(--bg);
+      color: var(--text);
+      font: inherit;
+      font-size: max(1rem, 1em);
+    }
+    .input:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .input:user-invalid { border-color: var(--danger); }
+
+    .guarantee-opt {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--bg);
+      cursor: pointer;
+      margin-block-top: 6px;
+    }
+    .guarantee-opt:has(input:checked) {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .guarantee-opt input { accent-color: var(--accent); margin-block-start: 3px; }
+    .guarantee-opt strong { display: block; font-size: 0.83rem; }
+    .guarantee-opt span { display: block; font-size: 0.74rem; color: var(--text-secondary); }
+
+    /* Staff View */
+    #staffView {
+      display: none;
+      padding-block-start: 18px;
+    }
+    .staff-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      margin-block-end: 14px;
+    }
+
+    /* Sticky Bottom Bar */
+    .bottom-bar {
+      display: none;
+      position: fixed;
+      inset-inline: 0;
+      bottom: 0;
+      z-index: 55;
+      background: rgba(250, 248, 245, 0.94);
+      backdrop-filter: blur(16px);
+      border-block-start: 1px solid var(--border);
+      padding: 10px 18px;
+    }
+    .bottom-inner {
+      max-inline-size: 560px;
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .bottom-inner small { display: block; font-size: 0.72rem; color: var(--text-secondary); }
+    .bottom-inner strong { font-size: 1.05rem; font-weight: 700; }
+    .btn-submit {
+      flex: 1;
+      max-inline-size: 260px;
+      min-block-size: 48px;
+      border-radius: var(--radius-md);
+      border: none;
+      background: var(--accent);
+      color: var(--accent-ink);
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    dialog {
+      margin: auto;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      max-inline-size: 440px;
+      inline-size: calc(100% - 32px);
+      padding: 20px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+    }
+    dialog:modal { overscroll-behavior: contain; }
+    dialog::backdrop {
+      overflow: hidden;
+      overscroll-behavior: contain;
+      background: rgba(24, 24, 27, 0.45);
+      backdrop-filter: blur(4px);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="brand">
+        <div class="brand-mark" id="brandInitials">EB</div>
+        <div>
+          <div class="brand-name" id="topName">Elena Beauty & Nail Studio</div>
+          <div class="brand-loc" id="topLoc">Calle 92 # 51C-30 · Barranquilla</div>
+        </div>
+      </div>
+      <nav class="nav-pills" aria-label="Navegación">
+        <button type="button" class="nav-pill active" id="navHome" onclick="switchView('home')">Inicio</button>
+        <button type="button" class="nav-pill" id="navBook" onclick="switchView('book')">Agendar</button>
+        <button type="button" class="nav-pill" id="navStaff" onclick="switchView('staff')">Agenda <span class="mono" id="badgeCount">2</span></button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HOME VIEW -->
+    <section id="homeView">
+      <div class="editorial-hero">
+        <div class="editorial-photo">
+          <div class="live-chip">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span>Agenda digital disponible hoy</span>
+          </div>
+        </div>
+        <div class="editorial-body">
+          <h1 class="editorial" id="welcomeTitle" tabindex="-1">Elena Beauty & Nail Studio</h1>
+          <p class="editorial-sub" id="welcomeLoc">Calle 92 # 51C-30 · Alto Prado, Barranquilla</p>
+
+          <div class="stats-row">
+            <div><strong class="mono">4.9 ★</strong><span>Clientes felices</span></div>
+            <div><strong>Especialistas</strong><span>Cabello, Uñas & Spa</span></div>
+            <div><strong>Sin esperas</strong><span>Hora reservada</span></div>
+          </div>
+
+          <button type="button" class="primary-btn" onclick="switchView('book')">
+            <span>Reservar cita online</span>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+
+          <div class="quick-links">
+            <button type="button" class="card-btn" onclick="openMenuModal()">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/></svg>
+              <div><strong>Lista de servicios</strong><span>Color, uñas y cejas</span></div>
+            </button>
+            <button type="button" class="card-btn" onclick="openMaps()">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-5.686-7-11a7 7 0 1 1 14 0c0 5.314-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              <div><strong>Cómo llegar</strong><span>Ver en Google Maps</span></div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOOKING VIEW -->
+    <section id="bookView">
+      <div class="sec">
+        <div class="sec-head">
+          <h2 id="bookHead" tabindex="-1">1. Tratamiento o servicio</h2>
+          <span>Puedes elegir varios</span>
+        </div>
+        <div class="tabs-row">
+          <button type="button" class="tab-chip active" onclick="setCat('unas', this)">Uñas & Manicure</button>
+          <button type="button" class="tab-chip" onclick="setCat('cabello', this)">Cabello & Color</button>
+          <button type="button" class="tab-chip" onclick="setCat('cejas', this)">Cejas & Pestañas</button>
+        </div>
+        <div class="srv-list" id="srvList"></div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-head">
+          <h2>2. Especialista</h2>
+          <span>Agenda personalizada</span>
+        </div>
+        <div class="stylists-grid" id="stylistsGrid"></div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-head">
+          <h2>3. Día y bloque disponible</h2>
+          <span class="mono" id="durLabel">60 min</span>
+        </div>
+        <div class="dates-row" id="datesRow"></div>
+        <div class="hours-grid" id="hoursGrid"></div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-head">
+          <h2>4. Confirmación</h2>
+          <span>Recordatorio por WhatsApp</span>
+        </div>
+        <form id="salonForm" class="form-card" action="#book" method="POST" novalidate>
+          <div class="field">
+            <label for="cName">Nombre y apellido *</label>
+            <input class="input" type="text" id="cName" name="name" autocomplete="name" required placeholder="Ej. Valentina Gómez" />
+          </div>
+          <div class="field">
+            <label for="cPhone">WhatsApp de contacto *</label>
+            <input class="input" type="tel" id="cPhone" name="phone" autocomplete="tel" required placeholder="Ej. 300 456 7890" />
+          </div>
+          <fieldset style="border:none;">
+            <legend style="font-size:0.79rem;font-weight:500;color:var(--text-secondary);">Política de separación de cita</legend>
+            <label class="guarantee-opt">
+              <input type="radio" name="g_mode" value="deposit" checked onchange="state.guarantee='deposit'" />
+              <div>
+                <strong>Separación garantizada · Anticipo $20.000 Nequi</strong>
+                <span>Asegura tu bloque con la especialista. Descontable del valor final.</span>
+              </div>
+            </label>
+            <label class="guarantee-opt">
+              <input type="radio" name="g_mode" value="confirm" onchange="state.guarantee='confirm'" />
+              <div>
+                <strong>Confirmación previa 2h antes</strong>
+                <span>Sujeto a confirmación puntual por WhatsApp.</span>
+              </div>
+            </label>
+          </fieldset>
+        </form>
+      </div>
+    </section>
+
+    <!-- STAFF AGENDA VIEW -->
+    <section id="staffView">
+      <div class="staff-panel">
+        <h2 id="staffHead" tabindex="-1" style="font-size:1rem;margin-block-end:6px;">Gestión de citas del salón</h2>
+        <p style="font-size:0.8rem;color:var(--text-secondary);margin-block-end:14px;">Envía recordatorios de asistencia o libera bloques cancelados en tiempo real.</p>
+        <div id="staffAppts"></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="bottom-bar" id="bottomBar">
+    <div class="bottom-inner">
+      <div>
+        <small id="bMeta">1 servicio · 60 min</small>
+        <strong class="mono" id="bTotal">$65.000</strong>
+      </div>
+      <button type="submit" form="salonForm" class="btn-submit">Agendar cita</button>
+    </div>
+  </div>
+
+  <dialog id="confirmDialog" closedby="any" aria-labelledby="confTitle">
+    <h3 id="confTitle" style="font-size:1rem;margin-block-end:6px;">Cita bloqueada en agenda</h3>
+    <p style="font-size:0.8rem;color:var(--text-secondary);margin-block-end:12px;">Envía este resumen al WhatsApp del salón para finalizar:</p>
+    <div id="waTextPreview" class="mono" style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:12px;font-size:0.76rem;white-space:pre-wrap;margin-block-end:14px;"></div>
+    <div style="display:flex;gap:8px;">
+      <button type="button" class="card-btn" style="justify-content:center;" onclick="document.getElementById('confirmDialog').close()">Volver</button>
+      <button type="button" class="primary-btn" style="justify-content:center;" onclick="sendSalonWa()">Enviar en WhatsApp</button>
+    </div>
+  </dialog>
+
+  <dialog id="menuDialog" closedby="any" aria-labelledby="mTitle">
+    <h3 id="mTitle" style="font-size:1rem;margin-block-end:10px;">Portafolio de servicios</h3>
+    <div id="menuModalItems" style="display:flex;flex-direction:column;gap:8px;max-block-size:300px;overflow-y:auto;margin-block-end:14px;"></div>
+    <button type="button" class="primary-btn" style="justify-content:center;" onclick="document.getElementById('menuDialog').close(); switchView('book');">Seleccionar y reservar</button>
+  </dialog>
+
+  <script>
+    const SERVICES = [
+      { id: "u1", cat: "unas", name: "Manicure Rusa + Nivelación Base Rubber", desc: "Limpieza profunda de cutícula, refuerzo estructural en rubber y esmaltado semipermanente.", price: 65000, dur: 70 },
+      { id: "u2", cat: "unas", name: "Set Nuevo Uñas Acrílicas / Polygel", desc: "Extensión esculpida o tip con diseño minimalista y acabado brillante.", price: 110000, dur: 110 },
+      { id: "u3", cat: "unas", name: "Spa Pedicure Semipermanente", desc: "Exfoliación botánica, sales relajantes, hidratación profunda y color duradero.", price: 55000, dur: 60 },
+      { id: "h1", cat: "cabello", name: "Diseño de Color / Balayage + Hidratación", desc: "Diagnóstico capilar, técnica de iluminación personalizada, matiz y protección plex.", price: 260000, dur: 180 },
+      { id: "h2", cat: "cabello", name: "Corte Editorial + Blower & Ondas", desc: "Lavado spa, corte de puntas o capas y estilizado con protección térmica.", price: 60000, dur: 55 },
+      { id: "h3", cat: "cabello", name: "Ritual Reestructuración Capilar Profunda", desc: "Nutrición intensiva de aminoácidos para devolver brillo y sedosidad.", price: 95000, dur: 75 },
+      { id: "l1", cat: "cejas", name: "Laminado de Cejas + Diseño y Sombreado", desc: "Alineación pelo a pelo con diseño visagista y nutrición con keratina.", price: 58000, dur: 45 },
+      { id: "l2", cat: "cejas", name: "Extensiones de Pestañas Efecto Rímel / Híbrido", desc: "Aplicación delicada fibra a fibra para una mirada natural y definida.", price: 115000, dur: 90 }
+    ];
+
+    const STYLISTS = [
+      { id: "s1", name: "Valentina · Nail Master", role: "Manicure Rusa & Acrílico", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=160&q=80" },
+      { id: "s2", name: "Camila · Hair & Color", role: "Balayage & Tratamientos", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80" },
+      { id: "s3", name: "Sofía · Brow & Lash", role: "Cejas & Pestañas", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=160&q=80" },
+      { id: "any", name: "Primera disponible", role: "Asignación inmediata", img: "" }
+    ];
+
+    const HOURS = ["9:00 AM", "10:30 AM", "12:00 PM", "2:00 PM", "3:30 PM", "5:00 PM"];
+
+    let state = {
+      name: "Elena Beauty & Nail Studio",
+      loc: "Calle 92 # 51C-30 · Barranquilla",
+      wa: "573046382036",
+      theme: "rose",
+      cat: "unas",
+      selected: ["u1"],
+      stylist: "s1",
+      dateIdx: 0,
+      hour: "3:30 PM",
+      guarantee: "deposit",
+      dates: [],
+      appts: []
+    };
+
+    const formatCOP = (n) => "$" + n.toLocaleString("es-CO");
+
+    function buildDates() {
+      const dNames = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+      const mNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+      const now = new Date();
+      state.dates = Array.from({ length: 6 }, (_, i) => {
+        const d = new Date(now);
+        d.setDate(now.getDate() + i);
+        const dl = i === 0 ? "Hoy" : i === 1 ? "Mañana" : dNames[d.getDay()];
+        return { key: `d${i}`, dl, num: d.getDate(), ml: mNames[d.getMonth()], full: `${dl} ${d.getDate()} ${mNames[d.getMonth()]}` };
+      });
+    }
+
+    function loadAppts() {
+      try {
+        const s = JSON.parse(localStorage.getItem("salon_appts_v1"));
+        if (Array.isArray(s) && s.length) { state.appts = s; return; }
+      } catch {}
+      state.appts = [
+        { id: "a1", dateKey: "d0", dateLabel: state.dates[0].full, hour: "10:30 AM", stylistId: "s1", stylistName: "Valentina · Nail Master", client: "Mariana Pardo", phone: "573001234567", service: "Manicure Rusa + Base Rubber", total: 65000 },
+        { id: "a2", dateKey: "d0", dateLabel: state.dates[0].full, hour: "2:00 PM", stylistId: "s2", stylistName: "Camila · Hair & Color", client: "Daniela Vives", phone: "573019876543", service: "Diseño de Color / Balayage", total: 260000 }
+      ];
+      saveAppts();
+    }
+
+    function saveAppts() {
+      localStorage.setItem("salon_appts_v1", JSON.stringify(state.appts));
+      document.getElementById("badgeCount").textContent = String(state.appts.length);
+    }
+
+    function isBusy(dIdx, h, stId) {
+      const dk = state.dates[dIdx]?.key;
+      if (stId === "any") return ["s1", "s2", "s3"].every(id => state.appts.some(a => a.dateKey === dk && a.hour === h && a.stylistId === id));
+      return state.appts.some(a => a.dateKey === dk && a.hour === h && a.stylistId === stId);
+    }
+
+    function ensureSlot() {
+      if (isBusy(state.dateIdx, state.hour, state.stylist)) {
+        const f = HOURS.find(h => !isBusy(state.dateIdx, h, state.stylist));
+        if (f) state.hour = f;
+      }
+    }
+
+    function switchView(v) {
+      const apply = () => {
+        document.getElementById("homeView").style.display = v === "home" ? "block" : "none";
+        document.getElementById("bookView").style.display = v === "book" ? "block" : "none";
+        document.getElementById("bottomBar").style.display = v === "book" ? "block" : "none";
+        document.getElementById("staffView").style.display = v === "staff" ? "block" : "none";
+        document.getElementById("navHome").classList.toggle("active", v === "home");
+        document.getElementById("navBook").classList.toggle("active", v === "book");
+        document.getElementById("navStaff").classList.toggle("active", v === "staff");
+        if (v === "staff") renderStaffAppts();
+        window.scrollTo({ top: 0, behavior: "instant" });
+      };
+      const target = v === "home" ? "welcomeTitle" : v === "book" ? "bookHead" : "staffHead";
+      if (!document.startViewTransition) { apply(); document.getElementById(target)?.focus({ preventScroll: true }); return; }
+      document.startViewTransition(apply).finished.finally(() => document.getElementById(target)?.focus({ preventScroll: true }));
+    }
+
+    function applyBrand() {
+      if (state.theme && state.theme !== "rose") document.documentElement.setAttribute("data-theme", state.theme);
+      document.getElementById("topName").textContent = state.name;
+      document.getElementById("topLoc").textContent = state.loc;
+      document.getElementById("welcomeTitle").textContent = state.name;
+      document.getElementById("welcomeLoc").textContent = state.loc;
+      document.title = `Agenda Online | ${state.name}`;
+      const ini = state.name.split(" ").filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join("");
+      document.getElementById("brandInitials").textContent = ini || "ST";
+    }
+
+    function setCat(c, btn) {
+      state.cat = c;
+      document.querySelectorAll(".tab-chip").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderServices();
+    }
+
+    function renderServices() {
+      document.getElementById("srvList").innerHTML = SERVICES.filter(s => s.cat === state.cat).map(s => {
+        const sel = state.selected.includes(s.id);
+        return `
+          <button type="button" class="srv-item ${sel ? 'selected' : ''}" onclick="toggleSrv('${s.id}')">
+            <div>
+              <span class="srv-name">${s.name}</span>
+              <span class="srv-desc">${s.desc}</span>
+              <div class="srv-meta">
+                <strong class="mono">${formatCOP(s.price)}</strong>
+                <span class="mono" style="color:var(--text-muted)">${s.dur} min</span>
+              </div>
+            </div>
+            <span class="srv-check" aria-hidden="true">✓</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function toggleSrv(id) {
+      const idx = state.selected.indexOf(id);
+      if (idx >= 0) { if (state.selected.length > 1) state.selected.splice(idx, 1); }
+      else state.selected.push(id);
+      renderServices();
+      updateTotals();
+    }
+
+    function renderStylists() {
+      document.getElementById("stylistsGrid").innerHTML = STYLISTS.map(st => `
+        <button type="button" class="stylist-btn ${state.stylist === st.id ? 'selected' : ''}" onclick="pickStylist('${st.id}')">
+          ${st.img ? `<img class="stylist-img" src="${st.img}" alt="" width="40" height="40" loading="lazy" />` : `<span class="stylist-img">✦</span>`}
+          <div>
+            <strong style="font-size:0.82rem;display:block;">${st.name}</strong>
+            <span style="font-size:0.71rem;color:var(--text-secondary);">${st.role}</span>
+          </div>
+        </button>
+      `).join("");
+    }
+
+    function pickStylist(id) { state.stylist = id; ensureSlot(); renderStylists(); renderHours(); updateTotals(); }
+
+    function renderDates() {
+      document.getElementById("datesRow").innerHTML = state.dates.map((d, i) => `
+        <button type="button" class="day-pill ${state.dateIdx === i ? 'selected' : ''}" onclick="pickDate(${i})">
+          <small>${d.dl}</small>
+          <strong class="mono">${d.num}</strong>
+          <small>${d.ml}</small>
+        </button>
+      `).join("");
+    }
+
+    function pickDate(i) { state.dateIdx = i; ensureSlot(); renderDates(); renderHours(); updateTotals(); }
+
+    function renderHours() {
+      document.getElementById("hoursGrid").innerHTML = HOURS.map(h => {
+        const busy = isBusy(state.dateIdx, h, state.stylist);
+        const sel = !busy && state.hour === h;
+        return `
+          <button type="button" class="hour-btn ${sel ? 'selected' : ''}" aria-disabled="${busy}" onclick="${busy ? '' : `pickHour('${h}')`}">
+            <span class="mono">${h}</span>
+            <small>${busy ? 'Ocupado' : (sel ? 'Elegido' : 'Libre')}</small>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function pickHour(h) { state.hour = h; renderHours(); updateTotals(); }
+
+    function updateTotals() {
+      const chosen = SERVICES.filter(s => state.selected.includes(s.id));
+      const total = chosen.reduce((a, s) => a + s.price, 0);
+      const dur = chosen.reduce((a, s) => a + s.dur, 0);
+      document.getElementById("durLabel").textContent = `${dur} min`;
+      document.getElementById("bMeta").textContent = `${chosen.length} servicio${chosen.length > 1 ? 's' : ''} · ${state.hour}`;
+      document.getElementById("bTotal").textContent = formatCOP(total);
+    }
+
+    function buildWaMsg() {
+      const chosen = SERVICES.filter(s => state.selected.includes(s.id));
+      const total = chosen.reduce((a, s) => a + s.price, 0);
+      const dur = chosen.reduce((a, s) => a + s.dur, 0);
+      const st = STYLISTS.find(x => x.id === state.stylist) || STYLISTS[0];
+      const d = state.dates[state.dateIdx];
+      const name = document.getElementById("cName").value.trim();
+      const ph = document.getElementById("cPhone").value.trim();
+      return [
+        `*SOLICITUD DE CITA — ${state.name.toUpperCase()}*`,
+        `Sede: ${state.loc}`,
+        `────────────────────`,
+        `Cliente: ${name} (${ph})`,
+        `Fecha: ${d.full} · ${state.hour}`,
+        `Especialista: ${st.name}`,
+        `Duración aprox: ${dur} min`,
+        `Modalidad: ${state.guarantee === 'deposit' ? 'Anticipo $20.000 Nequi' : 'Confirmación 2h antes'}`,
+        `────────────────────`,
+        ...chosen.map(s => `• ${s.name} (${formatCOP(s.price)})`),
+        `Total estimado: *${formatCOP(total)} COP*`
+      ].join("\n");
+    }
+
+    document.getElementById("salonForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const n = document.getElementById("cName");
+      const p = document.getElementById("cPhone");
+      if (!n.value.trim()) { n.focus(); n.reportValidity(); return; }
+      if (!p.value.trim()) { p.focus(); p.reportValidity(); return; }
+
+      const chosen = SERVICES.filter(s => state.selected.includes(s.id));
+      const total = chosen.reduce((a, s) => a + s.price, 0);
+      const stId = state.stylist === "any" ? "s1" : state.stylist;
+      const stName = STYLISTS.find(x => x.id === stId)?.name || "Especialista";
+      if (!isBusy(state.dateIdx, state.hour, stId)) {
+        state.appts.unshift({
+          id: "ap_" + Date.now(),
+          dateKey: state.dates[state.dateIdx].key,
+          dateLabel: state.dates[state.dateIdx].full,
+          hour: state.hour,
+          stylistId: stId,
+          stylistName: stName,
+          client: n.value.trim(),
+          phone: p.value.replace(/\D/g, ""),
+          service: chosen.map(s => s.name).join(" + "),
+          total
+        });
+        saveAppts();
+      }
+      document.getElementById("waTextPreview").textContent = buildWaMsg();
+      document.getElementById("confirmDialog").showModal();
+      renderHours();
+    });
+
+    function sendSalonWa() {
+      const clean = (state.wa || "573000000000").replace(/\D/g, "");
+      window.open(`https://wa.me/${clean}?text=${encodeURIComponent(buildWaMsg())}`, "_blank");
+      document.getElementById("confirmDialog").close();
+      ensureSlot();
+      renderHours();
+    }
+
+    function openMenuModal() {
+      document.getElementById("menuModalItems").innerHTML = SERVICES.map(s => `
+        <div style="display:flex;justify-content:space-between;padding:10px 12px;border:1px solid var(--border);border-radius:10px;font-size:0.83rem;">
+          <div><strong>${s.name}</strong><div class="mono" style="font-size:0.72rem;color:var(--text-muted);">${s.dur} min</div></div>
+          <strong class="mono">${formatCOP(s.price)}</strong>
+        </div>
+      `).join("");
+      document.getElementById("menuDialog").showModal();
+    }
+
+    function openMaps() {
+      window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(state.name + " " + state.loc)}`, "_blank");
+    }
+
+    function renderStaffAppts() {
+      const w = document.getElementById("staffAppts");
+      if (!state.appts.length) { w.innerHTML = `<p style="font-size:0.8rem;color:var(--text-muted);">Sin citas activas.</p>`; return; }
+      w.innerHTML = state.appts.map(a => `
+        <div style="border:1px solid var(--border);border-radius:12px;padding:13px;margin-block-end:8px;background:var(--bg);">
+          <div style="display:flex;justify-content:space-between;margin-block-end:4px;">
+            <strong class="mono" style="font-size:0.82rem;">${a.dateLabel} · ${a.hour}</strong>
+            <span style="font-size:0.72rem;color:var(--success);font-weight:600;">Reservada</span>
+          </div>
+          <div style="font-size:0.8rem;color:var(--text-secondary);margin-block-end:10px;">${a.client} · ${a.stylistName}<br/>${a.service} (${formatCOP(a.total)})</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <button type="button" class="card-btn" style="min-block-size:36px;padding:6px 10px;justify-content:center;font-size:0.75rem;font-weight:600;" onclick="remind('${a.id}')">Recordar WhatsApp</button>
+            <button type="button" class="card-btn" style="min-block-size:36px;padding:6px 10px;justify-content:center;font-size:0.75rem;font-weight:600;color:var(--danger);" onclick="freeAppt('${a.id}')">Liberar bloque</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function remind(id) {
+      const a = state.appts.find(x => x.id === id);
+      if (!a) return;
+      const ph = (a.phone || "").startsWith("57") ? a.phone : "57" + (a.phone || "3000000000");
+      const msg = `Hola ${a.client}, te recordamos tu cita en ${state.name} (${a.dateLabel} a las ${a.hour}) con ${a.stylistName}. ¿Nos confirmas tu asistencia?`;
+      window.open(`https://wa.me/${ph}?text=${encodeURIComponent(msg)}`, "_blank");
+    }
+
+    function freeAppt(id) {
+      state.appts = state.appts.filter(x => x.id !== id);
+      saveAppts();
+      renderStaffAppts();
+      renderHours();
+    }
+
+    function init() {
+      buildDates();
+      loadAppts();
+      const p = new URLSearchParams(window.location.search);
+      if (p.get("nombre")) state.name = p.get("nombre");
+      if (p.get("barrio")) state.loc = p.get("barrio");
+      if (p.get("wa")) state.wa = p.get("wa");
+      if (p.get("tema")) state.theme = p.get("tema");
+
+      ensureSlot();
+      applyBrand();
+      renderServices();
+      renderStylists();
+      renderDates();
+      renderHours();
+      updateTotals();
+
+      if (!("closedBy" in HTMLDialogElement.prototype)) {
+        for (const dlg of document.querySelectorAll('dialog[closedby="any"]')) {
+          dlg.addEventListener("click", (ev) => {
+            if (ev.target !== dlg) return;
+            const r = dlg.getBoundingClientRect();
+            if (ev.clientX < r.left || ev.clientX > r.right || ev.clientY < r.top || ev.clientY > r.bottom) dlg.close();
+          });
+        }
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

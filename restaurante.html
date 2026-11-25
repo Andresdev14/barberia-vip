@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menú Digital & Pedidos | Restaurante</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0a0a0c;
+      --surface: #121216;
+      --surface-2: #19191f;
+      --surface-hover: #202028;
+      --accent: #f97316;
+      --accent-ink: #09090b;
+      --accent-soft: color-mix(in oklab, var(--accent), transparent 88%);
+      --text: #fafafa;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --success: #10b981;
+      --danger: #f43f5e;
+      --radius-lg: 18px;
+      --radius-md: 13px;
+      --radius-sm: 9px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    [data-theme="emerald"] {
+      --accent: #10b981;
+      --accent-ink: #04160e;
+    }
+
+    [data-theme="crimson"] {
+      --accent: #e11d48;
+      --accent-ink: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-block-size: 100dvh;
+      padding-block-end: 108px;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .container {
+      max-inline-size: 580px;
+      margin-inline: auto;
+      padding-inline: 18px;
+    }
+
+    .icon {
+      inline-size: 18px;
+      block-size: 18px;
+      stroke: currentColor;
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    /* Compact Sticky Header */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(10, 10, 12, 0.86);
+      border-block-end: 1px solid var(--border);
+      padding-block: 10px;
+    }
+    .top-bar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-inline-size: 0;
+    }
+    .brand-mark {
+      inline-size: 34px;
+      block-size: 34px;
+      border-radius: 9px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-strong);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.82rem;
+      display: grid;
+      place-content: center;
+      flex-shrink: 0;
+    }
+    .brand-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      white-space: nowrap;
+      overflow: clip;
+      text-overflow: ellipsis;
+    }
+    .brand-loc {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: clip;
+      text-overflow: ellipsis;
+    }
+
+    .nav-pills {
+      display: inline-flex;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+    .nav-pill {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 11px;
+      border-radius: 999px;
+      cursor: pointer;
+      min-block-size: 32px;
+    }
+    .nav-pill.active {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    /* Hero Banner */
+    .hero-card {
+      margin-block-start: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: clip;
+    }
+    .hero-cover {
+      aspect-ratio: 16 / 7.5;
+      inline-size: 100%;
+      background:
+        linear-gradient(180deg, rgba(10,10,12,0.12) 0%, rgba(18,18,22,0.96) 100%),
+        url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1100&q=82') center/cover;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px 18px;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(10, 10, 12, 0.8);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border-strong);
+      font-size: 0.73rem;
+      font-weight: 500;
+    }
+    .dot {
+      inline-size: 7px;
+      block-size: 7px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+    .hero-content {
+      padding: 4px 18px 18px;
+    }
+    .hero-content h1 {
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-block-end: 4px;
+    }
+    .hero-content p {
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      margin-block-end: 14px;
+    }
+    .info-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-block-start: 1px solid var(--border);
+      padding-block-start: 12px;
+      gap: 8px;
+    }
+    .info-strip strong {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .info-strip span {
+      font-size: 0.71rem;
+      color: var(--text-muted);
+    }
+
+    /* Search + Categories */
+    .controls-wrap {
+      margin-block: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .search-box {
+      position: relative;
+    }
+    .search-box input {
+      inline-size: 100%;
+      min-block-size: 46px;
+      padding: 10px 14px 10px 38px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font: inherit;
+      font-size: max(1rem, 1em);
+    }
+    .search-box svg {
+      position: absolute;
+      inset-inline-start: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .cat-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-block-end: 4px;
+      scrollbar-width: none;
+    }
+    .cat-row::-webkit-scrollbar { display: none; }
+    .cat-btn {
+      flex-shrink: 0;
+      min-block-size: 38px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .cat-btn.active {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+      font-weight: 600;
+    }
+
+    /* Menu Dish Cards */
+    .menu-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .dish-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      transition: border-color 0.16s, background-color 0.16s;
+    }
+    .dish-card:hover {
+      border-color: var(--border-strong);
+    }
+    .dish-card.sold-out {
+      opacity: 0.48;
+    }
+    .dish-copy {
+      flex: 1;
+      min-inline-size: 0;
+    }
+    .dish-title-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-block-end: 3px;
+      flex-wrap: wrap;
+    }
+    .dish-name {
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+    .dish-tag {
+      font-size: 0.66rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .dish-desc {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-block-end: 9px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      line-clamp: 2;
+      overflow: clip;
+    }
+    .dish-foot {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .dish-price {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .btn-add-dish {
+      min-block-size: 36px;
+      padding: 6px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface-2);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-add-dish:hover:not(:disabled) {
+      background: var(--accent);
+      color: var(--accent-ink);
+      border-color: var(--accent);
+    }
+    .btn-add-dish:disabled {
+      cursor: not-allowed;
+      color: var(--danger);
+    }
+    .dish-img {
+      inline-size: 84px;
+      block-size: 84px;
+      aspect-ratio: 1 / 1;
+      border-radius: 11px;
+      object-fit: cover;
+      background: var(--surface-2);
+      flex-shrink: 0;
+    }
+
+    /* Kitchen Admin View */
+    #kitchenView {
+      display: none;
+      padding-block-start: 18px;
+    }
+    .panel-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+    .panel-box h2 {
+      font-size: 0.98rem;
+      font-weight: 600;
+      margin-block-end: 4px;
+    }
+    .panel-box p {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-block-end: 14px;
+    }
+    .stock-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-block-end: 8px;
+      gap: 10px;
+    }
+    .stock-btn {
+      min-block-size: 36px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface-2);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .stock-btn.out {
+      color: #fda4af;
+      border-color: rgba(244, 63, 94, 0.4);
+      background: rgba(244, 63, 94, 0.1);
+    }
+
+    /* Sticky Bottom Cart Bar */
+    .cart-bar {
+      position: fixed;
+      inset-inline: 0;
+      bottom: 0;
+      z-index: 55;
+      background: rgba(10, 10, 12, 0.92);
+      backdrop-filter: blur(16px);
+      border-block-start: 1px solid var(--border);
+      padding: 10px 18px;
+    }
+    .cart-bar-inner {
+      max-inline-size: 580px;
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .cart-totals small {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+    }
+    .cart-totals strong {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .btn-checkout {
+      flex: 1;
+      max-inline-size: 270px;
+      min-block-size: 48px;
+      border-radius: var(--radius-md);
+      border: none;
+      background: var(--accent);
+      color: var(--accent-ink);
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-checkout:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Native Dialogs */
+    dialog {
+      margin: auto;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      max-inline-size: 460px;
+      inline-size: calc(100% - 32px);
+      padding: 20px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8);
+    }
+    dialog:modal {
+      overscroll-behavior: contain;
+    }
+    dialog::backdrop {
+      overflow: hidden;
+      overscroll-behavior: contain;
+      background: rgba(0, 0, 0, 0.74);
+      backdrop-filter: blur(6px);
+    }
+    .dlg-head {
+      font-size: 1.02rem;
+      font-weight: 600;
+      margin-block-end: 4px;
+    }
+    .dlg-sub {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-block-end: 14px;
+    }
+
+    .addon-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-block-end: 7px;
+      cursor: pointer;
+      font-size: 0.82rem;
+    }
+    .addon-option input {
+      accent-color: var(--accent);
+      inline-size: 16px;
+      block-size: 16px;
+      margin-inline-end: 9px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-block-end: 12px;
+    }
+    .field label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    .input {
+      inline-size: 100%;
+      min-block-size: 46px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: var(--bg);
+      color: var(--text);
+      font: inherit;
+      font-size: max(1rem, 1em);
+    }
+    .input:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .input:user-invalid {
+      border-color: var(--danger);
+    }
+
+    .mode-radios {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-block-end: 12px;
+    }
+    .mode-radio {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: var(--bg);
+    }
+    .mode-radio:has(input:checked) {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--text);
+    }
+    .mode-radio input {
+      position: absolute;
+      clip-path: inset(50%);
+      inline-size: 1px;
+      block-size: 1px;
+      overflow: hidden;
+    }
+
+    .cart-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-block: 8px;
+      border-block-end: 1px solid var(--border);
+      font-size: 0.82rem;
+      gap: 10px;
+    }
+    .qty-controls {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .qty-btn {
+      inline-size: 28px;
+      block-size: 28px;
+      border-radius: 7px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface-2);
+      color: var(--text);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .dlg-footer {
+      display: flex;
+      gap: 8px;
+      margin-block-start: 14px;
+    }
+    .btn-ghost {
+      min-block-size: 46px;
+      padding-inline: 15px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-solid {
+      flex: 1;
+      min-block-size: 46px;
+      border-radius: var(--radius-md);
+      border: none;
+      background: var(--accent);
+      color: var(--accent-ink);
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      ::view-transition-group(*),
+      ::view-transition-old(*),
+      ::view-transition-new(*) {
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="brand">
+        <div class="brand-mark" id="brandInitials">KB</div>
+        <div>
+          <div class="brand-name" id="topName">Kobe Sushi & Burger</div>
+          <div class="brand-loc" id="topLoc">Calle 96 # 46-30 · Barranquilla</div>
+        </div>
+      </div>
+      <nav class="nav-pills" aria-label="Modo de vista">
+        <button type="button" class="nav-pill active" id="pillMenu" onclick="switchTab('menu')">Menú</button>
+        <button type="button" class="nav-pill" id="pillKitchen" onclick="switchTab('kitchen')">Cocina</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- CUSTOMER MENU VIEW -->
+    <section id="menuView">
+      <div class="hero-card">
+        <div class="hero-cover">
+          <div class="status-badge">
+            <span class="dot" aria-hidden="true"></span>
+            <span>Cocina abierta · Entrega 25–35 min</span>
+          </div>
+        </div>
+        <div class="hero-content">
+          <h1 id="heroTitle" tabindex="-1">Kobe Sushi & Burger</h1>
+          <p id="heroSub">Pide directo sin comisiones de apps externas. Arma tu pedido con adiciones y envíalo listo a cocina por WhatsApp.</p>
+          <div class="info-strip">
+            <div><strong class="mono">4.9 ★</strong><span>Calificación</span></div>
+            <div><strong class="mono">$5.000</strong><span>Domicilio fijo</span></div>
+            <div><strong>0% extra</strong><span>Precio directo</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-wrap">
+        <search class="search-box">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="search" id="searchInput" aria-label="Buscar plato o bebida" placeholder="Buscar hamburguesa, sushi, papas, bebidas..." oninput="renderMenu()" />
+        </search>
+
+        <div class="cat-row" role="tablist" aria-label="Categorías del menú">
+          <button type="button" class="cat-btn active" onclick="setCat('all', this)">Todo</button>
+          <button type="button" class="cat-btn" onclick="setCat('burgers', this)">Hamburguesas</button>
+          <button type="button" class="cat-btn" onclick="setCat('especiales', this)">Especiales & Sushi</button>
+          <button type="button" class="cat-btn" onclick="setCat('entradas', this)">Entradas</button>
+          <button type="button" class="cat-btn" onclick="setCat('bebidas', this)">Bebidas</button>
+        </div>
+      </div>
+
+      <div class="menu-grid" id="menuGrid"></div>
+    </section>
+
+    <!-- KITCHEN STOCK PANEL -->
+    <section id="kitchenView">
+      <div class="panel-box">
+        <h2 id="kitchenHeading" tabindex="-1">Control de inventario en vivo (Cocina)</h2>
+        <p>Marca cualquier plato como agotado en un toque para deshabilitarlo inmediatamente en el menú digital.</p>
+        <div id="stockList"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- STICKY BOTTOM CART BAR -->
+  <div class="cart-bar" id="cartBar">
+    <div class="cart-bar-inner">
+      <div class="cart-totals">
+        <small id="cartCountLabel">Tu carrito está vacío</small>
+        <strong class="mono" id="cartTotalLabel">$0 COP</strong>
+      </div>
+      <button type="button" class="btn-checkout" id="checkoutBtn" disabled onclick="openCheckoutModal()">
+        <span>Ver pedido y enviar</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- DISH CUSTOMIZER DIALOG -->
+  <dialog id="addonModal" closedby="any" aria-labelledby="addonTitle">
+    <h3 class="dlg-head" id="addonTitle">Personalizar plato</h3>
+    <p class="dlg-sub" id="addonDesc"></p>
+
+    <fieldset style="border:none;margin-block-end:12px;">
+      <legend style="font-size:0.78rem;font-weight:500;color:var(--text-secondary);margin-block-end:8px;">Adiciones opcionales</legend>
+      <div id="addonsContainer"></div>
+    </fieldset>
+
+    <div class="field">
+      <label for="itemNote">Notas para cocina (opcional)</label>
+      <input class="input" type="text" id="itemNote" placeholder="Ej. Sin cebolla, término tres cuartos, salsas aparte" />
+    </div>
+
+    <div class="dlg-footer">
+      <button type="button" class="btn-ghost" onclick="document.getElementById('addonModal').close()">Cancelar</button>
+      <button type="button" class="btn-solid" id="confirmAddItemBtn" onclick="confirmCustomizedItem()">Agregar al pedido</button>
+    </div>
+  </dialog>
+
+  <!-- CHECKOUT & WHATSAPP ORDER DIALOG -->
+  <dialog id="checkoutModal" closedby="any" aria-labelledby="chkTitle">
+    <h3 class="dlg-head" id="chkTitle">Finalizar pedido</h3>
+    <p class="dlg-sub">Revisa tus platos y completa los datos de entrega.</p>
+
+    <div id="cartItemsContainer" style="max-block-size:165px;overflow-y:auto;margin-block-end:14px;"></div>
+
+    <form id="orderForm" action="#order" method="POST" novalidate>
+      <fieldset style="border:none;">
+        <legend style="font-size:0.78rem;font-weight:500;color:var(--text-secondary);margin-block-end:6px;">Tipo de entrega</legend>
+        <div class="mode-radios">
+          <label class="mode-radio">
+            <input type="radio" name="delivery_mode" value="delivery" checked onchange="setDeliveryMode('delivery')" />
+            <span>Domicilio (+$5.000)</span>
+          </label>
+          <label class="mode-radio">
+            <input type="radio" name="delivery_mode" value="pickup" onchange="setDeliveryMode('pickup')" />
+            <span>Recoger en local ($0)</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label for="custName">Nombre completo *</label>
+        <input class="input" type="text" id="custName" name="customer_name" autocomplete="name" required placeholder="Ej. Andrea Gómez" />
+      </div>
+
+      <div id="addressFields">
+        <div class="field">
+          <label for="custAddress">Dirección exacta y apartamento/casa *</label>
+          <input class="input" type="text" id="custAddress" name="street_address" autocomplete="street-address" required placeholder="Ej. Cra 53 # 82-45 Apto 402, Alto Prado" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="payMethod">Método de pago</label>
+        <select class="input" id="payMethod" name="payment_method">
+          <option value="Nequi">Transferencia Nequi</option>
+          <option value="Bancolombia">Transferencia Bancolombia</option>
+          <option value="Efectivo (exacto)">Efectivo exacto</option>
+          <option value="Efectivo (requiere vueltas)">Efectivo (requiere cambio)</option>
+          <option value="Datáfono">Datáfono al recibir</option>
+        </select>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:baseline;padding-block-start:10px;border-block-start:1px solid var(--border);margin-block-top:6px;">
+        <span style="font-size:0.85rem;color:var(--text-secondary);">Total a pagar</span>
+        <strong class="mono" id="finalTotalLabel" style="font-size:1.15rem;color:var(--accent);">$0 COP</strong>
+      </div>
+
+      <div class="dlg-footer">
+        <button type="button" class="btn-ghost" onclick="document.getElementById('checkoutModal').close()">Seguir viendo</button>
+        <button type="submit" class="btn-solid">Enviar comanda por WhatsApp</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script>
+    const ITEMS = [
+      { id: "m1", cat: "burgers", name: "Doble Smash Trufada + Papas", desc: "Doble carne artesanal 120g, cheddar madurado, tocineta caramelizada, mayo trufada en brioche y papas rústicas.", price: 34000, tag: "Más vendida", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=240&q=80" },
+      { id: "m2", cat: "burgers", name: "Crispy Bacon Cheeseburger", desc: "Carne angus 150g, doble queso americano, cebolla crispy, pepinillos de la casa y salsa secreta.", price: 29000, tag: "", img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=240&q=80" },
+      { id: "m3", cat: "especiales", name: "Roll Tempura Dinamita (10 bocados)", desc: "Salmón fresco, queso crema, aguacate, coronado con kanikama dinamita y salsa teriyaki artesanal.", price: 32000, tag: "Chef", img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=240&q=80" },
+      { id: "m4", cat: "especiales", name: "Salchipapa Costeña Especial (2 pers.)", desc: "Papas crocantes, lomito salteado, chorizo artesanal, pollo desmechado, queso costeño gratinado y maíz.", price: 38000, tag: "Para compartir", img: "https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=240&q=80" },
+      { id: "m5", cat: "entradas", name: "Deditos de Queso Costeño (x6)", desc: "Masa hojaldrada crocante rellena de queso costeño con miel mostaza.", price: 16000, tag: "", img: "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=240&q=80" },
+      { id: "m6", cat: "bebidas", name: "Limonada Cerezada Frappé 16oz", desc: "Preparada al instante con limón natural y cerezas.", price: 10000, tag: "", img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=240&q=80" },
+      { id: "m7", cat: "bebidas", name: "Coca-Cola Sin Azúcar / Original 400ml", desc: "Bien fría.", price: 6500, tag: "", img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=240&q=80" }
+    ];
+
+    const ADDONS = [
+      { id: "a1", name: "Extra tocineta ahumada", price: 5000 },
+      { id: "a2", name: "Extra queso cheddar / costeño", price: 4000 },
+      { id: "a3", name: "Porción papas rústicas", price: 7000 }
+    ];
+
+    let state = {
+      name: "Kobe Sushi & Burger",
+      loc: "Calle 96 # 46-30 · Barranquilla",
+      wa: "573242218119",
+      theme: "orange",
+      cat: "all",
+      deliveryFee: 5000,
+      deliveryMode: "delivery",
+      activeDish: null,
+      cart: [],
+      soldOut: {}
+    };
+
+    const formatCOP = (n) => "$" + n.toLocaleString("es-CO");
+
+    function loadSoldOut() {
+      try { state.soldOut = JSON.parse(localStorage.getItem("rest_soldout_v1") || "{}"); } catch {}
+    }
+
+    function applyBranding() {
+      if (state.theme && state.theme !== "orange") document.documentElement.setAttribute("data-theme", state.theme);
+      document.getElementById("topName").textContent = state.name;
+      document.getElementById("topLoc").textContent = state.loc;
+      document.getElementById("heroTitle").textContent = state.name;
+      document.title = `Menú Digital | ${state.name}`;
+      const ini = state.name.split(" ").filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join("");
+      document.getElementById("brandInitials").textContent = ini || "RS";
+    }
+
+    function switchTab(tab) {
+      const update = () => {
+        const isMenu = tab === "menu";
+        document.getElementById("menuView").style.display = isMenu ? "block" : "none";
+        document.getElementById("cartBar").style.display = isMenu ? "block" : "none";
+        document.getElementById("kitchenView").style.display = isMenu ? "none" : "block";
+        document.getElementById("pillMenu").classList.toggle("active", isMenu);
+        document.getElementById("pillKitchen").classList.toggle("active", !isMenu);
+        if (!isMenu) renderKitchenStock();
+      };
+      const target = tab === "menu" ? "heroTitle" : "kitchenHeading";
+      if (!document.startViewTransition) {
+        update();
+        document.getElementById(target)?.focus({ preventScroll: true });
+        return;
+      }
+      document.startViewTransition(update).finished.finally(() => {
+        document.getElementById(target)?.focus({ preventScroll: true });
+      });
+    }
+
+    function setCat(c, btn) {
+      state.cat = c;
+      document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderMenu();
+    }
+
+    function renderMenu() {
+      const q = (document.getElementById("searchInput").value || "").toLowerCase().trim();
+      const filtered = ITEMS.filter(i => (state.cat === "all" || i.cat === state.cat) && (!q || i.name.toLowerCase().includes(q) || i.desc.toLowerCase().includes(q)));
+      document.getElementById("menuGrid").innerHTML = filtered.map(item => {
+        const out = !!state.soldOut[item.id];
+        return `
+          <article class="dish-card ${out ? 'sold-out' : ''}">
+            <div class="dish-copy">
+              <div class="dish-title-row">
+                <span class="dish-name">${item.name}</span>
+                ${item.tag ? `<span class="dish-tag">${item.tag}</span>` : ''}
+              </div>
+              <p class="dish-desc">${item.desc}</p>
+              <div class="dish-foot">
+                <span class="dish-price mono">${formatCOP(item.price)}</span>
+                <button type="button" class="btn-add-dish" ${out ? 'disabled' : ''} onclick="openCustomize('${item.id}')">
+                  ${out ? 'Agotado hoy' : '+ Agregar'}
+                </button>
+              </div>
+            </div>
+            <img class="dish-img" src="${item.img}" alt="${item.name}" width="84" height="84" loading="lazy" />
+          </article>
+        `;
+      }).join("");
+    }
+
+    function openCustomize(id) {
+      const dish = ITEMS.find(x => x.id === id);
+      if (!dish) return;
+      state.activeDish = dish;
+      document.getElementById("addonTitle").textContent = dish.name;
+      document.getElementById("addonDesc").textContent = `${formatCOP(dish.price)} · ${dish.desc}`;
+      document.getElementById("itemNote").value = "";
+      document.getElementById("addonsContainer").innerHTML = ADDONS.map(a => `
+        <label class="addon-option">
+          <span><input type="checkbox" value="${a.id}" />${a.name}</span>
+          <strong class="mono">+${formatCOP(a.price)}</strong>
+        </label>
+      `).join("");
+      document.getElementById("addonModal").showModal();
+    }
+
+    function confirmCustomizedItem() {
+      const dish = state.activeDish;
+      if (!dish) return;
+      const checked = [...document.querySelectorAll("#addonsContainer input:checked")].map(el => ADDONS.find(a => a.id === el.value)).filter(Boolean);
+      const addonsTotal = checked.reduce((s, a) => s + a.price, 0);
+      const note = document.getElementById("itemNote").value.trim();
+      state.cart.push({
+        uid: "c_" + Date.now(),
+        name: dish.name,
+        unitPrice: dish.price + addonsTotal,
+        qty: 1,
+        addons: checked.map(a => a.name),
+        note
+      });
+      document.getElementById("addonModal").close();
+      updateCartBar();
+    }
+
+    function updateCartBar() {
+      const count = state.cart.reduce((s, i) => s + i.qty, 0);
+      const sub = state.cart.reduce((s, i) => s + i.unitPrice * i.qty, 0);
+      document.getElementById("cartCountLabel").textContent = count ? `${count} producto${count > 1 ? 's' : ''} en tu pedido` : "Tu carrito está vacío";
+      document.getElementById("cartTotalLabel").textContent = `${formatCOP(sub)} COP`;
+      document.getElementById("checkoutBtn").disabled = count === 0;
+    }
+
+    function setDeliveryMode(m) {
+      state.deliveryMode = m;
+      const addrWrap = document.getElementById("addressFields");
+      const addrInput = document.getElementById("custAddress");
+      addrWrap.style.display = m === "delivery" ? "block" : "none";
+      addrInput.required = m === "delivery";
+      renderCartInsideModal();
+    }
+
+    function changeQty(uid, delta) {
+      const item = state.cart.find(x => x.uid === uid);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) state.cart = state.cart.filter(x => x.uid !== uid);
+      updateCartBar();
+      if (!state.cart.length) {
+        document.getElementById("checkoutModal").close();
+        return;
+      }
+      renderCartInsideModal();
+    }
+
+    function renderCartInsideModal() {
+      const sub = state.cart.reduce((s, i) => s + i.unitPrice * i.qty, 0);
+      const fee = state.deliveryMode === "delivery" ? state.deliveryFee : 0;
+      document.getElementById("cartItemsContainer").innerHTML = state.cart.map(i => `
+        <div class="cart-item-row">
+          <div>
+            <strong>${i.qty}x ${i.name}</strong>
+            ${i.addons.length ? `<div style="font-size:0.72rem;color:var(--text-secondary);">+ ${i.addons.join(", ")}</div>` : ''}
+            ${i.note ? `<div style="font-size:0.72rem;color:var(--accent);">Nota: ${i.note}</div>` : ''}
+          </div>
+          <div class="qty-controls">
+            <span class="mono">${formatCOP(i.unitPrice * i.qty)}</span>
+            <button type="button" class="qty-btn" onclick="changeQty('${i.uid}', -1)">−</button>
+            <button type="button" class="qty-btn" onclick="changeQty('${i.uid}', 1)">+</button>
+          </div>
+        </div>
+      `).join("");
+      document.getElementById("finalTotalLabel").textContent = `${formatCOP(sub + fee)} COP`;
+    }
+
+    function openCheckoutModal() {
+      renderCartInsideModal();
+      document.getElementById("checkoutModal").showModal();
+    }
+
+    document.getElementById("orderForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nameIn = document.getElementById("custName");
+      const addrIn = document.getElementById("custAddress");
+      if (!nameIn.value.trim()) { nameIn.focus(); nameIn.reportValidity(); return; }
+      if (state.deliveryMode === "delivery" && !addrIn.value.trim()) { addrIn.focus(); addrIn.reportValidity(); return; }
+
+      const sub = state.cart.reduce((s, i) => s + i.unitPrice * i.qty, 0);
+      const fee = state.deliveryMode === "delivery" ? state.deliveryFee : 0;
+      const pay = document.getElementById("payMethod").value;
+
+      const lines = [
+        `*NUEVA COMANDA DIGITAL — ${state.name.toUpperCase()}*`,
+        `Modalidad: ${state.deliveryMode === "delivery" ? "Domicilio" : "Recoger en sede"}`,
+        `Cliente: ${nameIn.value.trim()}`,
+        ...(state.deliveryMode === "delivery" ? [`Dirección: ${addrIn.value.trim()}`] : []),
+        `Pago: ${pay}`,
+        `────────────────────`,
+        ...state.cart.map(i => {
+          let row = `• ${i.qty}x ${i.name} (${formatCOP(i.unitPrice * i.qty)})`;
+          if (i.addons.length) row += `\n   + ${i.addons.join(", ")}`;
+          if (i.note) row += `\n   Nota: ${i.note}`;
+          return row;
+        }),
+        `────────────────────`,
+        `Subtotal: ${formatCOP(sub)}`,
+        ...(fee ? [`Domicilio: ${formatCOP(fee)}`] : []),
+        `*TOTAL A PAGAR: ${formatCOP(sub + fee)} COP*`
+      ];
+
+      const cleanWa = (state.wa || "573000000000").replace(/\D/g, "");
+      window.open(`https://wa.me/${cleanWa}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
+      document.getElementById("checkoutModal").close();
+    });
+
+    function renderKitchenStock() {
+      document.getElementById("stockList").innerHTML = ITEMS.map(i => {
+        const out = !!state.soldOut[i.id];
+        return `
+          <div class="stock-row">
+            <div>
+              <strong style="font-size:0.84rem;">${i.name}</strong>
+              <div class="mono" style="font-size:0.73rem;color:var(--text-muted);">${formatCOP(i.price)}</div>
+            </div>
+            <button type="button" class="stock-btn ${out ? 'out' : ''}" onclick="toggleStock('${i.id}')">
+              ${out ? 'Agotado (Activar)' : 'Disponible (Agotar)'}
+            </button>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function toggleStock(id) {
+      if (state.soldOut[id]) delete state.soldOut[id];
+      else state.soldOut[id] = true;
+      localStorage.setItem("rest_soldout_v1", JSON.stringify(state.soldOut));
+      renderKitchenStock();
+      renderMenu();
+    }
+
+    function init() {
+      loadSoldOut();
+      const p = new URLSearchParams(window.location.search);
+      if (p.get("nombre")) state.name = p.get("nombre");
+      if (p.get("barrio")) state.loc = p.get("barrio");
+      if (p.get("wa")) state.wa = p.get("wa");
+      if (p.get("tema")) state.theme = p.get("tema");
+
+      applyBranding();
+      renderMenu();
+      updateCartBar();
+
+      if (!("closedBy" in HTMLDialogElement.prototype)) {
+        for (const dlg of document.querySelectorAll('dialog[closedby="any"]')) {
+          dlg.addEventListener("click", (ev) => {
+            if (ev.target !== dlg) return;
+            const r = dlg.getBoundingClientRect();
+            if (ev.clientX < r.left || ev.clientX > r.right || ev.clientY < r.top || ev.clientY > r.bottom) dlg.close();
+          });
+        }
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
